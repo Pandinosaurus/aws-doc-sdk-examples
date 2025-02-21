@@ -1,14 +1,11 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 #ifndef GLUE_EXAMPLES_GLUE_SAMPLES_H
 #define GLUE_EXAMPLES_GLUE_SAMPLES_H
 
 #include <aws/core/Aws.h>
 #include <aws/core/client/ClientConfiguration.h>
-#include <aws/cloudformation/model/Output.h>
 #include <functional>
 
 namespace AwsDoc {

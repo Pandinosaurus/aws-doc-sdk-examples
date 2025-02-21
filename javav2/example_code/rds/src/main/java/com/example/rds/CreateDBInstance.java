@@ -1,16 +1,12 @@
-//snippet-sourcedescription:[CreateDBInstance.java demonstrates how to create an Amazon Relational Database Service (RDS) instance and wait for it to be in an available state.]
-//snippet-keyword:[AWS SDK for Java v2]
-//snippet-service:[Amazon Relational Database Service]
-
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 package com.example.rds;
 
+// snippet-start:[rds.java2.create_instance.main]
 // snippet-start:[rds.java2.create_instance.import]
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import com.google.gson.Gson;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rds.RdsClient;
 import software.amazon.awssdk.services.rds.model.DescribeDbInstancesRequest;
@@ -19,57 +15,88 @@ import software.amazon.awssdk.services.rds.model.CreateDbInstanceResponse;
 import software.amazon.awssdk.services.rds.model.RdsException;
 import software.amazon.awssdk.services.rds.model.DescribeDbInstancesResponse;
 import software.amazon.awssdk.services.rds.model.DBInstance;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
+
 import java.util.List;
 // snippet-end:[rds.java2.create_instance.import]
 
 /**
- * Before running this Java V2 code example, set up your development environment, including your credentials.
+ * Before running this Java V2 code example, set up your development
+ * environment, including your credentials.
  *
  * For more information, see the following documentation topic:
  *
  * https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/get-started.html
+ *
+ * This example requires an AWS Secrets Manager secret that contains the
+ * database credentials. If you do not create a
+ * secret, this example will not work. For more details, see:
+ *
+ * https://docs.aws.amazon.com/secretsmanager/latest/userguide/integrating_how-services-use-secrets_RS.html
+ *
+ *
  */
+
 public class CreateDBInstance {
-        public static long sleepTime = 20;
+    public static long sleepTime = 20;
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
+        final String usage = """
 
-            final String usage = "\n" +
-                "Usage:\n" +
-                "    <dbInstanceIdentifier> <dbName> <masterUsername> <masterUserPassword> \n\n" +
-                "Where:\n" +
-                "    dbInstanceIdentifier - The database instance identifier. \n" +
-                "    dbName - The database name. \n" +
-                "    masterUsername - The master user name. \n" +
-                "    masterUserPassword - The password that corresponds to the master user name. \n";
+                Usage:
+                    <dbInstanceIdentifier> <dbName> <secretName>
 
-            if (args.length != 4) {
-                System.out.println(usage);
-                System.exit(1);
-            }
+                Where:
+                    dbInstanceIdentifier - The database instance identifier.\s
+                    dbName - The database name.\s
+                    secretName - The name of the AWS Secrets Manager secret that contains the database credentials."
+                """;
 
-            String dbInstanceIdentifier = args[0];
-            String dbName = args[1];
-            String masterUsername = args[2];
-            String masterUserPassword = args[3];
-
-            Region region = Region.US_WEST_2;
-            RdsClient rdsClient = RdsClient.builder()
-                .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
-                .build();
-
-            createDatabaseInstance(rdsClient, dbInstanceIdentifier, dbName, masterUsername, masterUserPassword) ;
-            waitForInstanceReady(rdsClient, dbInstanceIdentifier) ;
-            rdsClient.close();
+        if (args.length != 3) {
+            System.out.println(usage);
+            System.exit(1);
         }
 
-    // snippet-start:[rds.java2.create_instance.main]
+        String dbInstanceIdentifier = args[0];
+        String dbName = args[1];
+        String secretName = args[2];
+        Gson gson = new Gson();
+        User user = gson.fromJson(String.valueOf(getSecretValues(secretName)), User.class);
+        Region region = Region.US_WEST_2;
+        RdsClient rdsClient = RdsClient.builder()
+                .region(region)
+                .build();
+
+        createDatabaseInstance(rdsClient, dbInstanceIdentifier, dbName, user.getUsername(), user.getPassword());
+        waitForInstanceReady(rdsClient, dbInstanceIdentifier);
+        rdsClient.close();
+    }
+
+    private static SecretsManagerClient getSecretClient() {
+        Region region = Region.US_WEST_2;
+        return SecretsManagerClient.builder()
+                .region(region)
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                .build();
+    }
+
+    private static String getSecretValues(String secretName) {
+        SecretsManagerClient secretClient = getSecretClient();
+        GetSecretValueRequest valueRequest = GetSecretValueRequest.builder()
+                .secretId(secretName)
+                .build();
+
+        GetSecretValueResponse valueResponse = secretClient.getSecretValue(valueRequest);
+        return valueResponse.secretString();
+    }
+
     public static void createDatabaseInstance(RdsClient rdsClient,
-                                                  String dbInstanceIdentifier,
-                                                  String dbName,
-                                                  String masterUsername,
-                                                  String masterUserPassword) {
+            String dbInstanceIdentifier,
+            String dbName,
+            String userName,
+            String userPassword) {
 
         try {
             CreateDbInstanceRequest instanceRequest = CreateDbInstanceRequest.builder()
@@ -77,37 +104,34 @@ public class CreateDBInstance {
                 .allocatedStorage(100)
                 .dbName(dbName)
                 .engine("mysql")
-                .dbInstanceClass("db.m4.large")
-                .engineVersion("8.0.15")
-                .storageType("standard")
-                .masterUsername(masterUsername)
-                .masterUserPassword(masterUserPassword)
+                .dbInstanceClass("db.t3.medium") // Updated to a supported class
+                .engineVersion("8.0.32")         // Updated to a supported version
+                .storageType("gp2")             // Changed to General Purpose SSD (gp2)
+                .masterUsername(userName)
+                .masterUserPassword(userPassword)
                 .build();
 
             CreateDbInstanceResponse response = rdsClient.createDBInstance(instanceRequest);
             System.out.print("The status is " + response.dbInstance().dbInstanceStatus());
 
         } catch (RdsException e) {
-           System.out.println(e.getLocalizedMessage());
-           System.exit(1);
+            System.out.println(e.getLocalizedMessage());
+            System.exit(1);
         }
     }
 
-    // Waits until the database instance is available
+    // Waits until the database instance is available.
     public static void waitForInstanceReady(RdsClient rdsClient, String dbInstanceIdentifier) {
-
-        Boolean instanceReady = false;
-        String instanceReadyStr = "";
+        boolean instanceReady = false;
+        String instanceReadyStr;
         System.out.println("Waiting for instance to become available.");
-
         try {
             DescribeDbInstancesRequest instanceRequest = DescribeDbInstancesRequest.builder()
-                .dbInstanceIdentifier(dbInstanceIdentifier)
-                .build();
+                    .dbInstanceIdentifier(dbInstanceIdentifier)
+                    .build();
 
-            // Loop until the cluster is ready
+            // Loop until the cluster is ready.
             while (!instanceReady) {
-
                 DescribeDbInstancesResponse response = rdsClient.describeDBInstances(instanceRequest);
                 List<DBInstance> instanceList = response.dbInstances();
                 for (DBInstance instance : instanceList) {
@@ -129,4 +153,3 @@ public class CreateDBInstance {
     }
     // snippet-end:[rds.java2.create_instance.main]
 }
-

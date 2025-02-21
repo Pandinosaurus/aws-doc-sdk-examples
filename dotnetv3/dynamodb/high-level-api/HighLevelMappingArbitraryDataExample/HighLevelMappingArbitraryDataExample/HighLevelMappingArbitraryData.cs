@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace HighLevelMappingArbitraryDataExample
 {
@@ -11,18 +11,10 @@ namespace HighLevelMappingArbitraryDataExample
     // snippet-start:[dynamodb.dotnetv3.HighLevelMappingArbitraryDataExample]
 
     /// <summary>
-    /// Shows how to map arbitrary data to an Amazon DynamoDB table. The example
-    /// was created using the AWS SDK for .NET version 3.7 and .NET Core 5.0.
+    /// Shows how to map arbitrary data to an Amazon DynamoDB table.
     /// </summary>
     public class HighLevelMappingArbitraryData
     {
-        static async Task Main()
-        {
-            var client = new AmazonDynamoDBClient();
-            DynamoDBContext context = new DynamoDBContext(client);
-            await AddRetrieveUpdateBook(context);
-        }
-
         /// <summary>
         /// Creates a book, adds it to the DynamoDB ProductCatalog table, retrieves
         /// the new book from the table, updates the dimensions and writes the
@@ -32,7 +24,6 @@ namespace HighLevelMappingArbitraryDataExample
         /// read data from the table.</param>
         public static async Task AddRetrieveUpdateBook(IDynamoDBContext context)
         {
-
             // Create a book.
             DimensionType myBookDimensions = new DimensionType()
             {
@@ -63,6 +54,13 @@ namespace HighLevelMappingArbitraryDataExample
 
             // Write the changed item to the table.
             await context.SaveAsync(bookRetrieved);
+        }
+
+        public static async Task Main()
+        {
+            var client = new AmazonDynamoDBClient();
+            DynamoDBContext context = new DynamoDBContext(client);
+            await AddRetrieveUpdateBook(context);
         }
     }
 

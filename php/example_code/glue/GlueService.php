@@ -1,5 +1,4 @@
 <?php
-
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -122,7 +121,7 @@ class GlueService extends \AwsUtilities\AWSServiceClass
         if ($nextToken) {
             $arguments['NextToken'] = $nextToken;
         }
-        if (!isEmpty($tags)) {
+        if (!empty($tags)) {
             $arguments['Tags'] = $tags;
         }
         return $this->glueClient->listJobs($arguments);

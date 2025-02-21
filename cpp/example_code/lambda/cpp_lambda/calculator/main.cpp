@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 #include <memory>
 #include <cstring>
 #include <aws/lambda-runtime/runtime.h>
@@ -100,8 +102,13 @@ invocation_response my_handler(invocation_request const& request)
     }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc > 1)
+    {
+        aws::logging::log_info (TAG, "Lambda executable %s called with handler %s.", argv[0], argv[1]);
+    }
+
     const char* log_level = std::getenv("LOG_LEVEL");
     if (log_level)
     {

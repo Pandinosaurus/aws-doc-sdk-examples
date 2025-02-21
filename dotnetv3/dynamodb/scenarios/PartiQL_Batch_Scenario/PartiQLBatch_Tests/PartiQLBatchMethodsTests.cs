@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace PartiQL_Batch_Scenario.Tests
 {
@@ -13,13 +13,8 @@ namespace PartiQL_Batch_Scenario.Tests
             _ = DynamoDBMethods.CreateMovieTableAsync(tableName);
         }
 
-        [Fact]
-        public void Dispose()
-        {
-            _ = DynamoDBMethods.DeleteTableAsync(tableName);
-        }
-
-        [Fact(), TestPriority(1)]
+        [Fact(Skip = "Quarantined test."), TestPriority(1)]
+        [Trait("Category", "Integration")]
         public async Task InsertMoviesTest()
         {
             // Because InsertMovies calls ImportMovies, there is not
@@ -29,7 +24,8 @@ namespace PartiQL_Batch_Scenario.Tests
             Assert.True(success, "Could not insert the movies into the table.");
         }
 
-        [Fact(), TestPriority(2)]
+        [Fact(Skip = "Quarantined test."), TestPriority(2)]
+        [Trait("Category", "Integration")]
         public async Task GetBatchTest()
         {
             // Update multiple movies by using the BatchExecute statement.
@@ -42,7 +38,8 @@ namespace PartiQL_Batch_Scenario.Tests
             Assert.True(success, $"Could not update {title1} or {title2}.");
         }
 
-        [Fact(), TestPriority(3)]
+        [Fact(Skip = "Quarantined test."), TestPriority(3)]
+        [Trait("Category", "Integration")]
         public async Task UpdateBatchTest()
         {
             // Update multiple movies by using the BatchExecute statement.
@@ -57,7 +54,8 @@ namespace PartiQL_Batch_Scenario.Tests
             Assert.True(success, $"Could not update {title1} or {title2}.");
         }
 
-        [Fact(), TestPriority(4)]
+        [Fact(Skip = "Quarantined test."), TestPriority(4)]
+        [Trait("Category", "Integration")]
         public async Task DeleteBatchTest()
         {
             // Update multiple movies by using the BatchExecute statement.

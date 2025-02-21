@@ -1,10 +1,9 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace AssociateKmsKeyExample
 {
     // snippet-start:[CloudWatchLogs.dotnetv3.AssociateKmsKeyExample]
-
     using System;
     using System.Threading.Tasks;
     using Amazon.CloudWatchLogs;
@@ -12,8 +11,7 @@ namespace AssociateKmsKeyExample
 
     /// <summary>
     /// Shows how to associate an AWS Key Management Service (AWS KMS) key with
-    /// an Amazon CloudWatch Logs log group. The example was created using the
-    /// AWS SDK for .NET version 3.7 and .NET Core 5.0.
+    /// an Amazon CloudWatch Logs log group.
     /// </summary>
     public class AssociateKmsKey
     {
@@ -45,7 +43,7 @@ namespace AssociateKmsKeyExample
                 Console.WriteLine("Could not make the association between: {kmsKeyId} and {groupName}.");
             }
         }
-
     }
+
     // snippet-end:[CloudWatchLogs.dotnetv3.AssociateKmsKeyExample]
 }

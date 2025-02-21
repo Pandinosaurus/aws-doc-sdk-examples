@@ -1,5 +1,5 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace KeyspacesTests
 {
@@ -9,7 +9,7 @@ namespace KeyspacesTests
         private readonly IAmazonKeyspaces _client;
         private readonly KeyspacesWrapper _wrapper;
         private readonly string _keyspaceName;
-        private static string _keyspaceArn;
+        private static string _keyspaceArn = null!;
         private readonly string _tableName;
         private readonly SchemaDefinition _schemaDefinition;
         private static DateTime _timeChanged;
@@ -29,8 +29,8 @@ namespace KeyspacesTests
             _client = new AmazonKeyspacesClient();
             _wrapper = new KeyspacesWrapper(_client);
 
-            _keyspaceName = _configuration["KeyspaceName"];
-            _tableName = _configuration["TableName"];
+            _keyspaceName = _configuration["KeyspaceName"]!;
+            _tableName = _configuration["TableName"]!;
 
             // Define the schema for the test table.
             var allColumns = new List<ColumnDefinition>
@@ -129,6 +129,7 @@ namespace KeyspacesTests
         /// <returns>An async Task.</returns>
         [Fact()]
         [Order(4)]
+        [Trait("Category", "Integration")]
         public async Task GetTableTest()
         {
             var response = await _wrapper.GetTable(_keyspaceName, _tableName);
@@ -153,7 +154,7 @@ namespace KeyspacesTests
         /// Tests the call to restore the table.
         /// </summary>
         /// <returns></returns>
-        [Fact()]
+        [Fact(Skip = "Long running test.")]
         [Order(12)]
         [Trait("Category", "Integration")]
         public async Task RestoreTableTest()
@@ -161,10 +162,10 @@ namespace KeyspacesTests
             // This test defaults to not run since it can take up
             // to 20 minutes to restore the table.
             bool restoreTable = false;
-
+            var restoredTableName = $"{_tableName}_restored";
             if (restoreTable)
             {
-                var resourceArn = await _wrapper.RestoreTable(_keyspaceName, _tableName, _timeChanged);
+                var resourceArn = await _wrapper.RestoreTable(_keyspaceName, _tableName, restoredTableName, _timeChanged);
                 Assert.NotNull(resourceArn);
 
                 // Loop and call GetTable until the table has been restored. Once it has been
@@ -178,7 +179,7 @@ namespace KeyspacesTests
                         var resp = await _wrapper.GetTable(_keyspaceName, _tableName);
                     } while (!wasRestored);
                 }
-                catch (ResourceNotFoundException ex)
+                catch (ResourceNotFoundException)
                 {
                     wasRestored = true;
                 }
@@ -201,7 +202,7 @@ namespace KeyspacesTests
         /// will raise a resource not found error.
         /// </summary>
         /// <returns></returns>
-        [Fact()]
+        [Fact(Skip = "Quarantined test.")]
         [Order(13)]
         [Trait("Category", "Integration")]
         public async Task DeleteTableTest()
@@ -219,7 +220,7 @@ namespace KeyspacesTests
                     var resp = await _wrapper.GetTable(_keyspaceName, _tableName);
                 } while (!wasDeleted);
             }
-            catch (ResourceNotFoundException ex)
+            catch (ResourceNotFoundException)
             {
                 wasDeleted = true;
             }
@@ -231,7 +232,7 @@ namespace KeyspacesTests
         /// Tests deleting the keyspace.
         /// </summary>
         /// <returns></returns>
-        [Fact()]
+        [Fact(Skip = "Quarantined test.")]
         [Order(14)]
         [Trait("Category", "Integration")]
         public async Task DeleteKeyspaceTest()

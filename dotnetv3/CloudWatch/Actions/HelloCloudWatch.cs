@@ -1,11 +1,11 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 // snippet-start:[CloudWatch.dotnetv3.HelloCloudWatch]
-using Microsoft.Extensions.Hosting;
 using Amazon.CloudWatch;
 using Amazon.CloudWatch.Model;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace CloudWatchActions;
 
@@ -13,7 +13,7 @@ public static class HelloCloudWatch
 {
     static async Task Main(string[] args)
     {
-        // Use the AWS .NET Core Setup package to set up dependency injection for the Amazon CloudWatch domain registration service.
+        // Use the AWS .NET Core Setup package to set up dependency injection for the Amazon CloudWatch service.
         // Use your AWS profile name, or leave it blank to use the default profile.
         using var host = Host.CreateDefaultBuilder(args)
             .ConfigureServices((_, services) =>

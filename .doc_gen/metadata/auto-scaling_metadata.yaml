@@ -1,9 +1,73 @@
 # zexi 0.4.0
+auto-scaling_Hello:
+  title: Hello &AS;
+  title_abbrev: Hello &AS;
+  synopsis: get started using &AS;.
+  category: Hello
+  languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/autoscale
+          excerpts:
+            - description:
+              snippet_tags:
+                - autoscale.java2.hello.main
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/AutoScaling
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - AutoScaling.dotnetv3.AutoScalingActions.HelloAutoScaling
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.basics.helloService
+    Python:
+      versions:
+        - sdk_version: 3
+          github: python/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - python.example_code.auto-scaling.Hello
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - auto-scaling.ruby.hello
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - autoscaling.rust.list-autoscaling-groups
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/autoscaling/hello_autoscaling
+          excerpts:
+            - description: Code for the CMakeLists.txt CMake file.
+              snippet_tags:
+                - cpp.example_code.autoscaling.hello_autoscaling.cmake
+            - description: Code for the hello_autoscaling.cpp source file.
+              snippet_tags:
+                - cpp.example_code.autoscaling.hello_autoscaling
+  services:
+    auto-scaling: {DescribeAutoScalingGroups}
 auto-scaling_CreateAutoScalingGroup:
-  title: Create an &AS; group using an &AWS; SDK
-  title_abbrev: Create a group
-  synopsis: create an &AS; group.
-  category:
   languages:
     .NET:
       versions:
@@ -12,7 +76,15 @@ auto-scaling_CreateAutoScalingGroup:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.CreateAutoScalingGroup
+                - AutoScaling.dotnetv3.AutoScalingActions.CreateAutoScalingGroup
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.createAutoScalingGroup
     Kotlin:
       versions:
         - sdk_version: 1
@@ -41,7 +113,7 @@ auto-scaling_CreateAutoScalingGroup:
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/autoscaling
+          github: rustv1/examples/auto-scaling
           excerpts:
             - description:
               snippet_tags:
@@ -60,19 +132,19 @@ auto-scaling_CreateAutoScalingGroup:
   services:
     auto-scaling: {CreateAutoScalingGroup}
 auto-scaling_DeleteAutoScalingGroup:
-  title: Delete an &AS; group using an &AWS; SDK
-  title_abbrev: Delete a group
-  synopsis: delete an &AS; group.
-  category:
   languages:
     .NET:
       versions:
         - sdk_version: 3
-          github: dotnetv3/AutoScaling
+          github: dotnetv3/cross-service/ResilientService/AutoScalerActions
           excerpts:
+            - description: Update the minimum size of an Auto Scaling group to zero, terminate all instances in the group,
+                and delete the group.
+              snippet_tags:
+                - ResilientService.dotnetv3.AutoScaling.DeleteAutoScalingGroup
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.DeleteAutoScalingGroup
+                - AutoScaling.dotnetv3.AutoScalingActions.DeleteAutoScalingGroup
     Kotlin:
       versions:
         - sdk_version: 1
@@ -89,19 +161,28 @@ auto-scaling_DeleteAutoScalingGroup:
             - description:
               snippet_tags:
                 - autoscale.java2.del_scaling_group.main
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.deleteAutoScalingGroup
     Python:
       versions:
         - sdk_version: 3
           github: python/example_code/auto-scaling
           excerpts:
-            - description:
+            - description: Update the minimum size of an Auto Scaling group to zero, terminate all instances in the group,
+                and delete the group.
               snippet_tags:
-                - python.example_code.auto-scaling.AutoScalingWrapper.decl
-                - python.example_code.auto-scaling.DeleteAutoScalingGroup
+                - python.cross_service.resilient_service.AutoScaler.decl
+                - python.cross_service.resilient_service.auto-scaling.DeleteAutoScalingGroup
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/autoscaling
+          github: rustv1/examples/auto-scaling
           excerpts:
             - description:
               snippet_tags:
@@ -119,10 +200,6 @@ auto-scaling_DeleteAutoScalingGroup:
   services:
     auto-scaling: {DeleteAutoScalingGroup}
 auto-scaling_DescribeAutoScalingGroups:
-  title: Get information about &AS; groups using an &AWS; SDK
-  title_abbrev: Get information about groups
-  synopsis: get information about &AS; groups.
-  category:
   languages:
     .NET:
       versions:
@@ -131,7 +208,7 @@ auto-scaling_DescribeAutoScalingGroups:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.DescribeAutoScalingInstances
+                - AutoScaling.dotnetv3.AutoScalingActions.DescribeAutoScalingInstances
     Kotlin:
       versions:
         - sdk_version: 1
@@ -148,6 +225,14 @@ auto-scaling_DescribeAutoScalingGroups:
             - description:
               snippet_tags:
                 - autoscale.java2.describe_instances.main
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.describeAutoScalingGroups
     Python:
       versions:
         - sdk_version: 3
@@ -160,7 +245,7 @@ auto-scaling_DescribeAutoScalingGroups:
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/autoscaling
+          github: rustv1/examples/auto-scaling
           excerpts:
             - description:
               snippet_tags:
@@ -178,10 +263,6 @@ auto-scaling_DescribeAutoScalingGroups:
   services:
     auto-scaling: {DescribeAutoScalingGroups}
 auto-scaling_UpdateAutoScalingGroup:
-  title: Update an &AS; group using an &AWS; SDK
-  title_abbrev: Update a group
-  synopsis: update the configuration for an &AS; group.
-  category:
   languages:
     Kotlin:
       versions:
@@ -206,7 +287,15 @@ auto-scaling_UpdateAutoScalingGroup:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.UpdateAutoScalingGroup
+                - AutoScaling.dotnetv3.AutoScalingActions.UpdateAutoScalingGroup
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.updateAutoScalingGroup
     Python:
       versions:
         - sdk_version: 3
@@ -219,7 +308,7 @@ auto-scaling_UpdateAutoScalingGroup:
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/autoscaling
+          github: rustv1/examples/auto-scaling
           excerpts:
             - description:
               snippet_tags:
@@ -238,10 +327,6 @@ auto-scaling_UpdateAutoScalingGroup:
   services:
     auto-scaling: {UpdateAutoScalingGroup}
 auto-scaling_TerminateInstanceInAutoScalingGroup:
-  title: Terminate an instance in an &AS; group using an &AWS; SDK
-  title_abbrev: Terminate an instance in a group
-  synopsis: terminate an instance in an &AS; group.
-  category:
   languages:
     Kotlin:
       versions:
@@ -267,7 +352,15 @@ auto-scaling_TerminateInstanceInAutoScalingGroup:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.TerminateInstanceInAutoScalingGroup
+                - AutoScaling.dotnetv3.AutoScalingActions.TerminateInstanceInAutoScalingGroup
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.terminateInstanceInAutoScalingGroup
     Python:
       versions:
         - sdk_version: 3
@@ -289,13 +382,18 @@ auto-scaling_TerminateInstanceInAutoScalingGroup:
                 - cpp.example_code.autoscaling.autoscaling_client
                 - cpp.example_code.autoscaling.terminate_instance_autoscaling_group1
                 - cpp.example_code.autoscaling.terminate_instance_autoscaling_group2
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - rust.auto-scaling.scenario.terminate_some_instance
+                - rust.auto-scaling.scenario.get_group
   services:
     auto-scaling: {TerminateInstanceInAutoScalingGroup}
 auto-scaling_SetDesiredCapacity:
-  title: Set the desired capacity of an &AS; group using an &AWS; SDK
-  title_abbrev: Set the desired capacity of a group
-  synopsis: set the desired capacity of an &AS; group.
-  category:
   languages:
     Kotlin:
       versions:
@@ -321,7 +419,15 @@ auto-scaling_SetDesiredCapacity:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.SetDesiredCapacity
+                - AutoScaling.dotnetv3.AutoScalingActions.SetDesiredCapacity
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.setDesiredCapacity
     Python:
       versions:
         - sdk_version: 3
@@ -343,13 +449,17 @@ auto-scaling_SetDesiredCapacity:
                 - cpp.example_code.autoscaling.autoscaling_client
                 - cpp.example_code.autoscaling.set_desired_capacity1
                 - cpp.example_code.autoscaling.set_desired_capacity2
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - rust.auto-scaling.scenario.scale_desired_capacity
   services:
     auto-scaling: {SetDesiredCapacity}
 auto-scaling_DescribeAutoScalingInstances:
-  title: Get information about &AS; instances using an &AWS; SDK
-  title_abbrev: Get information about instances
-  synopsis: get information about &AS; instances.
-  category:
   languages:
     Kotlin:
       versions:
@@ -375,7 +485,15 @@ auto-scaling_DescribeAutoScalingInstances:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.DescribeAutoScalingInstances
+                - AutoScaling.dotnetv3.AutoScalingActions.DescribeAutoScalingInstances
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.describeAutoScalingInstances
     Python:
       versions:
         - sdk_version: 3
@@ -397,13 +515,17 @@ auto-scaling_DescribeAutoScalingInstances:
                 - cpp.example_code.autoscaling.autoscaling_client
                 - cpp.example_code.autoscaling.describe_autoscaling_instances1
                 - cpp.example_code.autoscaling.describe_autoscaling_instances2
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - rust.auto-scaling.scenario.list_instances
   services:
     auto-scaling: {DescribeAutoScalingInstances}
 auto-scaling_DescribeScalingActivities:
-  title: Get information about &AS; activities using an &AWS; SDK
-  title_abbrev: Get information about scaling activities
-  synopsis: get information about &AS; activities.
-  category:
   languages:
     Kotlin:
       versions:
@@ -429,7 +551,15 @@ auto-scaling_DescribeScalingActivities:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.DescribeScalingActivities
+                - AutoScaling.dotnetv3.AutoScalingActions.DescribeScalingActivities
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.describeScalingActivities
     Python:
       versions:
         - sdk_version: 3
@@ -451,13 +581,17 @@ auto-scaling_DescribeScalingActivities:
                 - cpp.example_code.autoscaling.autoscaling_client
                 - cpp.example_code.autoscaling.describe_scaling_activities1
                 - cpp.example_code.autoscaling.describe_scaling_activities2
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - rust.auto-scaling.scenario.describe_scenario
   services:
     auto-scaling: {DescribeScalingActivities}
 auto-scaling_EnableMetricsCollection:
-  title: Enable &CW; metrics collection for an &AS; group using an &AWS; SDK
-  title_abbrev: Enable metrics collection for a group
-  synopsis: enable &CW; metrics collection for an &AS; group.
-  category:
   languages:
     Kotlin:
       versions:
@@ -465,7 +599,7 @@ auto-scaling_EnableMetricsCollection:
           github: kotlin/services/autoscale
           excerpts:
             - description:
-              snippet_tags: 
+              snippet_tags:
                 - autoscale.kotlin.enable_collection.main
     Java:
       versions:
@@ -483,7 +617,15 @@ auto-scaling_EnableMetricsCollection:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.EnableMetricsCollection
+                - AutoScaling.dotnetv3.AutoScalingActions.EnableMetricsCollection
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.enableMetricsCollection
     Python:
       versions:
         - sdk_version: 3
@@ -505,13 +647,17 @@ auto-scaling_EnableMetricsCollection:
                 - cpp.example_code.autoscaling.autoscaling_client
                 - cpp.example_code.autoscaling.enable_metrics_collection1
                 - cpp.example_code.autoscaling.enable_metrics_collection2
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - rust.auto-scaling.scenario.enable_metrics_collection
   services:
     auto-scaling: {EnableMetricsCollection}
 auto-scaling_DisableMetricsCollection:
-  title: Disable &CW; metrics collection for an &AS; group using an &AWS; SDK
-  title_abbrev: Disable metrics collection for a group
-  synopsis: disable &CW; metrics collection for an &AS; group.
-  category:
   languages:
     Kotlin:
       versions:
@@ -519,7 +665,7 @@ auto-scaling_DisableMetricsCollection:
           github: kotlin/services/autoscale
           excerpts:
             - description:
-              snippet_tags: 
+              snippet_tags:
                 - autoscale.kotlin.disable_collection.main
     Java:
       versions:
@@ -537,7 +683,15 @@ auto-scaling_DisableMetricsCollection:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.DisableMetricsCollection
+                - AutoScaling.dotnetv3.AutoScalingActions.DisableMetricsCollection
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.service.disableMetricsCollection
     Python:
       versions:
         - sdk_version: 3
@@ -559,23 +713,57 @@ auto-scaling_DisableMetricsCollection:
                 - cpp.example_code.autoscaling.autoscaling_client
                 - cpp.example_code.autoscaling.disable_metrics_collection1
                 - cpp.example_code.autoscaling.disable_metrics_collection2
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - rust.auto-scaling.scenario.disable_metrics_collection
   services:
     auto-scaling: {DisableMetricsCollection}
+auto-scaling_AttachLoadBalancerTargetGroups:
+  languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/cross-service/ResilientService/AutoScalerActions
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ResilientService.dotnetv3.AutoScaling.AttachLoadBalancer
+    Python:
+      versions:
+        - sdk_version: 3
+          github: python/example_code/auto-scaling
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - python.cross_service.resilient_service.AutoScaler.decl
+                - python.cross_service.resilient_service.auto-scaling.AttachLoadBalancerTargetGroups
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/cross-services/wkflw-resilient-service
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - javascript.v3.wkflw.resilient.AttachTargetGroup
+  services:
+    auto-scaling: {AttachLoadBalancerTargetGroups}
 auto-scaling_Scenario_GroupsAndInstances:
-  title: Manage &AS; groups and instances using an &AWS; SDK
-  title_abbrev: Manage groups and instances
   synopsis_list:
-    - Create an &ASlong; group and configure it with a launch template and Availability
-      Zones.
-    - Get information about the group and running instances.
-    - Enable &CWlong; metrics collection on the group.
-    - Update the desired capacity of the group and wait for an instance to start.
+    - Create an &ASlong; group with a launch template and Availability Zones, and get information about running instances.
+    - Enable &CWlong; metrics collection.
+    - Update the group's desired capacity and wait for an instance to start.
     - Terminate an instance in the group.
-    - List scaling activities that occur in response to user requests and capacity
-      changes.
-    - Get statistics for &CW; metrics that are collected during the example.
-    - Stop collecting metrics, terminate all instances, and delete the group.
-  category: Scenarios
+    - List scaling activities that occur in response to user requests and capacity changes.
+    - Get statistics for &CW; metrics, then clean up resources.
+  category: Basics
   languages:
     .NET:
       versions:
@@ -585,14 +773,15 @@ auto-scaling_Scenario_GroupsAndInstances:
           excerpts:
             - description:
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.global-usings
-                - AutoScale.dotnetv3.AutoScale_Basics.main
-            - description: Define functions that are called by the scenario to
-                manage launch templates and metrics. These functions wrap
-                &EC2; and &CW; actions.
+                - AutoScaling.dotnetv3.AutoScalingBasics.Usings
+                - AutoScaling.dotnetv3.AutoScalingBasics
+                - AutoScaling.dotnetv3.AutoScalingBasics.UIWrapper
+            - description: Define functions that are called by the scenario to manage launch templates and metrics. These
+                functions wrap &AS;, &EC2;, and &CW; actions.
               snippet_tags:
-                - AutoScale.dotnetv3.AutoScale_Basics.EC2Methods
-                - AutoScale.dotnetv3.AutoScale_Basics.CloudWatchMethods
+                - AutoScaling.dotnetv3.AutoScalingActions.AutoScalingWrapper
+                - AutoScaling.dotnetv3.AutoScalingActions.EC2Wrapper
+                - AutoScaling.dotnetv3.AutoScalingActions.CloudWatchWrapper
     Kotlin:
       versions:
         - sdk_version: 1
@@ -601,7 +790,7 @@ auto-scaling_Scenario_GroupsAndInstances:
           excerpts:
             - description:
               snippet_tags:
-                - autoscale.kotlin.create_scaling_scenario.main 
+                - autoscale.kotlin.create_scaling_scenario.main
     Java:
       versions:
         - sdk_version: 2
@@ -610,7 +799,15 @@ auto-scaling_Scenario_GroupsAndInstances:
           excerpts:
             - description:
               snippet_tags:
-                - autoscale.java2.create_scaling_scenario.main  
+                - autoscale.java2.create_scaling_scenario.main
+    PHP:
+      versions:
+        - sdk_version: 3
+          github: php/example_code/auto-scaling
+          excerpts:
+            - description:
+              snippet_tags:
+                - php.example_code.auto-scaling.basics.scenario
     Python:
       versions:
         - sdk_version: 3
@@ -620,9 +817,8 @@ auto-scaling_Scenario_GroupsAndInstances:
             - description: Run an interactive scenario at a command prompt.
               snippet_tags:
                 - python.example_code.auto-scaling.Scenario_GroupsAndInstances
-            - description: Define functions that are called by the scenario to
-                manage launch templates and metrics. These functions wrap
-                &EC2; and &CW; actions.
+            - description: Define functions that are called by the scenario to manage launch templates and metrics. These
+                functions wrap &EC2; and &CW; actions.
               snippet_tags:
                 - python.example_code.auto-scaling.helper.ServiceHelper
     C++:
@@ -633,8 +829,17 @@ auto-scaling_Scenario_GroupsAndInstances:
             - description:
               snippet_tags:
                 - cpp.example_code.autoscaling.groups_and_instances_scenario
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/auto-scaling
+          excerpts:
+            - description:
+              snippet_files:
+                - rustv1/examples/auto-scaling/Cargo.toml
+                - rustv1/examples/auto-scaling/src/bin/scenario.rs
+                - rustv1/examples/auto-scaling/src/lib.rs
+                - rustv1/examples/auto-scaling/src/scenario.rs
   services:
-    auto-scaling: {CreateAutoScalingGroup, DeleteAutoScalingGroup, DisableMetricsCollection,
-                   EnableMetricsCollection, DescribeAutoScalingGroups, DescribeAutoScalingInstances,
-                   DescribeScalingActivities, SetDesiredCapacity, TerminateInstanceInAutoScalingGroup,
-                   UpdateAutoScalingGroup}
+    auto-scaling: {CreateAutoScalingGroup, DeleteAutoScalingGroup, DisableMetricsCollection, EnableMetricsCollection, DescribeAutoScalingGroups,
+                   DescribeAutoScalingInstances, DescribeScalingActivities, SetDesiredCapacity, TerminateInstanceInAutoScalingGroup, UpdateAutoScalingGroup}

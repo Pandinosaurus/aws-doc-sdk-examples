@@ -1,15 +1,12 @@
-/*
- * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 import { DescribeSubscriptionFiltersCommand } from "@aws-sdk/client-cloudwatch-logs";
 import { LambdaClient, waitUntilFunctionUpdated } from "@aws-sdk/client-lambda";
 import { describe, it, beforeAll, afterAll, expect } from "vitest";
 
-import { retry } from "libs/utils/util-timers.js";
-import { setEnv } from "libs/utils/util-node.js";
+import { retry } from "@aws-doc-sdk-examples/lib/utils/util-timers.js";
+import { setEnv } from "@aws-doc-sdk-examples/lib/utils/util-node.js";
 
 import {
   addPermissionLogsInvokeFunction,
@@ -22,19 +19,18 @@ import {
   deleteRole,
   detachRolePolicy,
 } from "../libs/iam-helper.js";
-import { DEFAULT_REGION, LAMBDA_EXECUTION_POLICY } from "../libs/constants.js";
+import { LAMBDA_EXECUTION_POLICY } from "../libs/constants.js";
 import { client } from "../libs/client.js";
 
 const testTimeout = 60000;
-
-const retryEvery2s = retry({ intervalInMs: 2000, maxRetries: 20 });
 
 const initializeLambdaFunction = async ({ funcName, roleName }) => {
   const roleArn = await createLambdaRole(roleName);
   await attachRolePolicy(roleName, LAMBDA_EXECUTION_POLICY);
 
-  const { FunctionArn } = await retryEvery2s(() =>
-    createFunction(funcName, roleArn)
+  const { FunctionArn } = await retry(
+    { intervalInMs: 2000, maxRetries: 20 },
+    () => createFunction(funcName, roleArn),
   );
   setEnv("CLOUDWATCH_LOGS_DESTINATION_ARN", FunctionArn);
   return { functionArn: FunctionArn };
@@ -61,9 +57,9 @@ const testCreateFilter = async (name, pattern) => {
   const descSubFiltersMod = await import(
     "../actions/describe-subscription-filters.js"
   );
-  const { subscriptionFilters } = await descSubFiltersMod.default;
+  const result = await descSubFiltersMod.default;
 
-  expect(subscriptionFilters[0].filterName).toBe(name);
+  expect(result?.subscriptionFilters[0].filterName).toBe(name);
 };
 
 const testDeleteFilter = async () => {
@@ -73,10 +69,10 @@ const testDeleteFilter = async () => {
 
   await deleteSubFilterMod.default;
 
-  await retryEvery2s(async () => {
+  await retry({ intervalInMs: 2000, maxRetries: 20 }, async () => {
     const command = new DescribeSubscriptionFiltersCommand({
-    logGroupName: process.env.CLOUDWATCH_LOGS_LOG_GROUP,
-    limit: 1,
+      logGroupName: process.env.CLOUDWATCH_LOGS_LOG_GROUP,
+      limit: 1,
     });
 
     const { subscriptionFilters } = await client.send(command);
@@ -103,8 +99,8 @@ describe("put-subscription-filter", () => {
 
       await addPermissionLogsInvokeFunction(lambdaFuncName, logGroupName);
       await waitUntilFunctionUpdated(
-        { client: new LambdaClient({ region: DEFAULT_REGION }) },
-        { FunctionName: lambdaFuncName }
+        { client: new LambdaClient({}) },
+        { FunctionName: lambdaFuncName },
       );
     } catch (err) {
       console.error(err);
@@ -112,11 +108,11 @@ describe("put-subscription-filter", () => {
   }, testTimeout);
 
   afterAll(async () => {
-    await deleteFunction(lambdaFuncName);
-    await detachRolePolicy(lambdaRoleName, LAMBDA_EXECUTION_POLICY);
-    await deleteRole(lambdaRoleName);
-    await deleteLogGroup(logGroupName);
     try {
+      await deleteFunction(lambdaFuncName);
+      await detachRolePolicy(lambdaRoleName, LAMBDA_EXECUTION_POLICY);
+      await deleteRole(lambdaRoleName);
+      await deleteLogGroup();
     } catch (err) {
       console.error(err);
     }
@@ -128,6 +124,6 @@ describe("put-subscription-filter", () => {
       await testCreateFilter(subscriptionFilterName, subscriptionFilterPattern);
       await testDeleteFilter();
     },
-    testTimeout
+    testTimeout,
   );
 });

@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace S3_BasicsScenario.Tests
 {
@@ -8,7 +8,6 @@ namespace S3_BasicsScenario.Tests
         private string newBucket = "";
         private string keyName = "sample.txt";
         private string destinationFolderName = "saved_pictures";
-        private string sourceFolderPath = "~/pictures";
 
         public IAmazonS3 CreateMockS3Client()
         {
@@ -154,6 +153,7 @@ namespace S3_BasicsScenario.Tests
         }
 
         [Fact()]
+        [Trait("Category", "Unit")]
         public async Task CreateBucketAsyncTest()
         {
             IAmazonS3 client = CreateMockS3Client();
@@ -171,6 +171,7 @@ namespace S3_BasicsScenario.Tests
         }
 
         [Fact()]
+        [Trait("Category", "Unit")]
         public async Task UploadFileAsyncTest()
         {
             IAmazonS3 client = CreateMockS3Client();
@@ -189,6 +190,7 @@ namespace S3_BasicsScenario.Tests
         }
 
         [Fact()]
+        [Trait("Category", "Unit")]
         public async Task DownloadObjectFromBucketAsyncTest()
         {
             IAmazonS3 client = CreateMockS3Client();
@@ -205,6 +207,7 @@ namespace S3_BasicsScenario.Tests
         }
 
         [Fact()]
+        [Trait("Category", "Unit")]
         public async Task CopyObjectInBucketAsyncTest()
         {
             IAmazonS3 client = CreateMockS3Client();
@@ -223,6 +226,7 @@ namespace S3_BasicsScenario.Tests
         }
 
         [Fact()]
+        [Trait("Category", "Unit")]
         public async Task ListBucketContentsAsyncTest()
         {
             IAmazonS3 client = CreateMockS3Client();
@@ -239,6 +243,7 @@ namespace S3_BasicsScenario.Tests
         }
 
         [Fact()]
+        [Trait("Category", "Unit")]
         public async Task DeleteBucketContentsAsyncTest()
         {
             IAmazonS3 client = CreateMockS3Client();
@@ -260,6 +265,7 @@ namespace S3_BasicsScenario.Tests
         }
 
         [Fact()]
+        [Trait("Category", "Unit")]
         public async Task DeleteBucketAsyncTest()
         {
             IAmazonS3 client = CreateMockS3Client();

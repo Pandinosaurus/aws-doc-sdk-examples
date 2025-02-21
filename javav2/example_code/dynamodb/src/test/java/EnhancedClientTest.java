@@ -1,6 +1,9 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.example.dynamodb.*;
+import com.example.dynamodb.enhanced.*;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -81,20 +84,18 @@ public class EnhancedClientTest {
 
     @Test
     @Order(4)
-    public void PutBatchItems() {
+    public void PutBatchItems() throws IOException {
 
         // create and seed the Music table to demonstrate that batching calls
         // works with multiple tables
         DynamoDBTest.setUp(); // load properties for Music table
         DynamoDBTest ddbTest = new DynamoDBTest();
-        ddbTest.CreateTable();  // create Music table
-        ddbTest.PutItem();  // add one item to Music table
-
+        ddbTest.createTable();  // create Music table
+        ddbTest.putItem();  // add one item to Music table
 
        EnhancedBatchWriteItems.putBatchRecords(enhancedClient);
        System.out.println("\n Test 4 passed");
-
-       ddbTest.DeleteTable();
+       ddbTest.deleteTable();
     }
 
     @Test
@@ -109,7 +110,6 @@ public class EnhancedClientTest {
     @Test
     @Order(6)
     public void GetItem() {
-
       String result = EnhancedGetItem.getItem(enhancedClient);
       assertTrue(!result.isEmpty());
       System.out.println("\n Test 6 passed");

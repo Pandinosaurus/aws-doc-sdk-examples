@@ -1,7 +1,5 @@
-/*
- * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -17,7 +15,7 @@ vi.doMock("@aws-sdk/client-sts", async () => {
   };
 });
 
-import { main } from "../actions/assume-role.js";
+const { main } = await import("../actions/assume-role.js");
 
 console.log = vi.fn();
 console.error = vi.fn();

@@ -1,13 +1,13 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 
-// SPDX-License-Identifier:  Apache-2.0
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Amazon;
 using Amazon.CertificateManager;
 using Amazon.CertificateManager.Model;
 using Moq;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DescribeCertificateTest
@@ -22,21 +22,19 @@ namespace DescribeCertificateTest
                 It.IsAny<CancellationToken>()
             )).Callback<DescribeCertificateRequest, CancellationToken>((request, token) =>
             {
-                if (request is not null)
-                {
-                }
             }).Returns((DescribeCertificateRequest r, CancellationToken token) =>
             {
                 return Task.FromResult(new DescribeCertificateResponse()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK
-                }); ;
+                });
             });
 
             return mockCertificateManagerClient.Object;
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public async Task ListCertificatesAsyncTest()
         {
             var client = CreateMockACMClient();

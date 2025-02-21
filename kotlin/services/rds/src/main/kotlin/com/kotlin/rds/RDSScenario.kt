@@ -1,11 +1,5 @@
-// snippet-sourcedescription:[RDSScenario.kt demonstrates how to perform multiple operations by using an Amazon Relational Database Service (RDS) service client.]
-// snippet-keyword:[AWS SDK for Kotlin]
-// snippet-service:[Amazon Relational Database Service]
-
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 package com.kotlin.rds
 
@@ -26,52 +20,61 @@ import aws.sdk.kotlin.services.rds.model.DescribeDbSnapshotsRequest
 import aws.sdk.kotlin.services.rds.model.DescribeOrderableDbInstanceOptionsRequest
 import aws.sdk.kotlin.services.rds.model.ModifyDbParameterGroupRequest
 import aws.sdk.kotlin.services.rds.model.Parameter
+import aws.sdk.kotlin.services.secretsmanager.SecretsManagerClient
+import aws.sdk.kotlin.services.secretsmanager.model.GetSecretValueRequest
+import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlin.system.exitProcess
 
 // snippet-start:[rds.kotlin.scenario.main]
+
 /**
- Before running this Java V2 code example, set up your development environment, including your credentials.
+Before running this code example, set up your development environment, including your credentials.
 
- For more information, see the following documentation topic:
+For more information, see the following documentation topic:
 
- https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/get-started.html
+https://docs.aws.amazon.com/sdk-for-kotlin/latest/developer-guide/setup.html
 
- This example performs the following tasks:
+This example requires an AWS Secrets Manager secret that contains the database credentials. If you do not create a
+secret, this example will not work. For more details, see:
 
- 1. Returns a list of the available DB engines by invoking the DescribeDbEngineVersions method.
- 2. Selects an engine family and create a custom DB parameter group by invoking the createDBParameterGroup method.
- 3. Gets the parameter groups by invoking the DescribeDbParameterGroups method.
- 4. Gets parameters in the group by invoking the DescribeDbParameters method.
- 5. Modifies both the auto_increment_offset and auto_increment_increment parameters by invoking the modifyDbParameterGroup method.
- 6. Gets and displays the updated parameters.
- 7. Gets a list of allowed engine versions by invoking the describeDbEngineVersions method.
- 8. Gets a list of micro instance classes available for the selected engine.
- 9. Creates an RDS database instance that contains a MySql database and uses the parameter group
- 10. Waits for DB instance to be ready and print out the connection endpoint value.
- 11. Creates a snapshot of the DB instance.
- 12. Waits for DB snapshot to be ready.
- 13. Deletes the DB instance. rds.DeleteDbInstance.
- 14. Deletes the parameter group.
+https://docs.aws.amazon.com/secretsmanager/latest/userguide/integrating_how-services-use-secrets_RS.html
+
+This example performs the following tasks:
+
+1. Returns a list of the available DB engines by invoking the DescribeDbEngineVersions method.
+2. Selects an engine family and create a custom DB parameter group by invoking the createDBParameterGroup method.
+3. Gets the parameter groups by invoking the DescribeDbParameterGroups method.
+4. Gets parameters in the group by invoking the DescribeDbParameters method.
+5. Modifies both the auto_increment_offset and auto_increment_increment parameters by invoking the modifyDbParameterGroup method.
+6. Gets and displays the updated parameters.
+7. Gets a list of allowed engine versions by invoking the describeDbEngineVersions method.
+8. Gets a list of micro instance classes available for the selected engine.
+9. Creates an Amazon Relational Database Service (Amazon RDS) database instance that contains a MySQL database and uses the parameter group.
+10. Waits for DB instance to be ready and prints out the connection endpoint value.
+11. Creates a snapshot of the DB instance.
+12. Waits for the DB snapshot to be ready.
+13. Deletes the DB instance.
+14. Deletes the parameter group.
  */
 
 var sleepTime: Long = 20
+
 suspend fun main(args: Array<String>) {
     val usage = """
         Usage:
-            <dbGroupName> <dbParameterGroupFamily> <dbInstanceIdentifier> <dbName> <masterUsername> <masterUserPassword> <dbSnapshotIdentifier>
+            <dbGroupName> <dbParameterGroupFamily> <dbInstanceIdentifier> <dbName> <dbSnapshotIdentifier><secretName>
 
         Where:
             dbGroupName - The database group name. 
             dbParameterGroupFamily - The database parameter group name.
             dbInstanceIdentifier - The database instance identifier. 
             dbName -  The database name. 
-            username - The user name. 
-            userPassword - The password that corresponds to the user name. 
             dbSnapshotIdentifier - The snapshot identifier. 
+            secretName - The name of the AWS Secrets Manager secret that contains the database credentials.
     """
 
-    if (args.size != 7) {
+    if (args.size != 6) {
         println(usage)
         exitProcess(1)
     }
@@ -80,9 +83,13 @@ suspend fun main(args: Array<String>) {
     val dbParameterGroupFamily = args[1]
     val dbInstanceIdentifier = args[2]
     val dbName = args[3]
-    val username = args[4]
-    val userPassword = args[5]
-    val dbSnapshotIdentifier = args[6]
+    val dbSnapshotIdentifier = args[4]
+    val secretName = args[5]
+
+    val gson = Gson()
+    val user = gson.fromJson(getSecretValues(secretName).toString(), User::class.java)
+    val username = user.username
+    val userPassword = user.password
 
     println("1. Return a list of the available DB engines")
     describeDBEngines()
@@ -133,7 +140,10 @@ suspend fun main(args: Array<String>) {
 }
 
 // snippet-start:[rds.kotlin.scenario.del_paragroup.main]
-suspend fun deleteParaGroup(dbGroupName: String, dbARN: String) {
+suspend fun deleteParaGroup(
+    dbGroupName: String,
+    dbARN: String,
+) {
     var isDataDel = false
     var didFind: Boolean
     var instanceARN: String
@@ -164,9 +174,10 @@ suspend fun deleteParaGroup(dbGroupName: String, dbARN: String) {
         }
 
         // Delete the para group.
-        val parameterGroupRequest = DeleteDbParameterGroupRequest {
-            dbParameterGroupName = dbGroupName
-        }
+        val parameterGroupRequest =
+            DeleteDbParameterGroupRequest {
+                dbParameterGroupName = dbGroupName
+            }
         rdsClient.deleteDbParameterGroup(parameterGroupRequest)
         println("$dbGroupName was deleted.")
     }
@@ -175,11 +186,12 @@ suspend fun deleteParaGroup(dbGroupName: String, dbARN: String) {
 
 // snippet-start:[rds.kotlin.scenario.del_db.main]
 suspend fun deleteDbInstance(dbInstanceIdentifierVal: String) {
-    val deleteDbInstanceRequest = DeleteDbInstanceRequest {
-        dbInstanceIdentifier = dbInstanceIdentifierVal
-        deleteAutomatedBackups = true
-        skipFinalSnapshot = true
-    }
+    val deleteDbInstanceRequest =
+        DeleteDbInstanceRequest {
+            dbInstanceIdentifier = dbInstanceIdentifierVal
+            deleteAutomatedBackups = true
+            skipFinalSnapshot = true
+        }
 
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.deleteDbInstance(deleteDbInstanceRequest)
@@ -190,15 +202,19 @@ suspend fun deleteDbInstance(dbInstanceIdentifierVal: String) {
 
 // snippet-start:[rds.kotlin.scenario.wait_db.main]
 // Waits until the snapshot instance is available.
-suspend fun waitForSnapshotReady(dbInstanceIdentifierVal: String?, dbSnapshotIdentifierVal: String?) {
+suspend fun waitForSnapshotReady(
+    dbInstanceIdentifierVal: String?,
+    dbSnapshotIdentifierVal: String?,
+) {
     var snapshotReady = false
     var snapshotReadyStr: String
     println("Waiting for the snapshot to become available.")
 
-    val snapshotsRequest = DescribeDbSnapshotsRequest {
-        dbSnapshotIdentifier = dbSnapshotIdentifierVal
-        dbInstanceIdentifier = dbInstanceIdentifierVal
-    }
+    val snapshotsRequest =
+        DescribeDbSnapshotsRequest {
+            dbSnapshotIdentifier = dbSnapshotIdentifierVal
+            dbInstanceIdentifier = dbInstanceIdentifierVal
+        }
 
     while (!snapshotReady) {
         RdsClient { region = "us-west-2" }.use { rdsClient ->
@@ -223,11 +239,15 @@ suspend fun waitForSnapshotReady(dbInstanceIdentifierVal: String?, dbSnapshotIde
 
 // snippet-start:[rds.kotlin.scenario.create_snapshot.main]
 // Create an Amazon RDS snapshot.
-suspend fun createDbSnapshot(dbInstanceIdentifierVal: String?, dbSnapshotIdentifierVal: String?) {
-    val snapshotRequest = CreateDbSnapshotRequest {
-        dbInstanceIdentifier = dbInstanceIdentifierVal
-        dbSnapshotIdentifier = dbSnapshotIdentifierVal
-    }
+suspend fun createDbSnapshot(
+    dbInstanceIdentifierVal: String?,
+    dbSnapshotIdentifierVal: String?,
+) {
+    val snapshotRequest =
+        CreateDbSnapshotRequest {
+            dbInstanceIdentifier = dbInstanceIdentifierVal
+            dbSnapshotIdentifier = dbSnapshotIdentifierVal
+        }
 
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.createDbSnapshot(snapshotRequest)
@@ -243,9 +263,10 @@ suspend fun waitForDbInstanceReady(dbInstanceIdentifierVal: String?) {
     var instanceReadyStr: String
     println("Waiting for instance to become available.")
 
-    val instanceRequest = DescribeDbInstancesRequest {
-        dbInstanceIdentifier = dbInstanceIdentifierVal
-    }
+    val instanceRequest =
+        DescribeDbInstancesRequest {
+            dbInstanceIdentifier = dbInstanceIdentifierVal
+        }
     var endpoint = ""
     while (!instanceReady) {
         RdsClient { region = "us-west-2" }.use { rdsClient ->
@@ -271,19 +292,26 @@ suspend fun waitForDbInstanceReady(dbInstanceIdentifierVal: String?) {
 
 // snippet-start:[rds.kotlin.scenario.create_db.main]
 // Create a database instance and return the ARN of the database.
-suspend fun createDatabaseInstance(dbGroupNameVal: String?, dbInstanceIdentifierVal: String?, dbNameVal: String?, masterUsernameVal: String?, masterUserPasswordVal: String?): String? {
-    val instanceRequest = CreateDbInstanceRequest {
-        dbInstanceIdentifier = dbInstanceIdentifierVal
-        allocatedStorage = 100
-        dbName = dbNameVal
-        dbParameterGroupName = dbGroupNameVal
-        engine = "mysql"
-        dbInstanceClass = "db.m4.large"
-        engineVersion = "8.0"
-        storageType = "standard"
-        masterUsername = masterUsernameVal
-        masterUserPassword = masterUserPasswordVal
-    }
+suspend fun createDatabaseInstance(
+    dbGroupNameVal: String?,
+    dbInstanceIdentifierVal: String?,
+    dbNameVal: String?,
+    masterUsernameVal: String?,
+    masterUserPasswordVal: String?,
+): String? {
+    val instanceRequest =
+        CreateDbInstanceRequest {
+            dbInstanceIdentifier = dbInstanceIdentifierVal
+            allocatedStorage = 100
+            dbName = dbNameVal
+            dbParameterGroupName = dbGroupNameVal
+            engine = "mysql"
+            dbInstanceClass = "db.t3.micro"
+            engineVersion = "8.0.35"
+            storageType = "gp2"
+            masterUsername = masterUsernameVal
+            masterUserPassword = masterUserPasswordVal
+        }
 
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.createDbInstance(instanceRequest)
@@ -296,9 +324,10 @@ suspend fun createDatabaseInstance(dbGroupNameVal: String?, dbInstanceIdentifier
 // snippet-start:[rds.kotlin.scenario.get_instances.main]
 // Get a list of micro instances.
 suspend fun getMicroInstances() {
-    val dbInstanceOptionsRequest = DescribeOrderableDbInstanceOptionsRequest {
-        engine = "mysql"
-    }
+    val dbInstanceOptionsRequest =
+        DescribeOrderableDbInstanceOptionsRequest {
+            engine = "mysql"
+        }
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.describeOrderableDbInstanceOptions(dbInstanceOptionsRequest)
         val orderableDBInstances = response.orderableDbInstanceOptions
@@ -315,10 +344,11 @@ suspend fun getMicroInstances() {
 // snippet-start:[rds.kotlin.scenario.get_engines.main]
 // Get a list of allowed engine versions.
 suspend fun getAllowedEngines(dbParameterGroupFamilyVal: String?) {
-    val versionsRequest = DescribeDbEngineVersionsRequest {
-        dbParameterGroupFamily = dbParameterGroupFamilyVal
-        engine = "mysql"
-    }
+    val versionsRequest =
+        DescribeDbEngineVersionsRequest {
+            dbParameterGroupFamily = dbParameterGroupFamilyVal
+            engine = "mysql"
+        }
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.describeDbEngineVersions(versionsRequest)
         val dbEngines: List<DbEngineVersion>? = response.dbEngineVersions
@@ -335,18 +365,20 @@ suspend fun getAllowedEngines(dbParameterGroupFamilyVal: String?) {
 // snippet-start:[rds.kotlin.scenario.mod_paras.main]
 // Modify the auto_increment_offset parameter.
 suspend fun modifyDBParas(dbGroupName: String) {
-    val parameter1 = Parameter {
-        parameterName = "auto_increment_offset"
-        applyMethod = ApplyMethod.Immediate
-        parameterValue = "5"
-    }
+    val parameter1 =
+        Parameter {
+            parameterName = "auto_increment_offset"
+            applyMethod = ApplyMethod.Immediate
+            parameterValue = "5"
+        }
 
     val paraList: ArrayList<Parameter> = ArrayList()
     paraList.add(parameter1)
-    val groupRequest = ModifyDbParameterGroupRequest {
-        dbParameterGroupName = dbGroupName
-        parameters = paraList
-    }
+    val groupRequest =
+        ModifyDbParameterGroupRequest {
+            dbParameterGroupName = dbGroupName
+            parameters = paraList
+        }
 
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.modifyDbParameterGroup(groupRequest)
@@ -357,18 +389,22 @@ suspend fun modifyDBParas(dbGroupName: String) {
 
 // snippet-start:[rds.kotlin.scenario.get_paras.main]
 // Retrieve parameters in the group.
-suspend fun describeDbParameters(dbGroupName: String?, flag: Int) {
+suspend fun describeDbParameters(
+    dbGroupName: String?,
+    flag: Int,
+) {
     val dbParameterGroupsRequest: DescribeDbParametersRequest
-    dbParameterGroupsRequest = if (flag == 0) {
-        DescribeDbParametersRequest {
-            dbParameterGroupName = dbGroupName
+    dbParameterGroupsRequest =
+        if (flag == 0) {
+            DescribeDbParametersRequest {
+                dbParameterGroupName = dbGroupName
+            }
+        } else {
+            DescribeDbParametersRequest {
+                dbParameterGroupName = dbGroupName
+                source = "user"
+            }
         }
-    } else {
-        DescribeDbParametersRequest {
-            dbParameterGroupName = dbGroupName
-            source = "user"
-        }
-    }
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.describeDbParameters(dbParameterGroupsRequest)
         val dbParameters: List<Parameter>? = response.parameters
@@ -392,10 +428,11 @@ suspend fun describeDbParameters(dbGroupName: String?, flag: Int) {
 
 // snippet-start:[rds.kotlin.scenario.desc_para_groups.main]
 suspend fun describeDbParameterGroups(dbGroupName: String?) {
-    val groupsRequest = DescribeDbParameterGroupsRequest {
-        dbParameterGroupName = dbGroupName
-        maxRecords = 20
-    }
+    val groupsRequest =
+        DescribeDbParameterGroupsRequest {
+            dbParameterGroupName = dbGroupName
+            maxRecords = 20
+        }
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.describeDbParameterGroups(groupsRequest)
         val groups = response.dbParameterGroups
@@ -411,12 +448,16 @@ suspend fun describeDbParameterGroups(dbGroupName: String?) {
 
 // snippet-start:[rds.kotlin.scenario.create_para_group.main]
 // Create a parameter group.
-suspend fun createDBParameterGroup(dbGroupName: String?, dbParameterGroupFamilyVal: String?) {
-    val groupRequest = CreateDbParameterGroupRequest {
-        dbParameterGroupName = dbGroupName
-        dbParameterGroupFamily = dbParameterGroupFamilyVal
-        description = "Created by using the AWS SDK for Kotlin"
-    }
+suspend fun createDBParameterGroup(
+    dbGroupName: String?,
+    dbParameterGroupFamilyVal: String?,
+) {
+    val groupRequest =
+        CreateDbParameterGroupRequest {
+            dbParameterGroupName = dbGroupName
+            dbParameterGroupFamily = dbParameterGroupFamilyVal
+            description = "Created by using the AWS SDK for Kotlin"
+        }
 
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.createDbParameterGroup(groupRequest)
@@ -428,11 +469,12 @@ suspend fun createDBParameterGroup(dbGroupName: String?, dbParameterGroupFamilyV
 // snippet-start:[rds.kotlin.scenario_desc_engine.main]
 // Returns a list of the available DB engines.
 suspend fun describeDBEngines() {
-    val engineVersionsRequest = DescribeDbEngineVersionsRequest {
-        defaultOnly = true
-        engine = "mysql"
-        maxRecords = 20
-    }
+    val engineVersionsRequest =
+        DescribeDbEngineVersionsRequest {
+            defaultOnly = true
+            engine = "mysql"
+            maxRecords = 20
+        }
 
     RdsClient { region = "us-west-2" }.use { rdsClient ->
         val response = rdsClient.describeDbEngineVersions(engineVersionsRequest)
@@ -446,6 +488,18 @@ suspend fun describeDBEngines() {
                 println("The version number of the database engine ${engineOb.engineVersion}")
             }
         }
+    }
+}
+
+suspend fun getSecretValues(secretName: String?): String? {
+    val valueRequest =
+        GetSecretValueRequest {
+            secretId = secretName
+        }
+
+    SecretsManagerClient { region = "us-west-2" }.use { secretsClient ->
+        val valueResponse = secretsClient.getSecretValue(valueRequest)
+        return valueResponse.secretString
     }
 }
 // snippet-end:[rds.kotlin.scenario_desc_engine.main]

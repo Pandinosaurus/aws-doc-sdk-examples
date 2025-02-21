@@ -2,49 +2,65 @@
 
 ## Overview
 
-The examples in this section show how to use the AWS SDK for .NET with AWS Key Management Service (AWS KMS) to create and manage keys, grants, and policies.
+Shows how to use the AWS SDK for .NET to work with AWS Key Management Service (AWS KMS).
 
-AWS KMS is an encryption and key management service scaled for the cloud. AWS KMS keys and functionality are used by other AWS services, and you can use them to protect data in your own applications that use AWS.
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## ⚠️ Important
-* Running this code might result in charges to your AWS account.
+_AWS KMS is an encryption and key management service scaled for the cloud._
+
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
 * Running the tests might result in charges to your AWS account.
 * We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
 * This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
 
+<!--custom.important.start-->
+<!--custom.important.end-->
+
 ## Code examples
 
+### Prerequisites
+
+For prerequisites, see the [README](../README.md#Prerequisites) in the `dotnetv3` folder.
+
+
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
+
 ### Single actions
+
 Code excerpts that show you how to call individual service functions.
 
-- [Create a grant for a key](CreateGrantExample/CreateGrant.cs) (`CreateGrantAsync`)
-- [Create a key](CreateKeyExample/CreateKey.cs) (`CreateKeyAsync`)
-- [Create an alias for a key](CreateAliasExample/CreateAlias.cs) (`CreateAliasAsync`)
-- [Describe a key](DescribeKeyExample/DescribeKey.cs) (`DescribeKeyAsync`)
-- [Disable a key](DisableKeyExample/DisableKey.cs) (`DisableKeyAsync`)
-- [Enable a key](EnableKeyExample/EnableKey.cs) (`EnableKeyAsync`)
-- [List aliases for a key](ListAliasesExample/ListAliases.cs) (`ListAliasesAsync`)
-- [List grants for a key](ListGrantsExample/ListGrants.cs) (`ListGrantsAsync`)
-- [List keys](ListKeysExample/ListKeys.cs) (`ListKeysAsync`)
+- [CreateAlias](CreateAliasExample/CreateAlias.cs#L6)
+- [CreateGrant](CreateGrantExample/CreateGrant.cs#L17)
+- [CreateKey](CreateKeyExample/CreateKey.cs#L6)
+- [DescribeKey](DescribeKeyExample/DescribeKey.cs#L6)
+- [DisableKey](DisableKeyExample/DisableKey.cs#L6)
+- [EnableKey](EnableKeyExample/EnableKey.cs#L6)
+- [ListAliases](ListAliasesExample/ListAliases.cs#L6)
+- [ListGrants](ListGrantsExample/ListGrants.cs#L6)
+- [ListKeys](ListKeysExample/ListKeys.cs#L6)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
 
 ## Run the examples
 
-### Prerequisites
-* To find prerequisites for running these examples, see the
-  [README](../README.md#Prerequisites) in the dotnetv3 folder.
+### Instructions
 
-The examples in this folder use the default user account. The call to
-initialize the client object does not specify the AWS Region. The following
-example shows how to supply the AWS Region to match your own as a
-parameter to the client constructor:
+For general instructions to run the examples, see the
+[README](../README.md#building-and-running-the-code-examples) in the `dotnetv3` folder.
 
-```
-var client = new AmazonKeyManagementServicelient(Amazon.RegionEndpoint.USWest2);
-```
+Some projects might include a settings.json file. Before compiling the project,
+you can change these values to match your own account and resources. Alternatively,
+add a settings.local.json file with your local settings, which will be loaded automatically
+when the application runs.
 
-After the example compiles, you can run it from the command line. To do so,
-navigate to the folder that contains the .csproj file and run the following
-command:
+After the example compiles, you can run it from the command line. To do so, navigate to
+the folder that contains the .csproj file and run the following command:
 
 ```
 dotnet run
@@ -52,10 +68,37 @@ dotnet run
 
 Alternatively, you can run the example from within your IDE.
 
-## Additional resources
-* [AWS KMS Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
-* [AWS KMS API Reference](https://docs.aws.amazon.com/kms/latest/APIReference/Welcome.html)
-* [AWS SDK for .NET KMS](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/KeyManagementService/NKeyManagementService.html)
-* [AWS SDK for .NET Developer Guide](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/welcome.html)
 
-Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. SPDX-License-Identifier: Apache-2.0
+<!--custom.instructions.start-->
+To run the examples, see the [README](../README.md#building-and-running-the-code-examples) in the `dotnetv3` folder.
+<!--custom.instructions.end-->
+
+
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../README.md#Tests)
+in the `dotnetv3` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
+
+## Additional resources
+
+- [AWS KMS Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+- [AWS KMS API Reference](https://docs.aws.amazon.com/kms/latest/APIReference/Welcome.html)
+- [SDK for .NET AWS KMS reference](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/KeyManagementService/NKeyManagementService.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
+
+---
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0

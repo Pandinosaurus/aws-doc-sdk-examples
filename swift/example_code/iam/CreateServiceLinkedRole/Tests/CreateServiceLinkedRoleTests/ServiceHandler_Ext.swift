@@ -1,9 +1,9 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 /*
    Extensions to the `ServiceHandler` class to handle tasks we need
    for testing that aren't the purpose of this example.
-
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
 */
 
 import Foundation
@@ -71,8 +71,8 @@ public extension ServiceHandler {
     ///
     /// - Parameter name: A `String` giving the name of the user to get. If
     ///   this parameter is `nil`, the default user's information is returned.
-    /// - Returns: An `IamClientTypes.User` record describing the user.
-    func getUser(name: String?) async throws -> IamClientTypes.User {
+    /// - Returns: An `IAMClientTypes.User` record describing the user.
+    func getUser(name: String?) async throws -> IAMClientTypes.User {
         let input = GetUserInput(
             userName: name
         )

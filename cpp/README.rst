@@ -29,23 +29,56 @@ applicable to utilizing the code examples in this repository.
 Building and running the code examples
 =============
  
-Additional information geared specifically to understanding the example applications is at
-`AWS SDK for C++ Code Examples <https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/programming-services.html>`_.
+The example code is organized in subfolders by AWS service.
+For example "example_code/s3" contains the Amazon Simple Storage Service (Amazon S3) code examples.
 
+Examples that use multiple services are located in the [example_code/cross-service](example_code/cross-service) folder.
+
+The examples use the CMake build system. Every service subfolder contains a CMakeLists.txt file that builds all the examples for that service. 
+
+To understand more about the example applications, see
+[Get started with the AWS SDK for C++ code examples](https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/getting-started-code-examples.html).
+
+Hello Service
+-----------
+
+Many of the services have a "Hello Service" folder with a starter project and README documentation. 
+For example, the Amazon S3 Hello project is located at [example_code/s3/hello_s3](example_code/s3/hello_s3).
 
 Docker image (Beta)
 ===================
 
 This example code will soon be available in a container image
-hosted on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html). This image will be pre-loaded
+hosted on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html). This image will be preloaded
 with all C++ examples with dependencies pre-resolved, allowing you to explore
 these examples in an isolated environment.
 
-As of January 2023, the [SDK for C++ image](https://gallery.ecr.aws/aws-docs-sdk-examples/cpp) is available on ECR Public but is still
+As of January 2023, the [SDK for C++ image](https://gallery.ecr.aws/b4v4v1s0/cpp) is available on ECR Public but is still
 undergoing active development. Refer to
 [this GitHub issue](https://github.com/awsdocs/aws-doc-sdk-examples/issues/4133)
 for more information.
 
+Build steps
+-----------
+To build the docker image, run the following command from the shell. This command must be run in
+the "aws-doc-sdk-examples/cpp" directory.
+
+.. code-block:: bash
+
+docker build -t <container_tag> .
+
+The following command will run the docker image, copying your AWS credentials.
+
+.. code-block:: bash
+
+docker run -it --volume ~/.aws/credentials:/home/tests/.aws/credentials <container_tag>
+
+Automated tests
+===================
+
+The automated tests for C++ examples can be run using the Python script [run_automated_tests.py](run_automated_tests.py). The script contains instructions for its use.
+
+For information about the dependencies needed to run the examples, see the [DockerFile](Dockerfile).
 
 Additional information
 =============

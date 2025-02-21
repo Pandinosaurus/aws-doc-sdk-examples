@@ -2,76 +2,192 @@
 
 ## Overview
 
-The code examples in this directory demonstrate how to work with Amazon DynamoDB using the AWS SDK for JavaScript version 3 (v3).
+Shows how to use the AWS SDK for JavaScript (v3) to work with Amazon DynamoDB.
 
-Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. You can use Amazon DynamoDB to create a database table that can store and retrieve any amount of data, and serve any level of request traffic. Amazon DynamoDB automatically spreads the data and traffic for the table over a sufficient number of servers to handle the request capacity specified by the customer and the amount of data stored, while maintaining consistent and fast performance.
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## ⚠️ Important
+_DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability._
 
-- Running this code might result in charges to your AWS account.
-- Running the tests might result in charges to your AWS account.
-- We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see Grant least privilege.
-- This code is not tested in every AWS Region. For more information, see AWS Regional Services.
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
+
+### Prerequisites
+
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `javascriptv3` folder.
+
+
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
+
+### Get started
+
+- [Hello DynamoDB](hello.js#L6) (`ListTables`)
+
+
+### Basics
+
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](scenarios/basic.js)
+
 
 ### Single actions
 
 Code excerpts that show you how to call individual service functions.
 
-- [Create a DynamoDB table](src/ddb_createtable.js) (CreateTableCommand)
-- [Create a DynamoDB table - TV example](src/QueryExample/ddb_createtable_tv.js)
-- [Describe DynamoDB tables](src/ddb_describetable.js) (DescribeTableCommand)
-- [Delete a DynamoDB table](src/ddb_deletetable.js) (DeleteTableCommand)
-- [Delete an item](src/ddb_deleteitem.js) (DeleteItemCommand)
-- [Delete items using Document Client](src/ddbdoc_delete_item.js) (DeleteCommand)
-- [Get items](src/ddb_getitem.js) (GetItemCommand)
-- [Get batch items](src/ddb_batchgetitem.js) (BatchGetItemCommand)
-- [Get items using Document Client](src/movies/getItem.js) (GetCommand)
-- [List DynamoDB tables](src/ddb_listtables.js) (ListTablesCommand)
-- [Put items using Document Client](src/movies/putItem.js) (PutCommand)
-- [Query a DynamoDB table using Document Client](src/movies/queryTable.js) (QueryCommand)
-- [Scan a DynamoDB table using Document Client](src/movies/scanTable.js) (ScanCommand)
-- [Update a DynamoDB table using Document Client](src/movies/updateItem.js) (UpdateCommand)
-- [Write batch items using Document Client](src/movies/writeData.js) (BatchWriteCommand)
-- [Write batch items - TV example](src/QueryExample/ddb_batchwriteitem_tv.js) (BatchWriteItemCommand)
-- [Add an item to a table using PartiQL](src/partiQL_examples/src/partiql_putItem.js) (ExecuteStatementCommand)
-- [Add items to a table by batch using PartiQL](src/partiQL_examples/src/partiql_batch_putItems.js) (BatchExecuteStatementCommand)
-- [Delete an item from a table using PartiQL](src/partiQL_examples/src/partiql_deleteItem.js) (ExecuteStatementCommand)
-- [Delete items from a table by batch using PartiQL](src/partiQL_examples/src/partiql_batch_deleteItems.js) (BatchExecuteStatementCommand)
-- [Get an item from a table using PartiQL](src/partiQL_examples/src/partiql_getItem.js) (ExecuteStatementCommand)
-- [Get items from a table by batch using PartiQL](src/partiQL_examples/src/partiql_batch_getItems.js) (BatchExecuteStatementCommand)
-- [Update an item in a table using PartiQL](src/partiQL_examples/src/partiql_updateItem.js) (ExecuteStatementCommand)
-- [Update items in a table by batch using PartiQL](src/partiQL_examples/src/partiql_batch_updateItems.js) (BatchExecuteStatementCommand)
+- [BatchExecuteStatement](actions/partiql/partiql-batch-put.js#L6)
+- [BatchGetItem](actions/document-client/batch-get.js#L6)
+- [BatchWriteItem](actions/document-client/batch-write.js#L6)
+- [CreateTable](actions/create-table.js#L6)
+- [DeleteItem](actions/document-client/delete.js#L6)
+- [DeleteTable](actions/delete-table.js#L6)
+- [DescribeTable](actions/describe-table.js#L6)
+- [ExecuteStatement](actions/partiql/partiql-put.js#L6)
+- [GetItem](actions/document-client/get.js#L6)
+- [ListTables](actions/list-tables.js#L6)
+- [PutItem](actions/document-client/put.js#L6)
+- [Query](actions/document-client/query.js#L6)
+- [Scan](actions/document-client/scan.js#L6)
+- [UpdateItem](actions/document-client/update.js#L6)
 
 ### Scenarios
 
-Code examples that show you how to accomplish a specific task by calling multiple functions within the same service.
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
 
-- [Get started using DynamoDB tables, items, and queries](scenarios/dynamodb_basics/src/dynamodb_basics.js)
-- [Get started using DynamoDB tables using PartiQL](scenarios/partiQL_basics/src/partiQL_basics.js)
-- [Get started using DynamoDB tables using PartiQL by batch](scenarios/partiQL_basics/src/partiQL_batch_basics.js)
+- [Query a table by using batches of PartiQL statements](scenarios/partiql-batch.js)
+- [Query a table using PartiQL](scenarios/partiql-single.js)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
 
 ## Run the examples
 
-### Prerequisites
-
-- [Set up AWS SDK for JavaScript](../README.md#prerequisites)
-
 ### Instructions
 
-1. Install the dependencies.
+**Note**: All code examples are written in ECMAscript 6 (ES6). For guidelines on converting to CommonJS, see
+[JavaScript ES6/CommonJS syntax](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sdk-examples-javascript-syntax.html).
 
-Run `yarn`.
+**Run a single action**
 
-2. Follow the instructions at the top of the example.
+```bash
+node ./actions/<fileName>
+```
 
-## Tests
+**Run a scenario**
 
-For more information, see the [README](../README.md).
+Most scenarios can be run with the following command:
+```bash
+node ./scenarios/<fileName>
+```
+
+**Run with options**
+
+Some actions and scenarios can be run with options from the command line:
+```bash
+node ./scenarios/<fileName> --option1 --option2
+```
+[util.parseArgs](https://nodejs.org/api/util.html#utilparseargsconfig) is used to configure
+these options. For the specific options available to each script, see the `parseArgs` usage
+for that file.
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+#### Hello DynamoDB
+
+This example shows you how to get started using DynamoDB.
+
+```bash
+node ./hello.js
+```
+
+#### Learn the basics
+
+This example shows you how to do the following:
+
+- Create a table that can hold movie data.
+- Put, get, and update a single movie in the table.
+- Write movie data to the table from a sample JSON file.
+- Query for movies that were released in a given year.
+- Scan for movies that were released in a range of years.
+- Delete a movie from the table, then delete the table.
+
+<!--custom.basic_prereqs.dynamodb_Scenario_GettingStartedMovies.start-->
+<!--custom.basic_prereqs.dynamodb_Scenario_GettingStartedMovies.end-->
+
+
+<!--custom.basics.dynamodb_Scenario_GettingStartedMovies.start-->
+<!--custom.basics.dynamodb_Scenario_GettingStartedMovies.end-->
+
+
+#### Query a table by using batches of PartiQL statements
+
+This example shows you how to do the following:
+
+- Get a batch of items by running multiple SELECT statements.
+- Add a batch of items by running multiple INSERT statements.
+- Update a batch of items by running multiple UPDATE statements.
+- Delete a batch of items by running multiple DELETE statements.
+
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLBatch.start-->
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLBatch.end-->
+
+
+<!--custom.scenarios.dynamodb_Scenario_PartiQLBatch.start-->
+<!--custom.scenarios.dynamodb_Scenario_PartiQLBatch.end-->
+
+#### Query a table using PartiQL
+
+This example shows you how to do the following:
+
+- Get an item by running a SELECT statement.
+- Add an item by running an INSERT statement.
+- Update an item by running an UPDATE statement.
+- Delete an item by running a DELETE statement.
+
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLSingle.start-->
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLSingle.end-->
+
+
+<!--custom.scenarios.dynamodb_Scenario_PartiQLSingle.start-->
+<!--custom.scenarios.dynamodb_Scenario_PartiQLSingle.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `javascriptv3` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
 
 ## Additional resources
 
-- [AWS SDK for JavaScript (v3)](https://github.com/aws/aws-sdk-js-v3) is available.
-- [AWS SDK for JavaScript (v3) Developer Guide](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/dynamodb-examples.html)
-- [AWS SDK for JavaScript (v3) API Reference Guide - Amazon DynamoDB client module](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/index.html)
+- [DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+- [DynamoDB API Reference](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html)
+- [SDK for JavaScript (v3) DynamoDB reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/dynamodb)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
+
+---
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0

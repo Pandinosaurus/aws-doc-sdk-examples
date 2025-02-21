@@ -1,8 +1,5 @@
-" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" "  Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights
-" "  Reserved.
-" "  SPDX-License-Identifier: MIT-0
-" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+" SPDX-License-Identifier: Apache-2.0
 
 CLASS ltc_zcl_aws1_s3_actions DEFINITION DEFERRED.
 CLASS zcl_aws1_s3_actions DEFINITION LOCAL FRIENDS ltc_zcl_aws1_s3_actions.
@@ -21,6 +18,7 @@ CLASS ltc_zcl_aws1_s3_actions DEFINITION FOR TESTING  DURATION SHORT RISK LEVEL 
       get_object FOR TESTING RAISING /aws1/cx_rt_generic,
       copy_object FOR TESTING RAISING /aws1/cx_rt_generic,
       list_objects FOR TESTING RAISING /aws1/cx_rt_generic,
+      list_objects_v2 FOR TESTING RAISING /aws1/cx_rt_generic,
       delete_object FOR TESTING RAISING /aws1/cx_rt_generic,
       delete_bucket FOR TESTING RAISING /aws1/cx_rt_generic.
 
@@ -54,7 +52,7 @@ CLASS ltc_zcl_aws1_s3_actions IMPLEMENTATION.
     ao_s3_actions = NEW zcl_aws1_s3_actions( ).
   ENDMETHOD.
   METHOD create_bucket.
-    CONSTANTS cv_bucket TYPE /aws1/s3_bucketname VALUE 'code-example-create-bucket'.
+    CONSTANTS cv_bucket TYPE /aws1/s3_bucketname VALUE 'amzn-s3-demo-bucket'.
     ao_s3_actions->create_bucket( iv_bucket_name = cv_bucket ).
 
     assert_bucket_exists(
@@ -154,9 +152,9 @@ CLASS ltc_zcl_aws1_s3_actions IMPLEMENTATION.
         ).
   ENDMETHOD.
   METHOD copy_object.
-    CONSTANTS cv_src_bucket TYPE /aws1/s3_bucketname VALUE 'code-example-copy-object-src-bucket'.
+    CONSTANTS cv_src_bucket TYPE /aws1/s3_bucketname VALUE 'amzn-s3-demo-copy-object-src-bucket'.
     ao_s3->createbucket( iv_bucket = cv_src_bucket ).
-    CONSTANTS cv_dest_bucket TYPE /aws1/s3_bucketname VALUE 'code-example-copy-object-dest-bucket'.
+    CONSTANTS cv_dest_bucket TYPE /aws1/s3_bucketname VALUE 'amzn-s3-demo-copy-object-dest-bucket'.
     ao_s3->createbucket( iv_bucket = cv_dest_bucket ).
 
     CONSTANTS cv_src_file TYPE /aws1/s3_objectkey VALUE 'copy_object_ex_file'.
@@ -222,6 +220,41 @@ CLASS ltc_zcl_aws1_s3_actions IMPLEMENTATION.
     delete_file( iv_file = cv_file ).
 
   ENDMETHOD.
+
+  METHOD list_objects_v2.
+    CONSTANTS cv_bucket TYPE /aws1/s3_bucketname VALUE 'code-example-list-objects'.
+    ao_s3->createbucket( iv_bucket = cv_bucket ).
+
+    CONSTANTS cv_file TYPE /aws1/s3_objectkey VALUE 'list_objects_ex_file1'.
+    create_file( iv_file = cv_file ).
+
+    put_file_in_bucket( iv_bucket = cv_bucket iv_file = cv_file ).
+
+    DATA lo_list TYPE REF TO /AWS1/CL_S3_LISTOBJSV2OUTPUT.
+    ao_s3_actions->list_objects_v2(
+      EXPORTING
+        iv_bucket_name = cv_bucket
+      IMPORTING
+        oo_result = lo_list
+    ).
+
+    DATA lv_found TYPE abap_bool VALUE abap_false.
+    LOOP AT lo_list->get_contents( ) INTO DATA(lo_object).
+      IF lo_object->get_key( ) = cv_file.
+        lv_found = abap_true.
+      ENDIF.
+    ENDLOOP.
+
+    cl_abap_unit_assert=>assert_true(
+      act = lv_found
+      msg = |Could not find object { cv_file } in the list|
+    ).
+
+    ao_s3->deleteobject( iv_bucket = cv_bucket iv_key = cv_file ).
+    ao_s3->deletebucket( iv_bucket = cv_bucket ).
+    delete_file( iv_file = cv_file ).
+
+  ENDMETHOD.
   METHOD delete_object.
     CONSTANTS cv_bucket TYPE /aws1/s3_bucketname VALUE 'code-example-delete-object'.
     ao_s3->createbucket( iv_bucket = cv_bucket ).
@@ -250,7 +283,7 @@ CLASS ltc_zcl_aws1_s3_actions IMPLEMENTATION.
 
   ENDMETHOD.
   METHOD delete_bucket.
-    CONSTANTS cv_bucket TYPE /aws1/s3_bucketname VALUE 'code-example-delete-bucket'.
+    CONSTANTS cv_bucket TYPE /aws1/s3_bucketname VALUE 'amzn-s3-demo-bucket'.
     ao_s3->createbucket( iv_bucket = cv_bucket ).
     ao_s3_actions->delete_bucket( iv_bucket_name =  cv_bucket ).
 

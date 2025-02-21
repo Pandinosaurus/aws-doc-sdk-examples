@@ -1,14 +1,13 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Amazon;
 using Amazon.CertificateManager;
 using Amazon.CertificateManager.Model;
 using Moq;
-using System;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace ListCertificatesTest
@@ -23,9 +22,6 @@ namespace ListCertificatesTest
                 It.IsAny<CancellationToken>()
             )).Callback<ListCertificatesRequest, CancellationToken>((request, token) =>
             {
-                if (request is not null)
-                {
-                }
             }).Returns((ListCertificatesRequest r, CancellationToken token) =>
             {
                 return Task.FromResult(new ListCertificatesResponse()
@@ -38,6 +34,7 @@ namespace ListCertificatesTest
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public async Task ListCertificatesAsyncTest()
         {
             var client = CreateMockACMClient();

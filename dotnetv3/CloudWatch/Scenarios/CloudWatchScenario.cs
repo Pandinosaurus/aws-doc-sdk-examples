@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 using System.Diagnostics;
 using System.Text.Json;
@@ -734,7 +734,7 @@ public class CloudWatchScenario
     }
 
     /// <summary>
-    /// Create a dashboard with metrics.
+    /// Clean up created resources.
     /// </summary>
     /// <param name="metricNamespace">The namespace for metrics.</param>
     /// <param name="metric">The CloudWatch metric.</param>

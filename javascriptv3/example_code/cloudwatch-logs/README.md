@@ -1,68 +1,129 @@
-# CloudWatch Logs code examples for the SDK for JavaScript in Node.js
+# CloudWatch Logs code examples for the SDK for JavaScript (v3)
 
 ## Overview
 
-The code examples in this directory demonstrate how to work with Amazon CloudWatch Logs
-using the AWS SDK for JavaScript (v3).
+Shows how to use the AWS SDK for JavaScript (v3) to work with Amazon CloudWatch Logs.
 
-You can use Amazon CloudWatch Logs to monitor, store, and access your log files from Amazon Elastic Compute Cloud (Amazon EC2) instances, AWS CloudTrail, Route 53, and other sources.
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## ⚠️ Important
+_CloudWatch Logs monitor, store, and access your log files from Amazon Elastic Compute Cloud instances, AWS CloudTrail, or other sources._
 
-- Running this code might result in charges to your AWS account.
-- Running the tests might result in charges to your AWS account.
-- We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
-- This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
+
+### Prerequisites
+
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `javascriptv3` folder.
+
+
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
 ### Single actions
 
 Code excerpts that show you how to call individual service functions.
 
-- [Create a log group](actions/create-log-group.js)
-- [Create a subscription filter](actions/put-subscription-filter.js)
-- [Delete a log group](actions/delete-log-group.js)
-- [Delete a subscription filter](actions/delete-subscription-filter.js)
-- [Describe log groups](actions/describe-log-groups.js)
-- [Describe existing subscription filters](actions/describe-subscription-filters.js)
+- [CreateLogGroup](actions/create-log-group.js#L4)
+- [DeleteLogGroup](actions/delete-log-group.js#L4)
+- [DeleteSubscriptionFilter](actions/delete-subscription-filter.js#L4)
+- [DescribeLogGroups](actions/describe-log-groups.js#L6)
+- [DescribeSubscriptionFilters](actions/describe-subscription-filters.js#L4)
+- [GetQueryResults](scenarios/large-query/cloud-watch-query.js#L108)
+- [PutSubscriptionFilter](actions/put-subscription-filter.js#L4)
+- [StartQuery](scenarios/large-query/cloud-watch-query.js#L141)
+
+### Scenarios
+
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
+
+- [Run a large query](scenarios/large-query/index.js)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
 
 ## Run the examples
+
+### Instructions
 
 **Note**: All code examples are written in ECMAscript 6 (ES6). For guidelines on converting to CommonJS, see
 [JavaScript ES6/CommonJS syntax](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sdk-examples-javascript-syntax.html).
 
-### Prerequisites
-
-- [Set up AWS SDK for JavaScript](../README.rst)
-- Run `yarn` to install dependencies.
-
-## Instructions
-
 **Run a single action**
 
-1. Run `node ./actions/<fileName>`.
-   OR
-1. Import `./actions/fileName` into another module.
+```bash
+node ./actions/<fileName>
+```
 
-## Tests
+**Run a scenario**
 
-⚠️ Running the tests might result in charges to your AWS account.
+Most scenarios can be run with the following command:
+```bash
+node ./scenarios/<fileName>
+```
 
-### Unit tests
+**Run with options**
 
-1. Run `yarn`.
-1. Run `yarn test`.
+Some actions and scenarios can be run with options from the command line:
+```bash
+node ./scenarios/<fileName> --option1 --option2
+```
+[util.parseArgs](https://nodejs.org/api/util.html#utilparseargsconfig) is used to configure
+these options. For the specific options available to each script, see the `parseArgs` usage
+for that file.
 
-### Integration tests
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
 
-1. Run `yarn`.
-1. Run `yarn integration-test`.
+
+
+#### Run a large query
+
+This example shows you how to use CloudWatch Logs to query more than 10,000 records.
+
+
+<!--custom.scenario_prereqs.cloudwatch-logs_Scenario_BigQuery.start-->
+<!--custom.scenario_prereqs.cloudwatch-logs_Scenario_BigQuery.end-->
+
+
+<!--custom.scenarios.cloudwatch-logs_Scenario_BigQuery.start-->
+<!--custom.scenarios.cloudwatch-logs_Scenario_BigQuery.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `javascriptv3` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
 
 ## Additional resources
 
-- [Amazon CloudWatch Logs User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
-- [Amazon CloudWatch Logs API Reference](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/Welcome.html)
-- [CloudWatch Logs Client - AWS SDK for JavaScript (v3)](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudwatch-logs/index.html)
+- [CloudWatch Logs User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
+- [CloudWatch Logs API Reference](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/Welcome.html)
+- [SDK for JavaScript (v3) CloudWatch Logs reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/cloudwatch-logs)
 
-Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. SPDX-License-Identifier: Apache-2.0
+<!--custom.resources.start-->
+<!--custom.resources.end-->
+
+---
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0

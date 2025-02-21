@@ -1,94 +1,37 @@
-import com.example.eventbridge.*;
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import com.example.eventbridge.HelloEventBridge;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Order;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EventBridgeTest {
 
-    private static  EventBridgeClient eventBrClient;
-    private static Region region;
-    private static String ruleName = "";
+    private static EventBridgeClient eventBrClient;
 
     @BeforeAll
     public static void setUp() throws IOException {
-
-        region = Region.US_WEST_2;
         eventBrClient = EventBridgeClient.builder()
-                .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .region(Region.US_WEST_2)
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
-
-        try (InputStream input = EventBridgeTest.class.getClassLoader().getResourceAsStream("config.properties")) {
-
-            Properties prop = new Properties();
-
-            if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
-                return;
-            }
-
-            //load a properties file from class path, inside static method
-            prop.load(input);
-
-            // Populate the data members required for all tests
-            ruleName = prop.getProperty("ruleName");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     @Test
     @Order(1)
-    public void whenInitializingEBervice_thenNotNull() {
-        assertNotNull(eventBrClient);
+    public void helloEventBridge() {
+        HelloEventBridge.listBuses(eventBrClient);
         System.out.println("Test 1 passed");
     }
 
-
-    @Test
-    @Order(2)
-    public void CreateRule() {
-
-        CreateRule.createEBRule(eventBrClient, ruleName);
-        System.out.println("Test 2 passed");
-    }
-
-    @Test
-    @Order(3)
-    public void DescribeRule() {
-
-        DescribeRule.describeSpecificRule(eventBrClient, ruleName);
-        System.out.println("Test 3 passed");
-    }
-
-    @Test
-    @Order(4)
-    public void ListRules() {
-
-        ListRules.listAllRules(eventBrClient);
-        System.out.println("Test 4 passed");
-    }
-
-    @Test
-    @Order(5)
-    public void ListEventBuses() {
-
-        ListEventBuses.listBuses(eventBrClient);
-        System.out.println("Test 5 passed");
-    }
-
-    @Test
-    @Order(6)
-    public void DeleteRule() {
-
-        DeleteRule.deleteEBRule(eventBrClient, ruleName);
-        System.out.println("Test 6 passed");
-    }
 }

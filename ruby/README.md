@@ -1,6 +1,6 @@
 # AWS SDK for Ruby Version 3 code examples
 ## Overview
-The code examples in this topic show you how to use the AWS SDK for Ruby Version 3 with AWS. 
+The code examples in this topic show you how to use the AWS SDK for Ruby Version 3. 
 
 The AWS SDK for Ruby Version 3 provides a Ruby API for AWS infrastructure services. Using the SDK, you can build applications on top of Amazon S3, Amazon EC2, Amazon DynamoDB, and more.
 
@@ -33,15 +33,46 @@ To begin, you must [set up an AWS account](../README.md#prerequisites-for-all-aw
 
 To resolve Ruby-specific dependencies, you must start a command line session and navigate to this directory.
 
-First, verify your version of Ruby is at 3.1 using the following command:
+### Ruby version
+
+This code is tested using [version 3.1.2](https://www.ruby-lang.org/en/news/2022/04/12/ruby-3-1-2-released/).
+
+You can check your Ruby version by using the following command:
 ```bash
 ruby -v
 ```
 
-Next, execute the following commands to resolve [Gemfile](Gemfile) dependencies:
+For more information about managing multiple Ruby versions in your local environment, see the [Ruby install docs](https://www.ruby-lang.org/en/documentation/installation/).
+
+### Resolving dependencies
+
+To resolve the dependencies declared in the [Gemfile](Gemfile), run the following commands from this `/ruby` directory:
 ```bash
 gem install bundler
 bundle install
+```
+
+To use a different Ruby version, modify or remove `ruby "3.1.2"` from the [Gemfile](Gemfile).
+
+## Linting
+We rely on [rubocop](https://docs.rubocop.org/rubocop/1.63/index.html) to keep this code consistently formatted and styled.
+To contribute Ruby code to this project, please refer to the following installation and usage steps.
+
+### Using Rubocop
+We run Rubocop using [a custom configuration file](.github/linters/.ruby-lint.yml) against any changed file or directory. See the [Ruby Github Action workflow](../.github/workflows/ruby.yml) for details.
+
+To invoke Rubocop yourself, first install it with `gem install rubocop`. 
+
+Next, run:
+
+```bash
+rubocop --config .github/linters/.ruby-lint.yml path/to/ruby/file_or_directory
+```
+
+To lint all Ruby files in the current directory and its subdirectories, run:
+
+```bash
+rubocop --config .github/linters/.ruby-lint.yml .
 ```
 
 ## Tests
@@ -81,7 +112,7 @@ hosted on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/
 with all Ruby examples with dependencies pre-resolved, allowing you to explore
 these examples in an isolated environment.
 
-⚠️ As of January 2023, the [SDK for Ruby image](https://gallery.ecr.aws/aws-docs-sdk-examples/ruby) is available on ECR Public but is still
+⚠️ As of January 2023, the [SDK for Ruby image](https://gallery.ecr.aws/b4v4v1s0/ruby) is available on ECR Public but is still
 undergoing active development. Refer to
 [this GitHub issue](https://github.com/awsdocs/aws-doc-sdk-examples/issues/4124)
 for more information.

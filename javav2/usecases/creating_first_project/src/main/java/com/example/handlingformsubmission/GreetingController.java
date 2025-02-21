@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 package com.example.handlingformsubmission;
 
@@ -14,12 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class GreetingController {
+    private final DynamoDBEnhanced dde;
+    private final PublishTextSMS msg;
 
     @Autowired
-    private DynamoDBEnhanced dde;
-
-    @Autowired
-    private PublishTextSMS msg;
+    GreetingController(
+            DynamoDBEnhanced dde,
+            PublishTextSMS msg) {
+        this.dde = dde;
+        this.msg = msg;
+    }
 
     @GetMapping("/")
     public String greetingForm(Model model) {
@@ -30,12 +32,11 @@ public class GreetingController {
     @PostMapping("/greeting")
     public String greetingSubmit(@ModelAttribute Greeting greeting) {
 
-        // Persist submitted data into a DynamoDB table using the Enhanced client.
+        // Persist submitted data into a DynamoDB table.
         dde.injectDynamoItem(greeting);
 
         // Send a mobile notification.
         msg.sendMessage(greeting.getId());
-
         return "result";
     }
 }

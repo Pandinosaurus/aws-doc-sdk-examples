@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 #pragma once
 #ifndef S3_EXAMPLES_S3_GTESTS_H
@@ -34,6 +32,9 @@ namespace AwsDocTest {
         static std::unique_ptr<Aws::Client::ClientConfiguration> s_clientConfig;
 
     private:
+
+        bool suppressStdOut();
+
         static Aws::SDKOptions s_options;
 
         std::stringbuf m_coutBuffer;  // Used to silence cout.

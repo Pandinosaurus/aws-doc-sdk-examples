@@ -1,16 +1,17 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 /*
-   A class containing functions that interact with AWS services.
-   
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+ A class containing functions that interact with AWS services.
+ */
 
 // snippet-start:[iam.swift.listattachedrolepolicies.handler]
 // snippet-start:[iam.swift.listattachedrolepolicies.handler.imports]
-import Foundation
+import AWSClientRuntime
 import AWSIAM
 import ClientRuntime
-import AWSClientRuntime
+import Foundation
+
 // snippet-end:[iam.swift.listattachedrolepolicies.handler.imports]
 
 /// Errors returned by `ServiceHandler` functions.
@@ -23,59 +24,62 @@ enum ServiceHandlerError: Error {
 
 /// A class containing all the code that interacts with the AWS SDK for Swift.
 public class ServiceHandler {
-    public let client: IamClient
+    public let client: IAMClient
 
     /// Initialize and return a new ``ServiceHandler`` object, which is used
-    /// to drive the AWS calls used for the example. The Region string
-    /// `AWS_GLOBAL` is used because users are shared across all Regions.
+    /// to drive the AWS calls used for the example.
     ///
     /// - Returns: A new ``ServiceHandler`` object, ready to be called to
     ///            execute AWS operations.
     // snippet-start:[iam.swift.listattachedrolepolicies.handler.init]
-    public init() async {
+    public init() async throws {
         do {
-            client = try IamClient(region: "AWS_GLOBAL")
+            client = try await IAMClient()
         } catch {
             print("ERROR: ", dump(error, name: "Initializing Amazon IAM client"))
-            exit(1)
+            throw error
         }
     }
+
     // snippet-end:[iam.swift.listattachedrolepolicies.handler.init]
 
-    // snippet-start:[iam.swift.listattachedrolepolicies.handler.listattachedrolepolicies]
+    // snippet-start:[iam.swift.listattachedrolepolicies.handler.ListAttachedRolePolicies]
 
     /// Returns a list of AWS Identity and Access Management (IAM) policies
     /// that are attached to the role.
     ///
     /// - Parameter role: The IAM role to return the policy list for.
     ///
-    /// - Returns: An array of `IamClientTypes.AttachedPolicy` objects
+    /// - Returns: An array of `IAMClientTypes.AttachedPolicy` objects
     ///   describing each managed policy that's attached to the role.
-    public func listAttachedRolePolicies(role: String) async throws -> [IamClientTypes.AttachedPolicy] {
-        var policyList: [IamClientTypes.AttachedPolicy] = []
-        var marker: String? = nil
-        var isTruncated: Bool
-        
-        repeat {
-            let input = ListAttachedRolePoliciesInput(
-                marker: marker,
-                roleName: role
-            )
-            let output = try await client.listAttachedRolePolicies(input: input)
-            
-            guard let attachedPolicies = output.attachedPolicies else {
-                return policyList
-            }
+    public func listAttachedRolePolicies(role: String) async throws -> [IAMClientTypes.AttachedPolicy] {
+        var policyList: [IAMClientTypes.AttachedPolicy] = []
 
-            for attachedPolicy in attachedPolicies {
-                policyList.append(attachedPolicy)
+        // Use "Paginated" to get all the attached role polices.
+        // This lets the SDK handle the 'isTruncated' in "ListAttachedRolePoliciesOutput".
+        let input = ListAttachedRolePoliciesInput(
+            roleName: role
+        )
+        let output = client.listAttachedRolePoliciesPaginated(input: input)
+
+        do {
+            for try await page in output {
+                guard let attachedPolicies = page.attachedPolicies else {
+                    print("Error: no attached policies returned.")
+                    continue
+                }
+                for attachedPolicy in attachedPolicies {
+                    policyList.append(attachedPolicy)
+                }
             }
-            marker = output.marker
-            isTruncated = output.isTruncated
-        } while isTruncated == true
+        } catch {
+            print("ERROR: listAttachedRolePolicies:", dump(error))
+            throw error
+        }
+
         return policyList
     }
-    // snippet-end:[iam.swift.listattachedrolepolicies.handler.listattachedrolepolicies]
-
+    // snippet-end:[iam.swift.listattachedrolepolicies.handler.ListAttachedRolePolicies]
 }
+
 // snippet-end:[iam.swift.listattachedrolepolicies.handler]

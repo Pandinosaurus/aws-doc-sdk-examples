@@ -11,6 +11,7 @@ Shows how to send email by using an Amazon Pinpoint SMTP server.
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from os import environ
 import logging
 import smtplib
 
@@ -18,8 +19,16 @@ logger = logging.getLogger(__name__)
 
 
 def send_smtp_message(
-        smtp_server, smtp_username, smtp_password, sender, to_address, cc_address,
-        subject, html_message, text_message):
+    smtp_server,
+    smtp_username,
+    smtp_password,
+    sender,
+    to_address,
+    cc_address,
+    subject,
+    html_message,
+    text_message,
+):
     """
     Sends an email by using an Amazon Pinpoint SMTP server.
 
@@ -36,13 +45,13 @@ def send_smtp_message(
     :param text_message: The email body for recipients with non-HTML email clients.
     """
     # Create message container. The correct MIME type is multipart/alternative.
-    msg = MIMEMultipart('alternative')
-    msg['From'] = sender
-    msg['To'] = to_address
-    msg['Cc'] = cc_address
-    msg['Subject'] = subject
-    msg.attach(MIMEText(html_message, 'html'))
-    msg.attach(MIMEText(text_message, 'plain'))
+    msg = MIMEMultipart("alternative")
+    msg["From"] = sender
+    msg["To"] = to_address
+    msg["Cc"] = cc_address
+    msg["Subject"] = subject
+    msg.attach(MIMEText(html_message, "html"))
+    msg.attach(MIMEText(text_message, "plain"))
 
     smtp_server.ehlo()
     smtp_server.starttls()
@@ -60,14 +69,15 @@ def main():
     # endpoint in the appropriate AWS Region.
     host = "email-smtp.us-west-2.amazonaws.com"
     port = 587
-    sender = 'sender@example.com'
-    to_address = 'recipient@example.com'
+    sender = "sender@example.com"
+    to_address = "recipient@example.com"
     cc_address = "cc_recipient@example.com"
-    subject = 'Amazon Pinpoint Test (Python smtplib)'
+    subject = "Amazon Pinpoint Test (Python smtplib)"
     text_message = (
         "Amazon Pinpoint Test\r\n"
         "This email was sent through the Amazon Pinpoint SMTP "
-        "interface using the Python smtplib package.")
+        "interface using the Python smtplib package."
+    )
     html_message = """<html>
     <head></head>
     <body>
@@ -77,20 +87,28 @@ def main():
         <a href='https://docs.python.org/3/library/smtplib.html'>
         smtplib</a> library.</p>
     </body>
-    </html>
-                """
+    </html>"""
 
-    # Replace smtp_username and smtp_password with your Amazon Pinpoint SMTP user name
-    # and password.
+    # Replace smtp_username your &PINlong; SMTP user name.
     smtp_username = "AKIAIOSFODNN7EXAMPLE"
-    smtp_password = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+    # Use &ASMlong; to expose your &PIN; SMTP password.
+    smtp_password = environ["SMTP_PASSWORD"]
 
     print("Sending email through SMTP server.")
     try:
         with smtplib.SMTP(host, port) as smtp_server:
             send_smtp_message(
-                smtp_server, smtp_username, smtp_password, sender, to_address,
-                cc_address, subject, html_message, text_message)
+                smtp_server,
+                smtp_username,
+                smtp_password,
+                sender,
+                to_address,
+                cc_address,
+                subject,
+                html_message,
+                text_message,
+            )
     except Exception:
         logger.exception("Couldn't send message.")
         raise
@@ -98,6 +116,6 @@ def main():
         print("Email sent!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 # snippet-end:[pinpoint.python.pinpoint_send_email_smtp.complete]

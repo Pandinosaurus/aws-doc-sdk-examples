@@ -1,121 +1,139 @@
-# AWS Key Management Service examples
+# AWS KMS code examples for the SDK for Python
 
-## Purpose
+## Overview
 
-Shows how to use the AWS SDK for Python (Boto3) to create and manage AWS Key Management
-Service (AWS KMS) keys, grants, and policies.
+Shows how to use the AWS SDK for Python (Boto3) to work with AWS Key Management Service (AWS KMS).
 
-*AWS KMS is an encryption and key management service scaled for the cloud.*
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## Code examples
-
-### Scenario examples
-
-* [Encrypt and decrypt text](key_encryption.py)
-* [Manage aliases](alias_management.py)
-* [Manage grants](grant_management.py)
-* [Manage key policies](key_policies.py)
-* [Manage keys](key_management.py)
-
-### API examples
-
-* [Create a key](key_management.py)
-(`CreateKey`)
-* [Create a grant for a key](grant_management.py)
-(`CreateGrant`)
-* [Create an alias for a key](alias_management.py)
-(`CreateAlias`)
-* [Decrypt ciphertext](key_encryption.py)
-(`Decrypt`)
-* [Delete an alias](alias_management.py)
-(`DeleteAlias`)
-* [Describe a key](key_management.py)
-(`DescribeKey`)
-* [Disable a key](key_management.py)
-(`DisableKey`)
-* [Enable a key](key_management.py)
-(`EnableKey`)
-* [Encrypt text using a key](key_encryption.py)
-(`Encrypt`)
-* [Generate a plaintext data key for client-side encryption](key_management.py)
-(`GenerateDataKey`)
-* [Get a policy for a key](key_policies.py)
-(`GetKeyPolicy`)
-* [List aliases for a key](alias_management.py)
-(`ListAliases`)
-* [List grants for a key](grant_management.py)
-(`ListGrants`)
-* [List policies for a key](key_policies.py)
-(`ListKeyPolicies`)
-* [List keys](key_management.py)
-(`ListKeys`)
-* [Recencrypt ciphertext from one key to another](key_encryption.py)
-(`ReEncrypt`)
-* [Retire a grant for a key](grant_management.py)
-(`RetireGrant`)
-* [Revoke a grant for a key](grant_management.py)
-(`RevokeGrant`)
-* [Schedule deletion of a key](key_management.py)
-(`ScheduleKeyDeletion`)
-* [Set the policy for a key](key_policies.py)
-(`PutKeyPolicy`)
-* [Update the key referred to by an alias](alias_management.py)
-(`UpdateAlias`)
+_AWS KMS is an encryption and key management service scaled for the cloud._
 
 ## ⚠ Important
 
-- As an AWS best practice, grant this code least privilege, or only the 
-  permissions required to perform a task. For more information, see 
-  [Grant Least Privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege) 
-  in the *AWS Identity and Access Management 
-  User Guide*.
-- This code has not been tested in all AWS Regions. Some AWS services are 
-  available only in specific Regions. For more information, see the 
-  [AWS Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)
-  on the AWS website.
-- Running this code might result in charges to your AWS account.
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
 
-## Running the code
+<!--custom.important.start-->
+<!--custom.important.end-->
+
+## Code examples
 
 ### Prerequisites
 
-- You must have an AWS account, and have your default credentials and AWS Region
-  configured as described in the [AWS Tools and SDKs Shared Configuration and
-  Credentials Reference Guide](https://docs.aws.amazon.com/credref/latest/refdocs/creds-config-files.html).
-- Python 3.7 or later
-- Boto3 1.14.47 or later
-- PyTest 5.3.5 or later (to run unit tests)
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `python` folder.
 
-### Command
-
-Run the examples at a command prompt with commands like the following.
+Install the packages required by these examples by running the following in a virtual environment:
 
 ```
-python key_management.py
-``` 
-
-The examples are interactive scripts that ask you to input data and answer questions. 
-Some of them require an existing KMS key. You can create a key using the AWS Management
-Console or by running the `key_management.py` script and choosing to keep the key that 
-is created for the demo.
-
-## Running the tests
-
-The unit tests in this module use the botocore Stubber. This captures requests before 
-they are sent to AWS, and returns a mocked response. To run all of the tests, 
-run the following in your [GitHub root]/python/example_code/kms 
-folder.
-
-```    
-python -m pytest
+python -m pip install -r requirements.txt
 ```
 
-## Additional information
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
-- [Boto3 AWS KMS service reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kms.html)
-- [AWS Key Management Service documentation](https://docs.aws.amazon.com/kms)
+### Basics
+
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](kms_scenario.py)
+
+
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [CreateAlias](alias_management.py#L89)
+- [CreateGrant](grant_management.py#L38)
+- [CreateKey](key_management.py#L39)
+- [Decrypt](key_encryption.py#L66)
+- [DeleteAlias](alias_management.py#L172)
+- [DescribeKey](key_management.py#L110)
+- [DisableKey](key_management.py#L175)
+- [EnableKey](key_management.py#L156)
+- [EnableKeyRotation](key_management.py#L216)
+- [Encrypt](key_encryption.py#L37)
+- [GenerateDataKey](key_management.py#L132)
+- [GetKeyPolicy](key_policies.py#L62)
+- [ListAliases](alias_management.py#L113)
+- [ListGrants](grant_management.py#L67)
+- [ListKeyPolicies](key_policies.py#L39)
+- [ListKeys](key_management.py#L82)
+- [PutKeyPolicy](key_policies.py#L91)
+- [ReEncrypt](key_encryption.py#L88)
+- [RetireGrant](grant_management.py#L95)
+- [RevokeGrant](grant_management.py#L115)
+- [ScheduleKeyDeletion](key_management.py#L189)
+- [Sign](key_encryption.py#L123)
+- [TagResource](key_management.py#L235)
+- [UpdateAlias](alias_management.py#L143)
+- [Verify](key_encryption.py#L147)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+
+#### Learn the basics
+
+This example shows you how to do the following:
+
+- Create a KMS key.
+- List KMS keys for your account and get details about them.
+- Enable and disable KMS keys.
+- Generate a symmetric data key that can be used for client-side encryption.
+- Generate an asymmetric key used to digitally sign data.
+- Tag keys.
+- Delete KMS keys.
+
+<!--custom.basic_prereqs.kms_Scenario_Basics.start-->
+<!--custom.basic_prereqs.kms_Scenario_Basics.end-->
+
+Start the example by running the following at a command prompt:
+
+```
+python kms_scenario.py
+```
+
+
+<!--custom.basics.kms_Scenario_Basics.start-->
+<!--custom.basics.kms_Scenario_Basics.end-->
+
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `python` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
+
+## Additional resources
+
+- [AWS KMS Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+- [AWS KMS API Reference](https://docs.aws.amazon.com/kms/latest/APIReference/Welcome.html)
+- [SDK for Python AWS KMS reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kms.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
 
 ---
+
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 SPDX-License-Identifier: Apache-2.0

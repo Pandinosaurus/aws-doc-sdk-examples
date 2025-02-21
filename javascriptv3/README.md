@@ -30,8 +30,8 @@ Cross-service examples are located in the [_cross-services folder_](./example_co
 ### Prerequisites
 
 - Install the latest stable version of Node.js.
-
 - Set up a shared configuration file with your credentials. For more information, see the [AWS SDK for JavaScript (v3) Developer Guide](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html).
+- Install dependencies by running `npm i` from the same path as this document.
 
 ## Tests
 
@@ -39,46 +39,57 @@ Cross-service examples are located in the [_cross-services folder_](./example_co
 
 You can run tests for a specific service, or for every service in this repository. Choose whether to run unit tests, integration tests, or both.
 
-- To run both unit and integration tests for all services, run the following from this directory:
+- To run unit tests, use the following command:
 
   `npm test`
 
-- To run only unit tests, set the `TEST_SCOPE` variable to `unit`:
+- To run integration tests, use the following command:
 
-  `TEST_SCOPE=unit npm test`
-
-- To run only integration tests, set the `TEST_SCOPE` variable to `integration`:
-
-  `TEST_SCOPE=integration npm test`
+  `npm run integration-test`
 
 - To run tests for a specific service, follow the instructions in the service's README.
 
+### Output
+
+If you run tests using the preceding commands, output will be stored in `unit_test.log` or `integration_test.log`. Errors are still logged to the console.
+
+## Linting
+You can run Biome to statically check for errors.
+
+To run Biome, use the following command:
+  `npm run ci-lint`
+
 ## Docker image (Beta)
 
-This example code will soon be available in a container image
-hosted on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html). This image will be pre-loaded
-with all JavaScript v3 examples with dependencies pre-resolved, allowing you to explore
-these examples in an isolated environment.
+This example is available in a container image hosted on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html). This image will be pre-loaded with all JavaScript v3 examples with dependencies pre-resolved. It is used for running tests.
 
-⚠️ As of January 2023, the [SDK for JavaScript v3 image](https://gallery.ecr.aws/aws-docs-sdk-examples/javascriptv3) is available on ECR Public but is still
-undergoing active development. Refer to
-[this GitHub issue](https://github.com/awsdocs/aws-doc-sdk-examples/issues/4127)
-for more information.
+- [SDK for JavaScript v3 image](https://gallery.ecr.aws/b4v4v1s0/javascriptv3)
 
 ### Build the Docker image
 
 1. Install and run Docker on your machine.
-2. Navigate to the same directory as this readme.
-3. Run `docker build -t <image_name> .` and replace `image_name` with a name for the image.
+2. Navigate to the root directory of this repository.
+3. Run `docker build -t <image_name> -f javascriptv3/Dockerfile .` and replace `<image_name>` with a name for the image.
 
 ### Launch the Docker container
 
-1. Run `docker run -it -v ~/.aws/credentials:/root/.aws/credentials <image_name>`. `-it` launches an
-   interactive terminal. `-v ~/.aws...` is optional but recommended. It will mount your local credentials
-   file to the container.
-2. The terminal initiates a bash instance at the root of the container. Run `cd javascriptv3` and then you
-   can run tests from here by following the steps in the [Tests](#tests) section. Run examples by navigating
-   to a service folder and following the README instructions there.
+1. Run `docker run -it -v /Users/corepyle/.aws/credentials:/home/automation/.aws/credentials <image_name>`. `-it` launches an interactive terminal. `-v ~/.aws...` is optional but recommended. It will mount your local credentials file to the container.
+2. The Dockerfile is configured to automatically run integration tests when the container is run.
+
+## Contribute
+
+Contributions are welcome. To increase the likelihood of your contribution being accepted, please adhere to the [JavaScript standards](https://github.com/awsdocs/aws-doc-sdk-examples/wiki/JavaScript-code-example-standards)
+
+### Create tests
+
+Every example should be covered by an integration test. Each integration test must
+run the example and verify that it ran correctly.
+
+## Configure Visual Studio Code (VS Code)
+
+### Biome
+
+To configure Biome in VS Code, follow the instructions here: https://biomejs.dev/guides/getting-started/
 
 ## Additional resources
 

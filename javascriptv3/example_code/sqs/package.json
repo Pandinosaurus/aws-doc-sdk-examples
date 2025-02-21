@@ -1,18 +1,17 @@
 {
-  "name": "aws-sdk-v3-iam-examples",
+  "name": "@aws-doc-sdk-examples/example-javascriptv3-sqs",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com/awsdocs/aws-doc-sdk-examples/tree/master/javascriptv3/example_code/iam.git",
-  "author": "Brian Murray <brmur@amazon.com>, Alex Forsyth <alex-git@amazon.com>",
-  "license": "Apache 2.0",
+  "author": "Corey Pyle <corepyle@amazon.com>",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "integration-test": "vitest run integration --reporter=junit --outputFile=test_results/sqs-test-results.junit.xml"
+  },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.32.0",
-    "@aws-sdk/node-http-handler": "^3.32.0",
-    "@aws-sdk/types": "^3.32.0",
-    "ts-node": "^9.0.0"
+    "@aws-doc-sdk-examples/lib": "^1.0.0",
+    "@aws-sdk/client-sqs": "^3.332.0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.23",
-    "typescript": "^4.0.2"
+    "vitest": "^1.6.0"
   }
 }

@@ -1,58 +1,150 @@
+# Amazon SNS code examples for the SDK for JavaScript (v3)
 
-# Amazon Simple Notification Service (SNS) JavaScript SDK v3 code examples
-Amazon SNS is a fully managed messaging service for both system-to-system and app-to-person (A2P) communication. 
+## Overview
+
+Shows how to use the AWS SDK for JavaScript (v3) to work with Amazon Simple Notification Service (Amazon SNS).
+
+<!--custom.overview.start-->
+<!--custom.overview.end-->
+
+_Amazon SNS is a web service that enables applications, end-users, and devices to instantly send and receive notifications from the cloud._
+
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
-This is a workspace where you can find AWS SDK for JavaScript version 3 (v3) Amazon SNS examples.
 
-- [Check phone opt out](src/sns_checkphoneoptout.js)
-- [Confirm a subscription](src/sns_confirmsubscription.js)
-- [Create a topic](src/sns_createtopic.js)
-- [Delete a topic](src/sns_deletetopic.js)
-- [Get SMS type](src/sns_getsmstype.js)
-- [Get topic attributes](src/sns_gettopicattributes.js)
-- [List opted out numbers](src/sns_listnumbersoptedout.js)
-- [List subscriptions](src/sns_listsubscriptions.js)
-- [List topics](src/sns_listtopics.js)
-- [Publish SMS](src/sns_publishsms.js)
-- [Publish to topics](src/sns_publishtotopic.js)
-- [Set SMS type](src/sns_setsmstype.js)
-- [Set topic attributes](src/sns_settopicattributes.js)
-- [Subscribe to an app](src/sns_subscribeapp.js)
-- [Subscribe to an email](src/sns_subscribeemail.js)
-- [Subscribe to Lambda](src/sns_subscribelambda.js)
-- [Unscribe](src/sns_unsubscribe.js)
+### Prerequisites
 
-**Note**: All code examples are written in ECMAscript 6 (ES6). For guidelines on converting to CommonJS, see 
-[JavaScript ES6/CommonJS syntax](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sdk-example-javascript-syntax.html).
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `javascriptv3` folder.
 
 
-## Getting started
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
-1. Clone the [AWS SDK Code Samples repo](https://github.com/awsdocs/aws-doc-sdk-examples) to your local environment. See [the Github documentation](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for instructions.
+### Get started
 
-2. Install the dependencies listed in the package.json.
+- [Hello Amazon SNS](hello.js#L6) (`ListTopics`)
 
-**Note**: These include the client module for the AWS services required in these example, 
-which is "@aws-sdk/client-sns".
+
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [CheckIfPhoneNumberIsOptedOut](libs/snsClient.js#L4)
+- [ConfirmSubscription](libs/snsClient.js#L4)
+- [CreateTopic](libs/snsClient.js#L4)
+- [DeleteTopic](libs/snsClient.js#L4)
+- [GetSMSAttributes](libs/snsClient.js#L4)
+- [GetTopicAttributes](libs/snsClient.js#L4)
+- [ListSubscriptions](libs/snsClient.js#L4)
+- [ListTopics](libs/snsClient.js#L4)
+- [Publish](libs/snsClient.js#L4)
+- [SetSMSAttributes](libs/snsClient.js#L4)
+- [SetTopicAttributes](libs/snsClient.js#L4)
+- [Subscribe](libs/snsClient.js#L4)
+- [Unsubscribe](libs/snsClient.js#L4)
+
+### Scenarios
+
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
+
+- [Publish messages to queues](../cross-services/wkflw-topics-queues/index.js)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+**Note**: All code examples are written in ECMAscript 6 (ES6). For guidelines on converting to CommonJS, see
+[JavaScript ES6/CommonJS syntax](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sdk-examples-javascript-syntax.html).
+
+**Run a single action**
+
+```bash
+node ./actions/<fileName>
 ```
-npm install node -g
-cd javascriptv3/example_code/sns
-npm install
+
+**Run a scenario**
+
+Most scenarios can be run with the following command:
+```bash
+node ./scenarios/<fileName>
+```
+
+**Run with options**
+
+Some actions and scenarios can be run with options from the command line:
+```bash
+node ./scenarios/<fileName> --option1 --option2
+```
+[util.parseArgs](https://nodejs.org/api/util.html#utilparseargsconfig) is used to configure
+these options. For the specific options available to each script, see the `parseArgs` usage
+for that file.
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+#### Hello Amazon SNS
+
+This example shows you how to get started using Amazon SNS.
+
+```bash
+node ./hello.js
 ```
 
 
+#### Publish messages to queues
 
-3. In your text editor, update user variables specified in the ```Inputs``` section of the sample file.
+This example shows you how to do the following:
 
-4. Run sample code:
-```
-cd src
-node [example name].js // For example, node sns_checkphoneoptout.js
-```
+- Create topic (FIFO or non-FIFO).
+- Subscribe several queues to the topic with an option to apply a filter.
+- Publish messages to the topic.
+- Poll the queues for messages received.
 
-## Resources
-- [AWS SDK for JavaScript v3](https://github.com/aws/aws-sdk-js-v3) 
-- [AWS SDK for JavaScript v3 Developer Guide](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sns-examples.html) 
-- [AWS SDK for JavaScript v3 API Reference Guide](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-sns/index.html) 
+<!--custom.scenario_prereqs.sqs_Scenario_TopicsAndQueues.start-->
+<!--custom.scenario_prereqs.sqs_Scenario_TopicsAndQueues.end-->
 
+
+<!--custom.scenarios.sqs_Scenario_TopicsAndQueues.start-->
+<!--custom.scenarios.sqs_Scenario_TopicsAndQueues.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `javascriptv3` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
+
+## Additional resources
+
+- [Amazon SNS Developer Guide](https://docs.aws.amazon.com/sns/latest/dg/welcome.html)
+- [Amazon SNS API Reference](https://docs.aws.amazon.com/sns/latest/api/welcome.html)
+- [SDK for JavaScript (v3) Amazon SNS reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/sns)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
+
+---
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0

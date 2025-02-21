@@ -1,5 +1,5 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace FaceRekognitionExampleTests
 {
@@ -16,14 +16,14 @@ namespace FaceRekognitionExampleTests
         private const string _filename = "test.png";
 
         [Fact]
+        [Trait("Category", "Unit")]
         public async Task IdentifyFacesTests()
         {
             var mockClient = new Mock<AmazonRekognitionClient>();
 
             mockClient.Setup(client => client.DetectFacesAsync(
                 It.IsAny<DetectFacesRequest>(),
-                It.IsAny<CancellationToken>()
-            )).Returns((DetectFacesRequest r, CancellationToken token) =>
+                It.IsAny<CancellationToken>())).Returns((DetectFacesRequest r, CancellationToken token) =>
             {
                 return Task.FromResult(new DetectFacesResponse()
                 {
@@ -52,14 +52,14 @@ namespace FaceRekognitionExampleTests
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public async Task IdentifyCelebretiesTest()
         {
             var mockClient = new Mock<AmazonRekognitionClient>();
 
             mockClient.Setup(client => client.RecognizeCelebritiesAsync(
                 It.IsAny<RecognizeCelebritiesRequest>(),
-                It.IsAny<CancellationToken>()
-            )).Returns((RecognizeCelebritiesRequest r, CancellationToken token) =>
+                It.IsAny<CancellationToken>())).Returns((RecognizeCelebritiesRequest r, CancellationToken token) =>
             {
                 return Task.FromResult(new RecognizeCelebritiesResponse()
                 {

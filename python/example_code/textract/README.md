@@ -1,84 +1,119 @@
-# Amazon Textract example
+# Amazon Textract code examples for the SDK for Python
 
-## Purpose
+## Overview
 
-Shows how to use the AWS SDK for Python (Boto3) with Amazon Textract to detect text, 
-form, and table elements in a document image. 
+Shows how to use the AWS SDK for Python (Boto3) to work with Amazon Textract.
 
-*Amazon Textract enables you to add document text detection and analysis to your 
-applications.*
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## Code examples
-
-### API examples
-
-* [Analyze a document](textract_wrapper.py)
-(`AnalyzeDocument`)
-* [Detect text in a document](textract_wrapper.py)
-(`DetectDocumentText`)
-* [Get data about a document analysis job](textract_wrapper.py)
-(`GetDocumentAnalysis`)
-* [Start asynchronous analysis of a document](textract_wrapper.py)
-(`StartDocumentAnalysis`)
-* [Start asynchronous detection of text in a document](textract_wrapper.py)
-(`StartDocumentTextDetection`)
+_Amazon Textract enables you to add document text detection and analysis to your applications._
 
 ## ⚠ Important
 
-- As an AWS best practice, grant this code least privilege, or only the 
-  permissions required to perform a task. For more information, see 
-  [Grant Least Privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege) 
-  in the *AWS Identity and Access Management 
-  User Guide*.
-- This code has not been tested in all AWS Regions. Some AWS services are 
-  available only in specific Regions. For more information, see the 
-  [AWS Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)
-  on the AWS website.
-- Running this code might result in charges to your AWS account.
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
 
-## Running the code
+<!--custom.important.start-->
+<!--custom.important.end-->
+
+## Code examples
 
 ### Prerequisites
 
-- You must have an AWS account, and have your default credentials and AWS Region
-  configured as described in the [AWS Tools and SDKs Shared Configuration and
-  Credentials Reference Guide](https://docs.aws.amazon.com/credref/latest/refdocs/creds-config-files.html).
-- Python 3.8.8 or later
-- Boto3 1.16.49 or later
-- PyTest 6.0.2 or later (to run unit tests)
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `python` folder.
 
-### Command
+Install the packages required by these examples by running the following in a virtual environment:
 
-This example shows how to implement basic Amazon Textract operations. 
-
-For an interactive Tkinter application that displays extracted data in a visual form, see 
-[python/cross_service/textract_explorer](https://github.com/awsdocs/aws-doc-sdk-examples/tree/master/python/cross_service/textract_explorer). 
-
-### Example structure
-
-The example contains the following file.
-
-**textract_wrapper.py**
-
-Wraps Textract, Amazon S3, and Amazon SQS functions.
-
-## Running the tests
-
-The unit tests in this module use the botocore Stubber. The Stubber captures requests 
-before they are sent to AWS, and returns a mocked response. To run all of the tests, 
-run the following command in your 
-[GitHub root]/python/example_code/textract folder.
-
-```    
-python -m pytest
+```
+python -m pip install -r requirements.txt
 ```
 
-## Additional information
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
-- [Boto3 Amazon Textract reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/textract.html)
-- [Amazon Textract Documentation](https://docs.aws.amazon.com/textract/)
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [AnalyzeDocument](textract_wrapper.py#L61)
+- [DetectDocumentText](textract_wrapper.py#L34)
+- [GetDocumentAnalysis](textract_wrapper.py#L255)
+- [StartDocumentAnalysis](textract_wrapper.py#L207)
+- [StartDocumentTextDetection](textract_wrapper.py#L145)
+
+### Scenarios
+
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
+
+- [Create an Amazon Textract explorer application](../../cross_service/textract_explorer)
+- [Detect entities in text extracted from an image](../../cross_service/textract_comprehend_notebook)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+
+
+#### Create an Amazon Textract explorer application
+
+This example shows you how to explore Amazon Textract output through an interactive application.
+
+
+<!--custom.scenario_prereqs.cross_TextractExplorer.start-->
+<!--custom.scenario_prereqs.cross_TextractExplorer.end-->
+
+
+<!--custom.scenarios.cross_TextractExplorer.start-->
+<!--custom.scenarios.cross_TextractExplorer.end-->
+
+#### Detect entities in text extracted from an image
+
+This example shows you how to use Amazon Comprehend to detect entities in text extracted by Amazon Textract from an image that is stored in Amazon S3.
+
+
+<!--custom.scenario_prereqs.cross_TextractComprehendDetectEntities.start-->
+<!--custom.scenario_prereqs.cross_TextractComprehendDetectEntities.end-->
+
+
+<!--custom.scenarios.cross_TextractComprehendDetectEntities.start-->
+<!--custom.scenarios.cross_TextractComprehendDetectEntities.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `python` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
+
+## Additional resources
+
+- [Amazon Textract Developer Guide](https://docs.aws.amazon.com/textract/latest/dg/what-is.html)
+- [Amazon Textract API Reference](https://docs.aws.amazon.com/textract/latest/dg/API_Reference.html)
+- [SDK for Python Amazon Textract reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/textract.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
 
 ---
+
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 SPDX-License-Identifier: Apache-2.0

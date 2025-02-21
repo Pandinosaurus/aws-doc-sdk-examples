@@ -35,14 +35,20 @@ def start_model(lookoutvision_client, project_name, version):
         print(f"python inference.py {project_name} {version} <your_image>")
         print(
             "\nStop your model when you're done. You're charged while it's running. "
-            "See hosting.py")
+            "See hosting.py"
+        )
     else:
         print("Not starting model.")
 
 
 def create_dataset(
-        lookoutvision_client, s3_resource, bucket, project_name, dataset_images,
-        dataset_type):
+    lookoutvision_client,
+    s3_resource,
+    bucket,
+    project_name,
+    dataset_images,
+    dataset_type,
+):
     """
     Creates a manifest from images in the supplied bucket and then creates
     a dataset.
@@ -61,9 +67,10 @@ def create_dataset(
     logger.info("Creating %s manifest file in %s.", dataset_type, manifest_file)
     Datasets.create_manifest_file_s3(s3_resource, dataset_images, manifest_file)
 
-    logger.info("Create %s dataset for project %s", dataset_type,project_name)
+    logger.info("Create %s dataset for project %s", dataset_type, project_name)
     Datasets.create_dataset(
-        lookoutvision_client, project_name, manifest_file, dataset_type)
+        lookoutvision_client, project_name, manifest_file, dataset_type
+    )
 
 
 def train_model(lookoutvision_client, bucket, project_name):
@@ -77,16 +84,19 @@ def train_model(lookoutvision_client, bucket, project_name):
     print("Training model...")
     training_results = f"{bucket}/{project_name}/output/"
     status, version = Models.create_model(
-        lookoutvision_client, project_name, training_results)
+        lookoutvision_client, project_name, training_results
+    )
 
     Models.describe_model(lookoutvision_client, project_name, version)
     if status == "TRAINED":
         print(
             "\nCheck the performance metrics and decide if you need to improve "
-            "the model performance.")
+            "the model performance."
+        )
         print(
             "\nMore information: "
-            "https://docs.aws.amazon.com/lookout-for-vision/latest/developer-guide/improve.html")
+            "https://docs.aws.amazon.com/lookout-for-vision/latest/developer-guide/improve.html"
+        )
         print("If you are satisfied with your model, you can start it.")
         start_model(lookoutvision_client, project_name, version)
     else:
@@ -101,36 +111,56 @@ def main():
     A new project, training dataset, optional test dataset, and model are created.
     After model training is completed, you can use the code in inference.py to try your
     model with an image.
+    For the training and test folders, place normal images in a folder named normal and
+    anomalous images in a folder named anomaly.
+    Make sure that bucket and the training/test Amazon S3 paths are in the same AWS Region.
     """
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     parser = argparse.ArgumentParser(usage=argparse.SUPPRESS)
     parser.add_argument("project", help="A unique name for your project")
     parser.add_argument(
         "bucket",
-        help="The bucket used to upload your manifest files and store training output")
+        help="The bucket used to upload your manifest files and store training output",
+    )
     parser.add_argument(
-        "training", help="The S3 path where the service gets the training images.")
+        "training",
+        help="The Amazon S3 path where the service gets the training images. ",
+    )
     parser.add_argument(
-        "test", nargs="?", default=None,
-        help="(Optional) The S3 path where the service gets the test images.")
+        "test",
+        nargs="?",
+        default=None,
+        help="(Optional) The Amazon S3 path where the service gets the test images.",
+    )
     args = parser.parse_args()
 
     project_name = args.project
     bucket = args.bucket
     training_images = args.training
     test_images = args.test
-    lookoutvision_client = boto3.client("lookoutvision")
-    s3_resource = boto3.resource("s3")
+
+    session = boto3.Session(profile_name="lookoutvision-access")
+
+    lookoutvision_client = session.client("lookoutvision")
+
+    s3_resource = session.resource("s3")
 
     print(f"Storing information in s3://{bucket}/{project_name}/")
     print("Creating project...")
     Projects.create_project(lookoutvision_client, project_name)
 
     create_dataset(
-        lookoutvision_client, s3_resource, bucket, project_name, training_images, "train")
+        lookoutvision_client,
+        s3_resource,
+        bucket,
+        project_name,
+        training_images,
+        "train",
+    )
     if test_images is not None:
         create_dataset(
-            lookoutvision_client, s3_resource, bucket, project_name, test_images, "test")
+            lookoutvision_client, s3_resource, bucket, project_name, test_images, "test"
+        )
 
     # Train the model and optionally start hosting.
     train_model(lookoutvision_client, bucket, project_name)

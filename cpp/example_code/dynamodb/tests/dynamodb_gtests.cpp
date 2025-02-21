@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 #include "dynamodb_gtests.h"
 #include <aws/dynamodb/DynamoDBClient.h>
@@ -59,8 +57,10 @@ void AwsDocTest::DynamoDB_GTests::TearDownTestSuite() {
 }
 
 void AwsDocTest::DynamoDB_GTests::SetUp() {
-    m_savedOutBuffer = std::cout.rdbuf();
-    std::cout.rdbuf(&m_coutBuffer);
+    if (suppressStdOut()) {
+        m_savedOutBuffer = std::cout.rdbuf();
+        std::cout.rdbuf(&m_coutBuffer);
+    }
 
     m_savedInBuffer = std::cin.rdbuf();
     std::cin.rdbuf(&m_cinBuffer);
@@ -253,6 +253,10 @@ bool AwsDocTest::DynamoDB_GTests::deleteItem(const Aws::String &tableName,
     }
 
     return outcome.IsSuccess();
+}
+
+bool AwsDocTest::DynamoDB_GTests::suppressStdOut() {
+    return std::getenv("EXAMPLE_TESTS_LOG_ON") == nullptr;
 }
 
 int AwsDocTest::MyStringBuffer::underflow() {

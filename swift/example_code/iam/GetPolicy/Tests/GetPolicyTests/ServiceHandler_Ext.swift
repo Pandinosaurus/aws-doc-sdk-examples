@@ -1,9 +1,9 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 /*
    Extensions to the `ServiceHandler` class to handle tasks we need
    for testing that aren't the purpose of this example.
-
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
 */
 
 import Foundation
@@ -22,9 +22,9 @@ public extension ServiceHandler {
     ///   - name: The name of the new policy.
     ///   - policyDocument: The policy document to assign to the new policy
     ///
-    /// - Returns: A `IamClientTypes.Policy` describing the new policy.
+    /// - Returns: A `IAMClientTypes.Policy` describing the new policy.
     ///
-    func createPolicy(name: String, policyDocument: String) async throws -> IamClientTypes.Policy {
+    func createPolicy(name: String, policyDocument: String) async throws -> IAMClientTypes.Policy {
         let input = CreatePolicyInput(
             policyDocument: policyDocument,
             policyName: name
@@ -34,9 +34,9 @@ public extension ServiceHandler {
             guard let policy = output.policy else {
                 throw ServiceHandlerError.noSuchPolicy
             }
-            guard   let policyName = policy.policyName,
-                    let policyID = policy.policyId,
-                    let policyARN = policy.arn else {
+            guard   let _ = policy.policyName,
+                    let _ = policy.policyId,
+                    let _ = policy.arn else {
                 throw ServiceHandlerError.noSuchPolicy
             }
             return policy
@@ -47,9 +47,9 @@ public extension ServiceHandler {
 
     /// Delete an IAM policy.
     ///
-    /// - Parameter name: The `IamClientTypes.Policy` describing the policy to
+    /// - Parameter name: The `IAMClientTypes.Policy` describing the policy to
     ///   delete.
-    func deletePolicy(policy: IamClientTypes.Policy) async throws {
+    func deletePolicy(policy: IAMClientTypes.Policy) async throws {
         let input = DeletePolicyInput(
             policyArn: policy.arn
         )

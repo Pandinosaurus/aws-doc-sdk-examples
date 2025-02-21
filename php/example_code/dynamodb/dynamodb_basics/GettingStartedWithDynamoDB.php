@@ -1,5 +1,4 @@
 <?php
-
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -21,7 +20,7 @@
  *
  * Alternatively, you can have the choices automatically selected by running the file as part of a PHPUnit test with the
  * following:
- * vendor\bin\phpunit DynamoDBBasicsTests.php
+ * vendor\bin\phpunit DynamoDBBasicsTest.php
  *
  **/
 
@@ -33,10 +32,14 @@ use DynamoDb;
 use DynamoDb\DynamoDBAttribute;
 use DynamoDb\DynamoDBService;
 
+use function AwsUtilities\loadMovieData;
+use function AwsUtilities\testable_readline;
+
 class GettingStartedWithDynamoDB
 {
     public function run()
     {
+        echo("\n");
         echo("--------------------------------------\n");
         print("Welcome to the Amazon DynamoDB getting started demo using PHP!\n");
         echo("--------------------------------------\n");
@@ -123,7 +126,6 @@ class GettingStartedWithDynamoDB
 
         $batch = json_decode(loadMovieData());
 
-        $limit = 0;
         $service->writeBatch($tableName, $batch);
 
 # snippet-start:[php.example_code.dynamodb.basics.getItem]

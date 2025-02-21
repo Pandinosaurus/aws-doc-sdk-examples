@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace ListCollectionsExample
 {
@@ -10,9 +10,8 @@ namespace ListCollectionsExample
     using Amazon.Rekognition.Model;
 
     /// <summary>
-    /// Uses the Amazpon Rekognition Service to list the collection IDs in the
-    /// default user account. This example was crated using the AWS SDK for
-    /// .NET version 3.7 and .NET Core 5.0.
+    /// Uses Amazon Rekognition to list the collection IDs in the
+    /// current account.
     /// </summary>
     public class ListCollections
     {
@@ -47,5 +46,6 @@ namespace ListCollectionsExample
             while (listCollectionsResponse.NextToken is not null);
         }
     }
+
     // snippet-end:[Rekognition.dotnetv3.ListCollectionsExample]
 }

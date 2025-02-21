@@ -1,10 +1,9 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace CreateTablesLoadDataExample
 {
     // snippet-start:[dynamodb.dotnetv3.CreateTablesLoadDataExample]
-
     using System;
     using System.Collections.Generic;
     using System.Net;
@@ -15,8 +14,7 @@ namespace CreateTablesLoadDataExample
 
     /// <summary>
     /// This example creates several Amazon DynamoDB tables and then adds
-    /// sample data to each table. The code was written using AWS SDK for
-    /// .NET version 3.7 and .NET Core 5.0.
+    /// sample data to each table.
     /// </summary>
     public class CreateTablesLoadData
     {
@@ -77,7 +75,7 @@ namespace CreateTablesLoadDataExample
             new AttributeDefinition
             {
               AttributeName = "Id",
-              AttributeType = "N",
+              AttributeType = ScalarAttributeType.N,
             },
           },
                 KeySchema = new List<KeySchemaElement>()
@@ -85,7 +83,7 @@ namespace CreateTablesLoadDataExample
             new KeySchemaElement
             {
               AttributeName = "Id",
-              KeyType = "HASH",
+              KeyType = KeyType.HASH,
             },
           },
                 ProvisionedThroughput = new ProvisionedThroughput
@@ -118,7 +116,7 @@ namespace CreateTablesLoadDataExample
             new AttributeDefinition
             {
               AttributeName = "Name",
-              AttributeType = "S",
+              AttributeType = ScalarAttributeType.S,
             },
           },
                 KeySchema = new List<KeySchemaElement>()
@@ -126,7 +124,7 @@ namespace CreateTablesLoadDataExample
             new KeySchemaElement
             {
               AttributeName = "Name",
-              KeyType = "HASH",
+              KeyType = KeyType.HASH,
             },
           },
                 ProvisionedThroughput = new ProvisionedThroughput
@@ -160,12 +158,12 @@ namespace CreateTablesLoadDataExample
             new AttributeDefinition
             {
               AttributeName = "ForumName", // Hash attribute.
-              AttributeType = "S",
+              AttributeType = ScalarAttributeType.S,
             },
             new AttributeDefinition
             {
               AttributeName = "Subject",
-              AttributeType = "S",
+              AttributeType = ScalarAttributeType.S,
             },
           },
                 KeySchema = new List<KeySchemaElement>()
@@ -173,12 +171,12 @@ namespace CreateTablesLoadDataExample
             new KeySchemaElement
             {
               AttributeName = "ForumName", // Hash attribute
-              KeyType = "HASH",
+              KeyType = KeyType.HASH,
             },
             new KeySchemaElement
             {
               AttributeName = "Subject", // Range attribute
-              KeyType = "RANGE",
+              KeyType = KeyType.RANGE,
             },
           },
                 ProvisionedThroughput = new ProvisionedThroughput
@@ -210,17 +208,17 @@ namespace CreateTablesLoadDataExample
             new AttributeDefinition
             {
               AttributeName = "Id",
-              AttributeType = "S",
+              AttributeType = ScalarAttributeType.S,
             },
             new AttributeDefinition
             {
               AttributeName = "ReplyDateTime",
-              AttributeType = "S",
+              AttributeType = ScalarAttributeType.S,
             },
             new AttributeDefinition
             {
               AttributeName = "PostedBy",
-              AttributeType = "S",
+              AttributeType = ScalarAttributeType.S,
             },
           },
                 KeySchema = new List<KeySchemaElement>()
@@ -228,12 +226,12 @@ namespace CreateTablesLoadDataExample
             new KeySchemaElement()
             {
               AttributeName = "Id",
-              KeyType = "HASH",
+              KeyType = KeyType.HASH,
             },
             new KeySchemaElement()
             {
               AttributeName = "ReplyDateTime",
-              KeyType = "RANGE",
+              KeyType = KeyType.RANGE,
             },
           },
                 LocalSecondaryIndexes = new List<LocalSecondaryIndex>()
@@ -245,11 +243,11 @@ namespace CreateTablesLoadDataExample
               {
                 new KeySchemaElement()
                 {
-                  AttributeName = "Id", KeyType = "HASH",
+                  AttributeName = "Id", KeyType = KeyType.HASH,
                 },
                 new KeySchemaElement()
                 {
-                  AttributeName = "PostedBy", KeyType = "RANGE",
+                  AttributeName = "PostedBy", KeyType = KeyType.RANGE,
                 },
               },
               Projection = new Projection()

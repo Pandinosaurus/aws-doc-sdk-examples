@@ -1,78 +1,105 @@
-# AWS Glue code examples for the AWS SDK for Python
+# AWS Glue code examples for the SDK for Python
 
 ## Overview
 
-Shows how to use the AWS SDK for Python (Boto3) to manage AWS Glue resources.
+Shows how to use the AWS SDK for Python (Boto3) to work with AWS Glue.
 
-*AWS Glue is a serverless data-preparation service for extract, transform, and load 
-(ETL) operations.*
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## ⚠️ Important
+_AWS Glue is a scalable, serverless data integration service that makes it easy to discover, prepare, and combine data for analytics, machine learning, and application development._
 
-* Running this code might result in charges to your AWS account. 
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
 * Running the tests might result in charges to your AWS account.
-* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege). 
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
 * This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
 
-### Single action
+### Prerequisites
 
-* [Create a crawler](glue_wrapper.py)
-(`CreateCrawler`)
-* [Create a job definition](glue_wrapper.py)
-(`CreateJob`)
-* [Delete a crawler](glue_wrapper.py)
-(`DeleteJob`)
-* [Delete a database from the AWS Glue Data Catalog](glue_wrapper.py)
-(`DeleteDatabase`)
-* [Delete a job definition](glue_wrapper.py)
-(`DeleteJob`)
-* [Delete a table from a database](glue_wrapper.py)
-(`DeleteTable`)
-* [Get a crawler](glue_wrapper.py)
-(`GetCrawler`)
-* [Get a database from the AWS Glue Data Catalog](glue_wrapper.py)
-(`GetDatabase`)
-* [Get a job run](glue_wrapper.py)
-(`GetJobRun`)
-* [Get runs of a job](glue_wrapper.py)
-(`GetJobRuns`)
-* [Get tables from a database](glue_wrapper.py)
-(`GetTables`)
-* [List job definitions](glue_wrapper.py)
-(`ListJobs`)
-* [Start a crawler](glue_wrapper.py)
-(`StartCrawler`)
-* [Start a job run](glue_wrapper.py)
-(`StartJobRun`)
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `python` folder.
 
-### Scenarios
+Install the packages required by these examples by running the following in a virtual environment:
 
-* [Get started running crawlers and jobs](scenario_getting_started_crawlers_and_jobs.py)
+```
+python -m pip install -r requirements.txt
+```
 
-## Running the examples
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
-### Get started running crawlers and jobs scenario
+### Get started
 
-This interactive scenario runs at a command prompt and shows you how to use 
-AWS Glue to do the following:
+- [Hello AWS Glue](hello/hello_glue.py#L4) (`ListJobs`)
 
-1. Create and run a crawler that crawls a public Amazon Simple Storage
-   Service (Amazon S3) bucket and generates a metadata database that describes the
-   CSV-formatted data it finds.
-2. List information about databases and tables in your AWS Glue Data Catalog.
-3. Create and run a job that extracts CSV data from the source Amazon S3 bucket,
-   transforms it by removing and renaming fields, and loads JSON-formatted output into
-   another S3 bucket.
-4. List information about job runs and view some of the transformed data.
-5. Delete all resources created by the demo.
 
-This scenario requires the following scaffold resources that are defined in the
+### Basics
+
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](glue_wrapper.py)
+
+
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [CreateCrawler](glue_wrapper.py#L57)
+- [CreateJob](glue_wrapper.py#L159)
+- [DeleteCrawler](glue_wrapper.py#L367)
+- [DeleteDatabase](glue_wrapper.py#L347)
+- [DeleteJob](glue_wrapper.py#L305)
+- [DeleteTable](glue_wrapper.py#L326)
+- [GetCrawler](glue_wrapper.py#L30)
+- [GetDatabase](glue_wrapper.py#L113)
+- [GetJobRun](glue_wrapper.py#L280)
+- [GetJobRuns](glue_wrapper.py#L256)
+- [GetTables](glue_wrapper.py#L136)
+- [ListJobs](glue_wrapper.py#L235)
+- [StartCrawler](glue_wrapper.py#L92)
+- [StartJobRun](glue_wrapper.py#L196)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+#### Hello AWS Glue
+
+This example shows you how to get started using AWS Glue.
+
+```
+python hello/hello_glue.py
+```
+
+#### Learn the basics
+
+This example shows you how to do the following:
+
+- Create a crawler that crawls a public Amazon S3 bucket and generates a database of CSV-formatted metadata.
+- List information about databases and tables in your AWS Glue Data Catalog.
+- Create a job to extract CSV data from the S3 bucket, transform the data, and load JSON-formatted output into another S3 bucket.
+- List information about job runs, view transformed data, and clean up resources.
+
+<!--custom.basic_prereqs.glue_Scenario_GetStartedCrawlersJobs.start-->
+This example requires the following scaffold resources that are defined in the
 accompanying AWS CloudFormation script `setup_scenario_getting_started.yaml`.
 
-* An Amazon S3 bucket that can contain the Python ETL job script and can receive 
-output data.
+* An Amazon Simple Storage Service (Amazon S3) bucket that can contain the Python ETL 
+job script and receive output data.
 * An AWS Identity and Access Management (IAM) role that can be assumed by AWS Glue. 
 The role must grant read-write access to the S3 bucket and standard rights needed by 
 AWS Glue.
@@ -91,40 +118,51 @@ Outputs:
         BucketName: doc-example-glue-scenario-docexampleglue6e2f12e5-3zjkuexample
 ```
 
-Start the scenario at a command prompt, passing the role and bucket name to it.
+If you prefer, you can deploy and destroy scaffold resources by using the AWS Cloud
+Development Kit (AWS CDK). To do this, run `cdk deploy` or `cdk destroy` in the
+[/resources/cdk/glue_role_bucket](/resources/cdk/glue_role_bucket) folder.
+<!--custom.basic_prereqs.glue_Scenario_GetStartedCrawlersJobs.end-->
+
+Start the example by running the following at a command prompt:
 
 ```
-python scenario_getting_started_crawler_and_jobs.py AWSGlueServiceRole-DocExample doc-example-glue-scenario-docexampleglue6e2f12e5-3zjkuexample
+python glue_wrapper.py
 ```
 
-Destroy scaffold resources at a command prompt.
+
+<!--custom.basics.glue_Scenario_GetStartedCrawlersJobs.start-->
+After the example is done, destroy scaffold resources at a command prompt.
 
 ```
 python scaffold.py destroy
 ```
+<!--custom.basics.glue_Scenario_GetStartedCrawlersJobs.end-->
 
-If you prefer, you can deploy and destroy scaffold resources by using the AWS Cloud
-Development Kit (AWS CDK). To do this, run `cdk deploy` or `cdk destroy` in the
-[/resources/cdk/glue_role_bucket](/resources/cdk/glue_role_bucket) folder.
 
-### Prerequisites
+### Tests
 
-Prerequisites for running the examples for this service can be found in the 
-[README](../../README.md#Prerequisites) in the Python folder.
+⚠ Running tests might result in charges to your AWS account.
 
-## Tests
 
-Instructions for running the tests for this service can be found in the
-[README](../../README.md#Tests) in the Python folder.
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `python` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
 
 ## Additional resources
 
-* [AWS Glue Developer Guide](https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html)
-* [AWS Glue API Reference](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api.html)
-* [AWS SDK for Python Glue Client](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue.html)
+- [AWS Glue Developer Guide](https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html)
+- [AWS Glue API Reference](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api.html)
+- [SDK for Python AWS Glue reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
 
 ---
 
-Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 SPDX-License-Identifier: Apache-2.0

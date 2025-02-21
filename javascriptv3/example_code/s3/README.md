@@ -1,82 +1,254 @@
-#  Amazon S3 JavaScript SDK v3 code examples
-The code examples in this directory demonstrate how to work with Amazon Simple Storage Service (Amazon S3) using the AWS SDK for JavaScript version 3 (v3).
+# Amazon S3 code examples for the SDK for JavaScript (v3)
 
-Amazon S3 is an object storage service that offers industry-leading scalability, data availability, security, and performance.
+## Overview
+
+Shows how to use the AWS SDK for JavaScript (v3) to work with Amazon Simple Storage Service (Amazon S3).
+
+<!--custom.overview.start-->
+<!--custom.overview.end-->
+
+_Amazon S3 is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web._
+
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
-In this workspace, you can find the following AWS SDK for JavaScript version 3 (v3) examples for Amazon S3:
-### Scenario examples
-- [S3_basics](scenarios/s3_basics/src/s3_basics.js) 
-
-### Single action examples
-- [Copy object](src/s3_copyobject.js) (CopyObjectCommand)
-- [Create and upload objects](src/s3_create_and_upload_objects.js) (PutObjectCommand)
-- [Create a bucket](src/s3_createbucket.js) (CreateBucketCommand)
-- [Delete a bucket](src/s3_deletebucket.js) (DeleteBucketCommand)
-- [Delete all objects from a bucket](src/s3_delete_all_objects.js) (ListObjectsCommand, DeleteObjectCommand)
-- [Delete multiple objects from a bucket](src/s3_delete_multiple_objects.js) (DeleteObjectsCommand)
-- [Delete an object from a bucket](src/s3_delete_object.js) (DeleteObjectCommand)
-- [Delete a bucket policy](src/s3_deletebucketpolicy.js) (DeleteBucketPolicyCommand)
-- [Delete a bucket website policy](src/s3_deletebucketwebsite.js) (DeleteBucketWebsiteCommand)
-- [Create a pre-signed URL to get objects](src/s3_get_presignedURL.js)
-- [Get a bucket Access Control List (ACL)](src/s3_getbucketacl.js)
-- [Get a bucket policy](src/s3_getbucketpolicy.js) (GetBucketPolicyCommand)
-- [Get a bucket website policy](src/s3_getbucketwebsite.js) (GetBucketWebsiteCommand)
-- [Get a bucket CORS policy](src/s3_getcors.js) (GetBucketCorsCommand)
-- [Get objects from a bucket](src/s3_getobject.js) (GetObjectCommand)
-- [Get more than 1000 objects from a bucket](src/s3_list1000plusobjects.js) (ListObjectsCommand)
-- [List buckets](src/s3_listbuckets.js) (ListBucketsCommand)
-- [List objects](src/s3_listobjects.js) (ListObjectsCommand)
-- [Create a pre-signed URL to put objects](src/s3_put_presignedURL.js)
-- [Set a bucket ACL](src/s3_putbucketacl.js) (PutBucketAclCommand)
-- [Set a bucket policy](src/s3_putbucketpolicy.js) (PutBucketPolicyCommand)
-- [Set a bucket website policy](src/s3_setbucketwebsite.js) (PutBucketWebsiteCommand)
-- [Set a bucket CORS policy](src/s3_setcors.js) (PutBucketCorsCommand)
-- [Upload objects to a bucket](src/s3_upload_object.js) (PutObjectCommand)
-
-**Note**: All code examples are written in ECMAscript 6 (ES6). For guidelines on converting to CommonJS, see 
-[JavaScript ES6/CommonJS syntax](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sdk-examples-javascript-syntax.html).
-
-## Important
-
-- As an AWS best practice, grant this code least privilege, or only the
-  permissions required to perform a task. For more information, see
-  [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege)
-  in the *AWS Identity and Access Management User Guide*.
-- This code has not been tested in all AWS Regions. Some AWS services are
-  available only in specific AWS Regions. For more information, see the
-  [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)
-  on the AWS website.
-- Running this code might result in charges to your AWS account.
-
-## Running the code
 
 ### Prerequisites
-- An AWS account. To create an account, see [How do I create and activate a new AWS account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/) on the AWS Premium Support website.
-- AWS credentials. For details, see  [Setting credentials in Node.js](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html) in the
-  *AWS SDK for Javascript (v3) Developer Guide*.
 
-1. Clone the [AWS SDK Code Samples repo](https://github.com/awsdocs/aws-doc-sdk-examples) to your local environment. See [the Github documentation](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for instructions.
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `javascriptv3` folder.
 
-2. Install the dependencies listed in the package.json.
 
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
+
+### Get started
+
+- [Hello Amazon S3](hello.js#L6) (`ListBuckets`)
+
+
+### Basics
+
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](scenarios/basic.js)
+
+
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [CopyObject](actions/copy-object.js#L4)
+- [CreateBucket](actions/create-bucket.js#L4)
+- [DeleteBucket](actions/delete-bucket.js#L4)
+- [DeleteBucketPolicy](actions/delete-bucket-policy.js#L4)
+- [DeleteBucketWebsite](actions/delete-bucket-website.js#L4)
+- [DeleteObject](actions/delete-object.js#L4)
+- [DeleteObjects](actions/delete-objects.js#L4)
+- [GetBucketAcl](actions/get-bucket-acl.js#L4)
+- [GetBucketCors](actions/get-bucket-cors.js#L4)
+- [GetBucketPolicy](actions/get-bucket-policy.js#L4)
+- [GetBucketWebsite](actions/get-bucket-website.js#L4)
+- [GetObject](actions/get-object.js#L4)
+- [GetObjectLegalHold](actions/get-object-legal-hold.js)
+- [GetObjectLockConfiguration](actions/get-object-lock-configuration.js)
+- [GetObjectRetention](actions/get-object-retention.js)
+- [ListBuckets](actions/list-buckets.js#L6)
+- [ListObjectsV2](actions/list-objects.js#L4)
+- [PutBucketAcl](actions/put-bucket-acl.js#L4)
+- [PutBucketCors](actions/put-bucket-cors.js#L4)
+- [PutBucketPolicy](actions/put-bucket-policy.js#L4)
+- [PutBucketWebsite](actions/put-bucket-website.js#L4)
+- [PutObject](actions/put-object.js#L4)
+- [PutObjectLegalHold](actions/put-object-legal-hold.js)
+- [PutObjectLockConfiguration](actions/put-object-lock-configuration.js)
+- [PutObjectRetention](actions/put-object-retention.js)
+
+### Scenarios
+
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
+
+- [Create a presigned URL](scenarios/presigned-url-upload.js)
+- [Create a web page that lists Amazon S3 objects](../web/s3/list-objects/src/App.tsx)
+- [Delete all objects in a bucket](scenarios/delete-all-objects.js)
+- [Lock Amazon S3 objects](scenarios/object-locking/index.js)
+- [Make conditional requests](scenarios/conditional-requests/index.js)
+- [Upload or download large files](scenarios/multipart-upload.js)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+**Note**: All code examples are written in ECMAscript 6 (ES6). For guidelines on converting to CommonJS, see
+[JavaScript ES6/CommonJS syntax](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sdk-examples-javascript-syntax.html).
+
+**Run a single action**
+
+```bash
+node ./actions/<fileName>
 ```
-npm install node -g
-cd javascriptv3/example_code/s3
-npm install
-```
-3. In your text editor, update user variables specified in the ```Inputs``` section of the sample file.
 
-4. Run sample code:
-```
-cd src
-node [example name].js
+**Run a scenario**
+
+Most scenarios can be run with the following command:
+```bash
+node ./scenarios/<fileName>
 ```
 
-## Unit tests
-For more information see, the [README](../README.rst).
+**Run with options**
 
-## Resources
-- [AWS SDK for JavaScript v3 repo](https://github.com/aws/aws-sdk-js-v3)
-- [AWS SDK for JavaScript v3 Developer Guide](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/s3-examples.html)
-- [AWS SDK for JavaScript v3 API Reference Guide](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/index.html) 
+Some actions and scenarios can be run with options from the command line:
+```bash
+node ./scenarios/<fileName> --option1 --option2
+```
+[util.parseArgs](https://nodejs.org/api/util.html#utilparseargsconfig) is used to configure
+these options. For the specific options available to each script, see the `parseArgs` usage
+for that file.
+
+<!--custom.instructions.start-->
+
+Some scenarios are web applications that must be bundled. These scenarios are in the `scenarios/web` folder.
+Follow these steps to run a web scenario. Some scenarios might require extra steps to get them working.
+
+1. Navigate to the web scenario you want to run.
+1. Run `npm i`.
+1. Run `npm run dev`.
+<!--custom.instructions.end-->
+
+#### Hello Amazon S3
+
+This example shows you how to get started using Amazon S3.
+
+```bash
+node ./hello.js
+```
+
+#### Learn the basics
+
+This example shows you how to do the following:
+
+- Create a bucket and upload a file to it.
+- Download an object from a bucket.
+- Copy an object to a subfolder in a bucket.
+- List the objects in a bucket.
+- Delete the bucket objects and the bucket.
+
+<!--custom.basic_prereqs.s3_Scenario_GettingStarted.start-->
+<!--custom.basic_prereqs.s3_Scenario_GettingStarted.end-->
+
+
+<!--custom.basics.s3_Scenario_GettingStarted.start-->
+<!--custom.basics.s3_Scenario_GettingStarted.end-->
+
+
+#### Create a presigned URL
+
+This example shows you how to create a presigned URL for Amazon S3 and upload an object.
+
+
+<!--custom.scenario_prereqs.s3_Scenario_PresignedUrl.start-->
+<!--custom.scenario_prereqs.s3_Scenario_PresignedUrl.end-->
+
+
+<!--custom.scenarios.s3_Scenario_PresignedUrl.start-->
+<!--custom.scenarios.s3_Scenario_PresignedUrl.end-->
+
+#### Create a web page that lists Amazon S3 objects
+
+This example shows you how to list Amazon S3 objects in a web page.
+
+
+<!--custom.scenario_prereqs.s3_Scenario_ListObjectsWeb.start-->
+<!--custom.scenario_prereqs.s3_Scenario_ListObjectsWeb.end-->
+
+
+<!--custom.scenarios.s3_Scenario_ListObjectsWeb.start-->
+<!--custom.scenarios.s3_Scenario_ListObjectsWeb.end-->
+
+#### Delete all objects in a bucket
+
+This example shows you how to delete all of the objects in an Amazon S3 bucket.
+
+
+<!--custom.scenario_prereqs.s3_Scenario_DeleteAllObjects.start-->
+<!--custom.scenario_prereqs.s3_Scenario_DeleteAllObjects.end-->
+
+
+<!--custom.scenarios.s3_Scenario_DeleteAllObjects.start-->
+<!--custom.scenarios.s3_Scenario_DeleteAllObjects.end-->
+
+#### Lock Amazon S3 objects
+
+This example shows you how to work with S3 object lock features.
+
+
+<!--custom.scenario_prereqs.s3_Scenario_ObjectLock.start-->
+<!--custom.scenario_prereqs.s3_Scenario_ObjectLock.end-->
+
+
+<!--custom.scenarios.s3_Scenario_ObjectLock.start-->
+<!--custom.scenarios.s3_Scenario_ObjectLock.end-->
+
+#### Make conditional requests
+
+This example shows you how to add preconditions to Amazon S3 requests.
+
+
+<!--custom.scenario_prereqs.s3_Scenario_ConditionalRequests.start-->
+<!--custom.scenario_prereqs.s3_Scenario_ConditionalRequests.end-->
+
+
+<!--custom.scenarios.s3_Scenario_ConditionalRequests.start-->
+<!--custom.scenarios.s3_Scenario_ConditionalRequests.end-->
+
+#### Upload or download large files
+
+This example shows you how to upload or download large files to and from Amazon S3.
+
+
+<!--custom.scenario_prereqs.s3_Scenario_UsingLargeFiles.start-->
+<!--custom.scenario_prereqs.s3_Scenario_UsingLargeFiles.end-->
+
+
+<!--custom.scenarios.s3_Scenario_UsingLargeFiles.start-->
+<!--custom.scenarios.s3_Scenario_UsingLargeFiles.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `javascriptv3` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
+
+## Additional resources
+
+- [Amazon S3 User Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
+- [Amazon S3 API Reference](https://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html)
+- [SDK for JavaScript (v3) Amazon S3 reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
+
+---
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0

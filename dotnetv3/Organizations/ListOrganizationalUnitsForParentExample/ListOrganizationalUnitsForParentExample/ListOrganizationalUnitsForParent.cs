@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace ListOrganizationalUnitsForParentExample
 {
@@ -11,8 +11,7 @@ namespace ListOrganizationalUnitsForParentExample
 
     /// <summary>
     /// Lists the AWS Organizations organizational units that belong to an
-    /// organization. The example was created using the AWS SDK for .NET
-    /// version 3.7 and .NET Core 5.0.
+    /// organization.
     /// </summary>
     public class ListOrganizationalUnitsForParent
     {
@@ -45,13 +44,13 @@ namespace ListOrganizationalUnitsForParentExample
                     {
                         request.NextToken = response.NextToken;
                     }
-                } while (response.NextToken is not null);
+                }
+                while (response.NextToken is not null);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
 
         /// <summary>
@@ -66,5 +65,6 @@ namespace ListOrganizationalUnitsForParentExample
             Console.WriteLine(accountInfo);
         }
     }
+
     // snippet-end:[Organizations.dotnetv3.ListOrganizationalUnitsForParentExample]
 }

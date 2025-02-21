@@ -1,11 +1,8 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
-#include <aws/cloudformation/CloudFormationClient.h>
 #include <aws/iam/IAMClient.h>
-#include <aws/iam/Model/GetRoleRequest.h>
+#include <aws/iam/model/GetRoleRequest.h>
 #include <fstream>
 #include "glue_samples.h"
 
@@ -26,12 +23,12 @@ int AwsDoc::Glue::askQuestionForIntRange(const Aws::String &string, int low,
                 int number = std::stoi(string1);
                 bool result = number >= low && number <= high;
                 if (!result) {
-                    std::cout << "\nThe number is out of range." << std::endl;
+                    std::cerr << "\nThe number is out of range." << std::endl;
                 }
                 return result;
             }
             catch (const std::invalid_argument &) {
-                std::cout << "\nNot a valid number." << std::endl;
+                std::cerr << "\nNot a valid number." << std::endl;
                 return false;
             }
     });

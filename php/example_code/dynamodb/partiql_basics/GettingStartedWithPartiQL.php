@@ -1,5 +1,4 @@
 <?php
-
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -32,10 +31,14 @@ use Aws\DynamoDb\Marshaler;
 use DynamoDb;
 use DynamoDb\DynamoDBAttribute;
 
+use function AwsUtilities\testable_readline;
+use function AwsUtilities\loadMovieData;
+
 class GettingStartedWithPartiQL
 {
     public function run()
     {
+        echo("\n");
         echo("--------------------------------------\n");
         print("Welcome to the Amazon DynamoDB - PartiQL getting started demo using PHP!\n");
         echo("--------------------------------------\n");

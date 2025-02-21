@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 #include "lambda_gtests.h"
 #include <aws/core/client/ClientConfiguration.h>
@@ -23,8 +21,10 @@ void AwsDocTest::Lambda_GTests::TearDownTestSuite() {
 }
 
 void AwsDocTest::Lambda_GTests::SetUp() {
-    m_savedBuffer = std::cout.rdbuf();
-    std::cout.rdbuf(&m_coutBuffer);
+    if (suppressStdOut()) {
+        m_savedBuffer = std::cout.rdbuf();
+        std::cout.rdbuf(&m_coutBuffer);
+    }
 
     m_savedInBuffer = std::cin.rdbuf();
     std::cin.rdbuf(&m_cinBuffer);
@@ -70,3 +70,8 @@ bool AwsDocTest::Lambda_GTests::getTrailingInt(const std::string &string, int &r
 
     return false;
 }
+
+bool AwsDocTest::Lambda_GTests::suppressStdOut() {
+    return std::getenv("EXAMPLE_TESTS_LOG_ON") == nullptr;
+}
+

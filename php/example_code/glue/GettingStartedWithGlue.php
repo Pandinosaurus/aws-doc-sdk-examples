@@ -1,5 +1,4 @@
 <?php
-
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -24,14 +23,15 @@ use Aws\Glue\GlueClient;
 use Aws\S3\S3Client;
 use AwsUtilities\AWSServiceClass;
 use GuzzleHttp\Psr7\Stream;
-use Iam\IamService;
+use Iam\IAMService;
 
 class GettingStartedWithGlue
 {
     public function run()
     {
+        echo("\n");
         echo("--------------------------------------\n");
-        print("Welcome to the Amazon Glue getting started demo using PHP!\n");
+        print("Welcome to the AWS Glue getting started demo using PHP!\n");
         echo("--------------------------------------\n");
 
         $clientArgs = [
@@ -43,7 +43,7 @@ class GettingStartedWithGlue
 
         $glueClient = new GlueClient($clientArgs);
         $glueService = new GlueService($glueClient);
-        $iamService = new IamService();
+        $iamService = new IAMService();
         #snippet-start:[php.example_code.glue.basics.crawlerName]
         $crawlerName = "example-crawler-test-" . $uniqid;
         #snippet-end:[php.example_code.glue.basics.crawlerName]
@@ -92,12 +92,12 @@ class GettingStartedWithGlue
         $s3client->putObject([
             'Bucket' => $bucketName,
             'Key' => 'run_job.py',
-            'SourceFile' => 'glue/flight_etl_job_script.py'
+            'SourceFile' => __DIR__ . '/flight_etl_job_script.py'
         ]);
         $s3client->putObject([
             'Bucket' => $bucketName,
             'Key' => 'setup_scenario_getting_started.yaml',
-            'SourceFile' => 'glue/setup_scenario_getting_started.yaml'
+            'SourceFile' => __DIR__ . '/setup_scenario_getting_started.yaml'
         ]);
 
         #snippet-start:[php.example_code.glue.basics.getTables]
@@ -139,11 +139,11 @@ class GettingStartedWithGlue
             echo $object['Key'] . "\n";
         }
 
-        echo "Downloading " . $objects[2]['Key'] . "\n";
+        echo "Downloading " . $objects[1]['Key'] . "\n";
         /** @var Stream $downloadObject */
         $downloadObject = $s3client->getObject([
             'Bucket' => $bucketName,
-            'Key' => $objects[2]['Key'],
+            'Key' => $objects[1]['Key'],
         ])['Body']->getContents();
         echo "Here is the first 1000 characters in the object.";
         echo substr($downloadObject, 0, 1000);

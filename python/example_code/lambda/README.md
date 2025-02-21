@@ -1,121 +1,215 @@
-# Lambda code examples for the AWS SDK for Python
+# Lambda code examples for the SDK for Python
 
 ## Overview
 
-Shows how to use the AWS SDK for Python (Boto3) to create, deploy, and invoke 
-AWS Lambda functions. Learn to accomplish the following tasks:
+Shows how to use the AWS SDK for Python (Boto3) to work with AWS Lambda.
 
-* Create and deploy Lambda functions that can be invoked in different ways:
-    * By an invoke call through Boto3
-    * By Amazon API Gateway as the target of a REST request
-    * By Amazon EventBridge on a schedule
-* Create and deploy a REST API on Amazon API Gateway. The REST API targets a 
-Lambda function to handle REST requests.
-* Create a scheduled rule on Amazon EventBridge that targets a Lambda function.
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-*Lambda lets you run code without provisioning or managing servers. Upload your code 
-and Lambda takes care of everything required to run and scale your code with high 
-availability.*
+_Lambda allows you to run code without provisioning or managing servers._
 
-## ⚠️ Important
-* Running this code might result in charges to your AWS account. 
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
 * Running the tests might result in charges to your AWS account.
-*  We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege). 
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
 * This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
 
-### Single action
-
-* [Create a function](lambda_basics.py)
-(`CreateFunction`)
-* [Delete a function](lambda_basics.py)
-(`DeleteFunction`)
-* [Get a function](lambda_basics.py)
-(`GetFunction`)
-* [Invoke a function](lambda_basics.py)
-(`Invoke`)
-* [List functions](lambda_basics.py)
-(`ListFunctions`)
-* [Update function code](lambda_basics.py)
-(`UpdateFunctionCode`)
-* [Update function configuration](lambda_basics.py)
-(`UpdateFunctionConfiguration`)
-
-### Scenario
-
-* [Get started with functions](scenario_getting_started_functions.py)
-
-### Cross-service
-
-* [Use scheduled EventBridge events to invoke a function](scheduled_lambda.py)
-* [Use API Gateway to invoke a function](api_gateway_rest.py)
-
-## Running the examples
-
 ### Prerequisites
 
-### Get started with functions
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `python` folder.
 
-This interactive scenario runs at a command prompt and shows you how to use 
-Lambda to do the following:
-
-1. Create an AWS Identity and Access Management (IAM) role role that grants Lambda 
-permission to write to logs.
-1. Create a Lambda function and upload handler code.
-1. Invoke the function with a single parameter and get results.
-1. Update the function code and configure its Lambda environment with an environment
-variable.
-1. Invoke the function with new parameters and get results. Display the execution
-log that's returned from the invocation.
-1. List the functions for your account.
-1. Delete the IAM role and the Lambda function. 
-
-Start the scenario at a command prompt.
+Install the packages required by these examples by running the following in a virtual environment:
 
 ```
-python scenario_getting_started_functions.py
+python -m pip install -r requirements.txt
 ```
 
-### Use scheduled EventBridge events to invoke a function
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
-This example creates an Amazon EventBridge rule that invokes a Lambda 
-function on a schedule.
+### Get started
 
-Run the example at a command prompt with the following command:
+- [Hello Lambda](hello/hello_lambda.py#L4) (`ListFunctions`)
+
+
+### Basics
+
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](lambda_handler_basic.py)
+
+
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [CreateFunction](lambda_basics.py#L144)
+- [DeleteFunction](lambda_basics.py#L185)
+- [GetFunction](lambda_basics.py#L118)
+- [Invoke](lambda_basics.py#L200)
+- [ListFunctions](lambda_basics.py#L280)
+- [UpdateFunctionCode](lambda_basics.py#L226)
+- [UpdateFunctionConfiguration](lambda_basics.py#L254)
+
+### Scenarios
+
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
+
+- [Create a REST API to track COVID-19 data](../../cross_service/apigateway_covid-19_tracker)
+- [Create a lending library REST API](../../cross_service/aurora_rest_lending_library)
+- [Create a messenger application](../../cross_service/stepfunctions_messenger)
+- [Create a websocket chat application](../../cross_service/apigateway_websocket_chat)
+- [Use API Gateway to invoke a Lambda function](../../example_code/lambda)
+- [Use scheduled events to invoke a Lambda function](../../example_code/lambda)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+#### Hello Lambda
+
+This example shows you how to get started using Lambda.
 
 ```
-python scheduled_lambda.py
-``` 
+python hello/hello_lambda.py
+```
 
-### Use API Gateway to invoke a function
+#### Learn the basics
 
-This example creates an Amazon API Gateway REST API and makes a Lambda function the 
-target of REST requests.
+This example shows you how to do the following:
 
-Run the example at a command prompt with the following command:
+- Create an IAM role and Lambda function, then upload handler code.
+- Invoke the function with a single parameter and get results.
+- Update the function code and configure with an environment variable.
+- Invoke the function with new parameters and get results. Display the returned execution log.
+- List the functions for your account, then clean up resources.
+
+<!--custom.basic_prereqs.lambda_Scenario_GettingStartedFunctions.start-->
+<!--custom.basic_prereqs.lambda_Scenario_GettingStartedFunctions.end-->
+
+Start the example by running the following at a command prompt:
 
 ```
-python api_gateway_rest.py
-``` 
+python lambda_handler_basic.py
+```
 
-### Prerequisites
 
-Prerequisites for running the examples for this service can be found in the 
-[README](../../README.md#Prerequisites) in the Python folder.
+<!--custom.basics.lambda_Scenario_GettingStartedFunctions.start-->
+<!--custom.basics.lambda_Scenario_GettingStartedFunctions.end-->
 
-## Tests
 
-Instructions for running the tests for this service can be found in the
-[README](../../README.md#Tests) in the Python folder.
+#### Create a REST API to track COVID-19 data
+
+This example shows you how to create a REST API that simulates a system to track daily cases of COVID-19 in the United States, using fictional data.
+
+
+<!--custom.scenario_prereqs.cross_ApiGatewayDataTracker.start-->
+<!--custom.scenario_prereqs.cross_ApiGatewayDataTracker.end-->
+
+
+<!--custom.scenarios.cross_ApiGatewayDataTracker.start-->
+<!--custom.scenarios.cross_ApiGatewayDataTracker.end-->
+
+#### Create a lending library REST API
+
+This example shows you how to create a lending library where patrons can borrow and return books by using a REST API backed by an Amazon Aurora database.
+
+
+<!--custom.scenario_prereqs.cross_AuroraRestLendingLibrary.start-->
+<!--custom.scenario_prereqs.cross_AuroraRestLendingLibrary.end-->
+
+
+<!--custom.scenarios.cross_AuroraRestLendingLibrary.start-->
+<!--custom.scenarios.cross_AuroraRestLendingLibrary.end-->
+
+#### Create a messenger application
+
+This example shows you how to create an AWS Step Functions messenger application that retrieves message records from a database table.
+
+
+<!--custom.scenario_prereqs.cross_StepFunctionsMessenger.start-->
+<!--custom.scenario_prereqs.cross_StepFunctionsMessenger.end-->
+
+
+<!--custom.scenarios.cross_StepFunctionsMessenger.start-->
+<!--custom.scenarios.cross_StepFunctionsMessenger.end-->
+
+#### Create a websocket chat application
+
+This example shows you how to create a chat application that is served by a websocket API built on Amazon API Gateway.
+
+
+<!--custom.scenario_prereqs.cross_ApiGatewayWebsocketChat.start-->
+<!--custom.scenario_prereqs.cross_ApiGatewayWebsocketChat.end-->
+
+
+<!--custom.scenarios.cross_ApiGatewayWebsocketChat.start-->
+<!--custom.scenarios.cross_ApiGatewayWebsocketChat.end-->
+
+#### Use API Gateway to invoke a Lambda function
+
+This example shows you how to create an AWS Lambda function invoked by Amazon API Gateway.
+
+
+<!--custom.scenario_prereqs.cross_LambdaAPIGateway.start-->
+<!--custom.scenario_prereqs.cross_LambdaAPIGateway.end-->
+
+
+<!--custom.scenarios.cross_LambdaAPIGateway.start-->
+<!--custom.scenarios.cross_LambdaAPIGateway.end-->
+
+#### Use scheduled events to invoke a Lambda function
+
+This example shows you how to create an AWS Lambda function invoked by an Amazon EventBridge scheduled event.
+
+
+<!--custom.scenario_prereqs.cross_LambdaScheduledEvents.start-->
+<!--custom.scenario_prereqs.cross_LambdaScheduledEvents.end-->
+
+
+<!--custom.scenarios.cross_LambdaScheduledEvents.start-->
+<!--custom.scenarios.cross_LambdaScheduledEvents.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `python` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
 
 ## Additional resources
-* [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
-* [AWS Lambda API Reference](https://docs.aws.amazon.com/lambda/latest/dg/API_Reference.html)
-* [AWS SDK for Python Lambda Client](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html) 
+
+- [Lambda Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
+- [Lambda API Reference](https://docs.aws.amazon.com/lambda/latest/dg/API_Reference.html)
+- [SDK for Python Lambda reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
 
 ---
 
-Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 SPDX-License-Identifier: Apache-2.0

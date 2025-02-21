@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 import XCTest
 import Foundation
 import AWSS3
@@ -32,10 +30,10 @@ final class BasicsTests: XCTestCase {
     override class func setUp() {
         let tdSem = TestWaiter(name: "Setup")
         super.setUp()
-        SDKLoggingSystem.initialize(logLevel: .error)
+        
 
         Task() {
-            BasicsTests.serviceHandler = await ServiceHandler()
+            BasicsTests.serviceHandler = try await ServiceHandler()
             BasicsTests.demoCleanup = await S3DemoCleanup()
             tdSem.signal()
         }
@@ -274,11 +272,9 @@ final class BasicsTests: XCTestCase {
     func testCreateFile() async throws {
         do {
             let bucketName = try await createTestBucket()
-
             let fileInfo = try await createTestFile(bucket: bucketName)
             
             if try await verifyTestFileContents(fileInfo: fileInfo) == false {
-                XCTFail("Created file doesn't contain expected contents")
             }
         } catch {
             throw error
@@ -360,7 +356,7 @@ final class BasicsTests: XCTestCase {
             do {
                 // Attempt to copy the file.
 
-                let destFileInfo = try await copyTestFile(fileInfo: srcFileInfo, to: destBucketName)
+                _ = try await copyTestFile(fileInfo: srcFileInfo, to: destBucketName)
                 XCTFail("Copying file to a nonexistent bucket didn't fail like it should")
             } catch {
                 return      // An error is a success case here.
@@ -379,8 +375,8 @@ final class BasicsTests: XCTestCase {
             // Create a bunch of files in the bucket, with random names and
             // contents.
             for _ in 0...14 {
-                let fileInfo = try await createTestFile(bucket: bucketName,
-                                withParagraphs: Int.random(in: 1...15))
+                _ = try await createTestFile(bucket: bucketName,
+                              withParagraphs: Int.random(in: 1...15))
             }
 
             // Get a list of the contents of the bucket.

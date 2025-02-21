@@ -1,20 +1,19 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
 // snippet-start:[ACM.dotnetv3.ListCertificates]
 
+using System;
+using System.Threading.Tasks;
 using Amazon;
 using Amazon.CertificateManager;
 using Amazon.CertificateManager.Model;
-using System;
-using System.Threading.Tasks;
 
 namespace ListCertificates
 {
     // The following example retrieves and displays a list of the
     // certificates defined for the default account using the AWS
-    // Certificate Manager (ACM) service. It was created using
-    // AWS SDK for .NET 3.5 and .NET 5.0.
+    // Certificate Manager (ACM) service.
     class ListCertificates
     {
         // Specify your AWS Region (an example Region is shown).
@@ -24,7 +23,7 @@ namespace ListCertificates
 
         static void Main(string[] args)
         {
-            var _client = new AmazonCertificateManagerClient(ACMRegion);
+            _client = new AmazonCertificateManagerClient(ACMRegion);
             var certificateList = ListCertificatesResponseAsync(client: _client);
 
             Console.WriteLine("Certificate Summary List\n");
@@ -34,7 +33,6 @@ namespace ListCertificates
                 Console.WriteLine($"Certificate Domain: {certificate.DomainName}");
                 Console.WriteLine($"Certificate ARN: {certificate.CertificateArn}\n");
             }
-
         }
 
         /// <summary>
@@ -53,7 +51,6 @@ namespace ListCertificates
             return response;
         }
     }
-
 }
 
 // snippet-end:[ACM.dotnetv3.ListCertificates]

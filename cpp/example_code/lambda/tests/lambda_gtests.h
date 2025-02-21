@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 #pragma once
 #ifndef S3_EXAMPLES_S3_GTESTS_H
@@ -38,6 +36,9 @@ namespace AwsDocTest {
         std::streambuf *m_savedBuffer = nullptr;
 
     private:
+
+        bool suppressStdOut();
+
         static Aws::SDKOptions s_options;
 
         std::stringbuf m_cinBuffer;

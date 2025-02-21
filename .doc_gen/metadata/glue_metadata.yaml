@@ -1,9 +1,75 @@
 # zexi 0.4.0
+glue_Hello:
+  title: Hello &GLU;
+  title_abbrev: Hello &GLU;
+  synopsis: get started using &GLU;.
+  category: Hello
+  languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - glue.java2.hello.main
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - Glue.dotnetv3.HelloGlue
+    Rust:
+      versions:
+        - sdk_version: 1
+          github: rustv1/examples/glue
+          excerpts:
+            - description:
+              snippet_tags:
+                - rust.glue.list_jobs
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/glue/hello_glue
+          excerpts:
+            - description: Code for the CMakeLists.txt CMake file.
+              snippet_tags:
+                - cpp.example_code.glue.hello_glue.cmake
+            - description: Code for the hello_glue.cpp source file.
+              snippet_tags:
+                - cpp.example_code.glue.hello_glue
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - javascript.v3.glue.hello
+    Python:
+      versions:
+        - sdk_version: 3
+          github: python/example_code/glue
+          excerpts:
+            - description:
+              snippet_tags:
+                - python.example.hello_glue
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.glue.HelloGlue
+  services:
+    glue: {ListJobs}
 glue_GetCrawler:
-  title: Get an &GLU; crawler using an &AWS; SDK
-  title_abbrev: Get a crawler
-  synopsis: get an &GLU; crawler.
-  category:
   languages:
     .NET:
       versions:
@@ -13,7 +79,7 @@ glue_GetCrawler:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.GetSpecificCrawlerAsync
+                - Glue.dotnetv3.GetCrawler
     Kotlin:
       versions:
         - sdk_version: 1
@@ -51,6 +117,16 @@ glue_GetCrawler:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.GetCrawler
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.GetCrawler
     JavaScript:
       versions:
         - sdk_version: 3
@@ -68,11 +144,11 @@ glue_GetCrawler:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.get_crawler
+                - cpp.example_code.glue.GetCrawler
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -80,10 +156,6 @@ glue_GetCrawler:
   services:
     glue: {GetCrawler}
 glue_CreateCrawler:
-  title: Create an &GLU; crawler using an &AWS; SDK
-  title_abbrev: Create a crawler
-  synopsis: create an &GLU; crawler.
-  category:
   languages:
     .NET:
       versions:
@@ -93,7 +165,7 @@ glue_CreateCrawler:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.CreateGlueCrawlerAsync
+                - Glue.dotnetv3.CreateCrawler
     Kotlin:
       versions:
         - sdk_version: 1
@@ -133,6 +205,16 @@ glue_CreateCrawler:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.CreateCrawler
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.CreateCrawler
     JavaScript:
       versions:
         - sdk_version: 3
@@ -150,11 +232,11 @@ glue_CreateCrawler:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.create_crawler
+                - cpp.example_code.glue.CreateCrawler
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -162,10 +244,6 @@ glue_CreateCrawler:
   services:
     glue: {CreateCrawler}
 glue_StartCrawler:
-  title: Start an &GLU; crawler using an &AWS; SDK
-  title_abbrev: Start a crawler
-  synopsis: start an &GLU; crawler.
-  category:
   languages:
     .NET:
       versions:
@@ -175,7 +253,7 @@ glue_StartCrawler:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.StartSpecificCrawlerAsync
+                - Glue.dotnetv3.StartCrawler
     Kotlin:
       versions:
         - sdk_version: 1
@@ -215,6 +293,16 @@ glue_StartCrawler:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.StartCrawler
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.StartCrawler
     JavaScript:
       versions:
         - sdk_version: 3
@@ -232,11 +320,11 @@ glue_StartCrawler:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.start_crawler
+                - cpp.example_code.glue.StartCrawler
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -244,10 +332,6 @@ glue_StartCrawler:
   services:
     glue: {StartCrawler}
 glue_GetDatabase:
-  title: Get a database from the &GLUDCLong; using an &AWS; SDK
-  title_abbrev: Get a database from the &GLUDC;
-  synopsis: get a database from the &GLUDCLong;.
-  category:
   languages:
     .NET:
       versions:
@@ -257,7 +341,7 @@ glue_GetDatabase:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.GetSpecificDatabaseAsync
+                - Glue.dotnetv3.GetDatabase
     Kotlin:
       versions:
         - sdk_version: 1
@@ -296,6 +380,16 @@ glue_GetDatabase:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.GetDatabase
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.GetDatabase
     JavaScript:
       versions:
         - sdk_version: 3
@@ -313,11 +407,11 @@ glue_GetDatabase:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.get_database
+                - cpp.example_code.glue.GetDatabase
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -325,10 +419,6 @@ glue_GetDatabase:
   services:
     glue: {GetDatabase}
 glue_GetTables:
-  title: Get tables from a database in the &GLUDCLong; using an &AWS; SDK
-  title_abbrev: Get tables from a database
-  synopsis: get tables from a database in the &GLUDCLong;.
-  category:
   languages:
     .NET:
       versions:
@@ -338,7 +428,7 @@ glue_GetTables:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.GetGlueTablesAsync
+                - Glue.dotnetv3.GetTables
     Java:
       versions:
         - sdk_version: 2
@@ -368,6 +458,16 @@ glue_GetTables:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.GetTables
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.GetTables
     JavaScript:
       versions:
         - sdk_version: 3
@@ -385,11 +485,11 @@ glue_GetTables:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.get_tables
+                - cpp.example_code.glue.GetTables
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -397,11 +497,16 @@ glue_GetTables:
   services:
     glue: {GetTables}
 glue_CreateJob:
-  title: Create an &GLU; job definition using an &AWS; SDK
-  title_abbrev: Create a job definition
-  synopsis: create an &GLU; job definition.
-  category:
   languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - glue.java2.create_job.main
     .NET:
       versions:
         - sdk_version: 3
@@ -410,7 +515,7 @@ glue_CreateJob:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.CreateJobAsync
+                - Glue.dotnetv3.CreateJob
     PHP:
       versions:
         - sdk_version: 3
@@ -432,6 +537,16 @@ glue_CreateJob:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.CreateJob
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.CreateJob
     JavaScript:
       versions:
         - sdk_version: 3
@@ -449,11 +564,11 @@ glue_CreateJob:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.create_job
+                - cpp.example_code.glue.CreateJob
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -461,11 +576,16 @@ glue_CreateJob:
   services:
     glue: {CreateJob}
 glue_StartJobRun:
-  title: Start an &GLU; job run using an &AWS; SDK
-  title_abbrev: Start a job run
-  synopsis: start an &GLU; job run.
-  category:
   languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - glue.java2.start.job.main
     .NET:
       versions:
         - sdk_version: 3
@@ -474,7 +594,7 @@ glue_StartJobRun:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.StartJobAsync
+                - Glue.dotnetv3.StartJobRun
     PHP:
       versions:
         - sdk_version: 3
@@ -497,6 +617,16 @@ glue_StartJobRun:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.StartJobRun
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.StartJobRun
     JavaScript:
       versions:
         - sdk_version: 3
@@ -514,11 +644,11 @@ glue_StartJobRun:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.start_job_run
+                - cpp.example_code.glue.StartJobRun
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -526,11 +656,15 @@ glue_StartJobRun:
   services:
     glue: {StartJobRun}
 glue_ListJobs:
-  title: List &GLU; job definitions using an &AWS; SDK
-  title_abbrev: List job definitions
-  synopsis: list &GLU; job definitions.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Glue
+          excerpts:
+            - description:
+              snippet_tags:
+                - Glue.dotnetv3.ListJobs
     PHP:
       versions:
         - sdk_version: 3
@@ -550,6 +684,16 @@ glue_ListJobs:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.ListJobs
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.ListJobs
     JavaScript:
       versions:
         - sdk_version: 3
@@ -567,11 +711,11 @@ glue_ListJobs:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.list_jobs
+                - cpp.example_code.glue.ListJobs
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -579,10 +723,6 @@ glue_ListJobs:
   services:
     glue: {ListJobs}
 glue_GetJobRuns:
-  title: Get runs of an &GLU; job using an &AWS; SDK
-  title_abbrev: Get runs of a job
-  synopsis: get runs of an &GLU; job.
-  category:
   languages:
     .NET:
       versions:
@@ -592,7 +732,16 @@ glue_GetJobRuns:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.GetJobRunsAsync
+                - Glue.dotnetv3.GetJobRuns
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - glue.java2.get_job.main
     PHP:
       versions:
         - sdk_version: 3
@@ -613,6 +762,16 @@ glue_GetJobRuns:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.GetJobRuns
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.GetJobRuns
     JavaScript:
       versions:
         - sdk_version: 3
@@ -630,15 +789,19 @@ glue_GetJobRuns:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.get_job_runs
+                - cpp.example_code.glue.GetJobRuns
   services:
     glue: {GetJobRuns}
 glue_GetJobRun:
-  title: Get an &GLU; job run using an &AWS; SDK
-  title_abbrev: Get a job run
-  synopsis: get an &GLU; job run.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Glue
+          excerpts:
+            - description:
+              snippet_tags:
+                - Glue.dotnetv3.GetJobRun
     PHP:
       versions:
         - sdk_version: 3
@@ -660,6 +823,16 @@ glue_GetJobRun:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.GetJobRun
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.GetJobRun
     JavaScript:
       versions:
         - sdk_version: 3
@@ -677,11 +850,11 @@ glue_GetJobRun:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.get_job_run
+                - cpp.example_code.glue.GetJobRun
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -689,11 +862,16 @@ glue_GetJobRun:
   services:
     glue: {GetJobRun}
 glue_DeleteJob:
-  title: Delete an &GLU; job definition using an &AWS; SDK
-  title_abbrev: Delete a job definition
-  synopsis: delete an &GLU; job definition and all associated runs.
-  category:
   languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - glue.java2.delete_job.main
     .NET:
       versions:
         - sdk_version: 3
@@ -702,7 +880,7 @@ glue_DeleteJob:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.DeleteJobAsync
+                - Glue.dotnetv3.DeleteJob
     PHP:
       versions:
         - sdk_version: 3
@@ -722,6 +900,16 @@ glue_DeleteJob:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.DeleteJob
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.DeleteJob
     JavaScript:
       versions:
         - sdk_version: 3
@@ -739,11 +927,11 @@ glue_DeleteJob:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.delete_job
+                - cpp.example_code.glue.DeleteJob
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -751,11 +939,15 @@ glue_DeleteJob:
   services:
     glue: {DeleteJob}
 glue_DeleteTable:
-  title: Delete a table from an &GLUDCLong; database using an &AWS; SDK
-  title_abbrev: Delete a table from a database
-  synopsis: delete a table from an &GLUDCLong; database.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Glue
+          excerpts:
+            - description:
+              snippet_tags:
+                - Glue.dotnetv3.DeleteTable
     PHP:
       versions:
         - sdk_version: 3
@@ -775,6 +967,16 @@ glue_DeleteTable:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.DeleteTable
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.DeleteTable
     JavaScript:
       versions:
         - sdk_version: 3
@@ -786,7 +988,7 @@ glue_DeleteTable:
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -794,11 +996,16 @@ glue_DeleteTable:
   services:
     glue: {DeleteTable}
 glue_DeleteDatabase:
-  title: Delete a database from the &GLUDCLong; using an &AWS; SDK
-  title_abbrev: Delete a database from the &GLUDC;
-  synopsis: delete a database from the &GLUDCLong;.
-  category:
   languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - glue.java2.delete_database.main
     .NET:
       versions:
         - sdk_version: 3
@@ -807,7 +1014,7 @@ glue_DeleteDatabase:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.DeleteDatabaseAsync
+                - Glue.dotnetv3.DeleteDatabase
     PHP:
       versions:
         - sdk_version: 3
@@ -827,6 +1034,16 @@ glue_DeleteDatabase:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.DeleteDatabase
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: python/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.DeleteDatabase
     JavaScript:
       versions:
         - sdk_version: 3
@@ -844,11 +1061,11 @@ glue_DeleteDatabase:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.delete_database
+                - cpp.example_code.glue.DeleteDatabase
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -856,11 +1073,16 @@ glue_DeleteDatabase:
   services:
     glue: {DeleteDatabase}
 glue_DeleteCrawler:
-  title: Delete an &GLU; crawler using an &AWS; SDK
-  title_abbrev: Delete a crawler
-  synopsis: delete an &GLU; crawler.
-  category:
   languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - glue.java2.delete_crawler.main
     .NET:
       versions:
         - sdk_version: 3
@@ -869,7 +1091,7 @@ glue_DeleteCrawler:
           excerpts:
             - description:
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.DeleteSpecificCrawlerAsync
+                - Glue.dotnetv3.DeleteCrawler
     PHP:
       versions:
         - sdk_version: 3
@@ -889,6 +1111,16 @@ glue_DeleteCrawler:
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.decl
                 - python.example_code.glue.DeleteCrawler
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.decl
+                - ruby.example_code.glue.DeleteCrawler
     JavaScript:
       versions:
         - sdk_version: 3
@@ -906,11 +1138,11 @@ glue_DeleteCrawler:
               snippet_tags:
                 - cpp.example_code.glue.client_configuration
                 - cpp.example_code.glue.glue_client
-                - cpp.example_code.glue.delete_crawler
+                - cpp.example_code.glue.DeleteCrawler
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           excerpts:
             - description:
               snippet_tags:
@@ -918,10 +1150,6 @@ glue_DeleteCrawler:
   services:
     glue: {DeleteCrawler}
 glue_GetDatabases:
-  title: Get database list from the &GLUDCLong; using an &AWS; SDK
-  title_abbrev: Get databases from the &GLUDC;
-  synopsis: get a list of databases from the &GLUDCLong;.
-  category:
   languages:
     JavaScript:
       versions:
@@ -934,10 +1162,6 @@ glue_GetDatabases:
   services:
     glue: {GetDatabases}
 glue_GetJob:
-  title: Get a job from the &GLUDCLong; using an &AWS; SDK
-  title_abbrev: Get job from the &GLUDC;
-  synopsis: get a job from the &GLUDCLong;.
-  category:
   languages:
     JavaScript:
       versions:
@@ -950,20 +1174,15 @@ glue_GetJob:
   services:
     glue: {GetJob}
 glue_Scenario_GetStartedCrawlersJobs:
-  title: Get started running &GLU; crawlers and jobs using an &AWS; SDK
-  title_abbrev: Get started running crawlers and jobs
   synopsis_list:
-    - Create and run a crawler that crawls a public &S3long; (&S3;) bucket and generates
-      a metadata database that describes the CSV-formatted data it finds.
+    - Create a crawler that crawls a public &S3; bucket and generates a database of CSV-formatted metadata.
     - List information about databases and tables in your &GLUDCLong;.
-    - Create and run a job that extracts CSV data from the source &S3; bucket,
-      transforms it by removing and renaming fields, and loads JSON-formatted
-      output into another &S3; bucket.
-    - List information about job runs and view some of the transformed data.
-    - Delete all resources created by the demo.
-  category: Scenarios
+    - Create a job to extract CSV data from the S3 bucket, transform the data, and load JSON-formatted output into another
+      S3 bucket.
+    - List information about job runs, view transformed data, and clean up resources.
+  category: Basics
   guide_topic:
-    title: "Tutorial: Getting started with &GLU; Studio"
+    title: 'Tutorial: Getting started with &GLU; Studio'
     url: glue/latest/ug/tutorial-create-job.html
   languages:
     .NET:
@@ -972,14 +1191,14 @@ glue_Scenario_GetStartedCrawlersJobs:
           github: dotnetv3/Glue
           sdkguide:
           excerpts:
-            - description: Create a class that wraps &GLU; functions that are
-                used in the scenario.
+            - description: Create a class that wraps &GLU; functions that are used in the scenario.
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.GlueMethods
+                - Glue.dotnetv3.GlueWrapper
             - description: Create a class that runs the scenario.
               snippet_tags:
-                - Glue.dotnetv3.GlueBasicsScenario.GlobalUsings
-                - Glue.dotnetv3.GlueBasicsScenario.Main
+                - Glue.dotnetv3.GlueBasics.GlobalUsings
+                - Glue.dotnetv3.GlueBasics.Main
+                - Glue.dotnetv3.GlueBasics.UiWrapper
     Kotlin:
       versions:
         - sdk_version: 1
@@ -1013,27 +1232,38 @@ glue_Scenario_GetStartedCrawlersJobs:
           github: python/example_code/glue
           sdkguide:
           excerpts:
-            - description: Create a class that wraps &GLU; functions used in
-                the scenario.
+            - description: Create a class that wraps &GLU; functions used in the scenario.
               snippet_tags:
                 - python.example_code.glue.GlueWrapper.full
             - description: Create a class that runs the scenario.
               snippet_tags:
                 - python.example_code.glue.Scenario_GetStartedCrawlersJobs
-            - description:
-                Create an ETL script that is used by &GLU; to extract,
-                transform, and load data during job runs.
+            - description: Create an ETL script that is used by &GLU; to extract, transform, and load data during job runs.
               snippet_tags:
                 - python.example_code.glue.Scenario_GetStartedCrawlersJobs.job_script
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/glue
+          sdkguide:
+          excerpts:
+            - description: Create a class that wraps &GLU; functions used in the scenario.
+              snippet_tags:
+                - ruby.example_code.glue.GlueWrapper.full
+            - description: Create a class that runs the scenario.
+              snippet_tags:
+                - ruby.example_code.glue.Scenario_GetStartedCrawlersJobs
+            - description: Create an ETL script that is used by &GLU; to extract, transform, and load data during job runs.
+              snippet_tags:
+                - ruby.example_code.glue.Scenario_GetStartedCrawlersJobs.job_script
     JavaScript:
       versions:
         - sdk_version: 3
           github: javascriptv3/example_code/glue
           sdkguide:
           excerpts:
-            - description:
-                Create and run a crawler that crawls a public &S3long; (&S3;) bucket and generates
-                a metadata database that describes the CSV-formatted data it finds.
+            - description: Create and run a crawler that crawls a public &S3long; (&S3;) bucket and generates a metadata database
+                that describes the CSV-formatted data it finds.
               snippet_tags:
                 - javascript.v3.glue.actions.CreateCrawler
                 - javascript.v3.glue.actions.GetCrawler
@@ -1046,10 +1276,8 @@ glue_Scenario_GetStartedCrawlersJobs:
                 - javascript.v3.glue.actions.GetTables
                 - javascript.v3.glue.scenarios.basic.GetDatabaseStep
                 - javascript.v3.glue.scenarios.basic.GetTablesStep
-            - description:
-                Create and run a job that extracts CSV data from the source &S3; bucket,
-                transforms it by removing and renaming fields, and loads JSON-formatted
-                output into another &S3; bucket.
+            - description: Create and run a job that extracts CSV data from the source &S3; bucket, transforms it by removing
+                and renaming fields, and loads JSON-formatted output into another &S3; bucket.
               snippet_tags:
                 - javascript.v3.glue.actions.CreateJob
                 - javascript.v3.glue.actions.StartJobRun
@@ -1082,12 +1310,11 @@ glue_Scenario_GetStartedCrawlersJobs:
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/glue
+          github: rustv1/examples/glue
           sdkguide:
           excerpts:
-            - description:
-                Create and run a crawler that crawls a public &S3long; (&S3;) bucket and generates
-                a metadata database that describes the CSV-formatted data it finds.
+            - description: Create and run a crawler that crawls a public &S3long; (&S3;) bucket and generates a metadata database
+                that describes the CSV-formatted data it finds.
               snippet_tags:
                 - rust.glue.create_crawler
                 - rust.glue.start_crawler
@@ -1095,10 +1322,8 @@ glue_Scenario_GetStartedCrawlersJobs:
               snippet_tags:
                 - rust.glue.get_database
                 - rust.glue.get_tables
-            - description:
-                Create and run a job that extracts CSV data from the source &S3; bucket,
-                transforms it by removing and renaming fields, and loads JSON-formatted
-                output into another &S3; bucket.
+            - description: Create and run a job that extracts CSV data from the source &S3; bucket, transforms it by removing
+                and renaming fields, and loads JSON-formatted output into another &S3; bucket.
               snippet_tags:
                 - rust.glue.create_job
                 - rust.glue.start_job_run
@@ -1109,22 +1334,5 @@ glue_Scenario_GetStartedCrawlersJobs:
                 - rust.glue.delete_database
                 - rust.glue.delete_crawler
   services:
-    glue:
-      {
-        GetCrawler,
-        CreateCrawler,
-        StartCrawler,
-        GetDatabase,
-        GetDatabases,
-        GetTables,
-        CreateJob,
-        StartJobRun,
-        ListJobs,
-        GetJob,
-        GetJobRuns,
-        GetJobRun,
-        DeleteJob,
-        DeleteTable,
-        DeleteDatabase,
-        DeleteCrawler,
-      }
+    glue: {GetCrawler, CreateCrawler, StartCrawler, GetDatabase, GetDatabases, GetTables, CreateJob, StartJobRun, ListJobs,
+           GetJob, GetJobRuns, GetJobRun, DeleteJob, DeleteTable, DeleteDatabase, DeleteCrawler}

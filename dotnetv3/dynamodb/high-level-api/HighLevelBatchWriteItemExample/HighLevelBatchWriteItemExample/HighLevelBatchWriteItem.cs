@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace HighLevelBatchWriteItemExample
 {
@@ -18,15 +18,6 @@ namespace HighLevelBatchWriteItemExample
     /// </summary>
     public class HighLevelBatchWriteItem
     {
-        static async Task Main()
-        {
-            AmazonDynamoDBClient client = new AmazonDynamoDBClient();
-            DynamoDBContext context = new DynamoDBContext(client);
-
-            await SingleTableBatchWrite(context);
-            await MultiTableBatchWrite(context);
-        }
-
         public static async Task SingleTableBatchWrite(IDynamoDBContext context)
         {
             Book book1 = new Book
@@ -88,6 +79,15 @@ namespace HighLevelBatchWriteItemExample
 
             Console.WriteLine("Performing batch write in MultiTableBatchWrite().");
             await superBatch.ExecuteAsync();
+        }
+
+        public static async Task Main()
+        {
+            AmazonDynamoDBClient client = new AmazonDynamoDBClient();
+            DynamoDBContext context = new DynamoDBContext(client);
+
+            await SingleTableBatchWrite(context);
+            await MultiTableBatchWrite(context);
         }
     }
 

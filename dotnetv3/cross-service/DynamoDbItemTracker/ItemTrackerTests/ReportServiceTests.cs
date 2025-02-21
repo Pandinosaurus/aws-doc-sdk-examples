@@ -1,10 +1,10 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 using System.Globalization;
 using Amazon.SimpleEmailV2;
-using DynamoDbItemTracker;
 using CsvHelper;
+using DynamoDbItemTracker;
 using Microsoft.Extensions.Configuration;
 namespace ItemTrackerTests;
 

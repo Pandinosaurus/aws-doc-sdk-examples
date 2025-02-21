@@ -1,16 +1,16 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 
-// SPDX-License-Identifier:  Apache-2.0
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
-using Amazon.SecretsManager;
-using Amazon.SecretsManager.Model;
-using GetSecretValueExample;
-using Moq;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Amazon.SecretsManager;
+using Amazon.SecretsManager.Model;
+using GetSecretValueExample;
+using Moq;
 using Xunit;
 
 namespace GetSecretValueExampleTests
@@ -18,6 +18,7 @@ namespace GetSecretValueExampleTests
     public class GetSecretValueTests
     {
         [Fact]
+        [Trait("Category", "Unit")]
         public void TestGetSecretValueAsync()
         {
             var mockClient = new Mock<IAmazonSecretsManager>();
@@ -36,7 +37,7 @@ namespace GetSecretValueExampleTests
 
             var client = mockClient.Object;
 
-            GetSecretValueRequest request = new ();
+            GetSecretValueRequest request = new();
             request.SecretId = "SecretTest";
             request.VersionStage = "AWSCURRENT"; // VersionStage defaults to AWSCURRENT if unspecified.
 
@@ -46,6 +47,7 @@ namespace GetSecretValueExampleTests
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public void TestDecodeStringNullSecretValue()
         {
             var secretValue = new GetSecretValueResponse();
@@ -55,6 +57,7 @@ namespace GetSecretValueExampleTests
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public void TestDecodeStringStringValue()
         {
             var secretValue = new GetSecretValueResponse
@@ -68,10 +71,11 @@ namespace GetSecretValueExampleTests
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public void TestDecodeStringBinaryValue()
         {
             var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes("SecretExample"));
-            var secretBinary =  new MemoryStream(Encoding.UTF8.GetBytes(base64));
+            var secretBinary = new MemoryStream(Encoding.UTF8.GetBytes(base64));
 
             var secretValue = new GetSecretValueResponse
             {

@@ -1,8 +1,22 @@
 # syntax=docker/dockerfile:1
-# Status: Beta
-# GA updates: https://github.com/awsdocs/aws-doc-sdk-examples/issues/4129
-FROM golang:1.19.2
+FROM golang:1.21
+
+# Update image
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy source code
 COPY . /gov2
-RUN cd gov2/dynamodb && \
-    go build ./...
-CMD ["bash"]
+
+# Perform build steps
+RUN go env -w GOPROXY=direct
+
+# Set non-root user
+RUN useradd -m automation && \
+    chown -R automation:automation /gov2/
+USER automation:automation
+
+# Set default command
+CMD ["/gov2/run_all_tests.sh", "integration"]

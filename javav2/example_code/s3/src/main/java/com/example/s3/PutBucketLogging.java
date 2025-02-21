@@ -1,14 +1,10 @@
-//snippet-sourcedescription:[PutBucketLogging.java demonstrates how to set the logging parameters for an Amazon Simple Storage Service (Amazon S3) bucket.]
-//snippet-keyword:[AWS SDK for Java v2]
-//snippet-service:[Amazon S3]
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 package com.example.s3;
 
+// snippet-start:[s3.java2.s3_put_log.main]
 // snippet-start:[s3.java2.s3_put_log.import]
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetBucketAclRequest;
@@ -25,44 +21,54 @@ import java.util.List;
 // snippet-end:[s3.java2.s3_put_log.import]
 
 /**
- * Before running this Java V2 code example, set up your development environment, including your credentials.
- *
+ * Before running this Java V2 code example, set up your development
+ * environment, including your credentials.
+ * <p>
  * For more information, see the following documentation topic:
- *
+ * <p>
  * https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/get-started.html
  */
 public class PutBucketLogging {
-
     public static void main(String[] args) {
+        final String usage = """
 
-        final String usage = "\n" +
-            "Usage:\n" +
-            "  <bucketName> <targetBucket>  \n\n" +
-            "Where:\n" +
-            "  bucketName - The Amazon S3 bucket to upload an object into.\n" +
-            "  targetBucket - The target bucket .\n" ;
+            Usage:
+              <bucketName> <targetBucket> <accountId> \s
+
+            Where:
+              bucketName - The Amazon S3 bucket to upload an object into.
+              targetBucket - The target bucket.
+              accountId - The account id.
+            """;
 
         if (args.length != 3) {
-             System.out.println(usage);
-             System.exit(1);
+            System.out.println(usage);
+            System.exit(1);
         }
 
         String bucketName = args[0];
         String targetBucket = args[1];
-        ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create();
+        String accountId = args[2];
         Region region = Region.US_EAST_1;
         S3Client s3 = S3Client.builder()
             .region(region)
-            .credentialsProvider(credentialsProvider)
             .build();
 
-        setlogRequest(s3, bucketName, targetBucket);
+        setlogRequest(s3, bucketName, targetBucket, accountId);
         s3.close();
     }
 
-    // snippet-start:[s3.java2.s3_put_log.main]
-    public static void setlogRequest(S3Client s3, String bucketName, String targetBucket) {
-
+    /**
+     * Enables logging for the specified S3 bucket.
+     *
+     * @param s3 an instance of the {@link S3Client} used to interact with the S3 service
+     * @param bucketName the name of the bucket for which logging needs to be enabled
+     * @param targetBucket the name of the target bucket where the logs will be stored
+     * @param accountId the account Id
+     *
+     * @throws S3Exception if an error occurs while enabling logging for the bucket
+     */
+    public static void setlogRequest(S3Client s3, String bucketName, String targetBucket, String accountId) {
         try {
             GetBucketAclRequest aclRequest = GetBucketAclRequest.builder()
                 .bucket(targetBucket)
@@ -93,7 +99,7 @@ public class PutBucketLogging {
 
             PutBucketLoggingRequest loggingRequest = PutBucketLoggingRequest.builder()
                 .bucket(bucketName)
-                .expectedBucketOwner("814548047983")
+                .expectedBucketOwner(accountId)
                 .bucketLoggingStatus(loggingStatus)
                 .build();
 
@@ -105,5 +111,5 @@ public class PutBucketLogging {
             System.exit(1);
         }
     }
-    // snippet-end:[s3.java2.s3_put_log.main]
 }
+// snippet-end:[s3.java2.s3_put_log.main]

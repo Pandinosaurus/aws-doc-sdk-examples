@@ -1,71 +1,91 @@
 # Aurora code examples for the SDK for .NET
 
 ## Overview
-The code examples in this section show how to use the AWS SDK for .NET with Amazon Aurora
-to create and manage Amazon Aurora DB clusters, DB instances, and custom parameter groups.
 
-Amazon Relational Database Service (Amazon RDS) is a web service that makes it easier
-to set up, operate, and scale a relational database in the cloud. Aurora is a fully
-managed relational database engine that's compatible with MySQL and PostgreSQL.
+Shows how to use the AWS SDK for .NET to work with Amazon Aurora.
 
-## ⚠️ Important
-* Running this code might result in charges to your AWS account.
+<!--custom.overview.start-->
+<!--custom.overview.end-->
+
+_Aurora is a fully managed relational database engine that's built for the cloud and compatible with MySQL and PostgreSQL. Amazon Aurora is part of Amazon Relational Database Service (Amazon RDS)._
+
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
 * Running the tests might result in charges to your AWS account.
 * We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
 * This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
 
+<!--custom.important.start-->
+<!--custom.important.end-->
+
 ## Code examples
+
+### Prerequisites
+
+For prerequisites, see the [README](../README.md#Prerequisites) in the `dotnetv3` folder.
+
+
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
 ### Get started
 
-* [Hello Aurora](Actions/HelloAurora.cs)
+- [Hello Aurora](Actions/HelloAurora.cs#L4) (`DescribeDBClusters`)
+
+
+### Basics
+
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](Scenarios/AuroraScenario.cs)
+
 
 ### Single actions
+
 Code excerpts that show you how to call individual service functions.
 
-* [Create a DB cluster](Actions/AuroraWrapper.cs)(`CreateDBClusterAsync`)
-* [Create a DB cluster parameter group](Actions/AuroraWrapper.cs)(`CreateDBClusterParameterGroupAsync`)
-* [Create a DB cluster snapshot](Actions/AuroraWrapper.cs)(`CreateDBClusterSnapshotAsync`)
-* [Create a DB instance in a DB cluster](Actions/AuroraWrapper.cs)(`CreateDBInstanceAsync`)
-* [Delete a DB cluster](Actions/AuroraWrapper.cs)(`DeleteDBClusterAsync`)
-* [Delete a DB cluster parameter group](Actions/AuroraWrapper.cs)(`DeleteDBClusterParameterGroupAsync`)
-* [Delete a DB instance](Actions/AuroraWrapper.cs)(`DeleteDBInstanceAsync`)
-* [Describe database engine versions](Actions/AuroraWrapper.cs)(`DescribeDBEngineVersionsAsync`)
-* [Describe DB cluster parameter groups](Actions/AuroraWrapper.cs)(`DescribeDBClusterParameterGroupsAsync`)
-* [Describe DB cluster snapshots](Actions/AuroraWrapper.cs)(`DescribeDBClusterSnapshotsAsync`)
-* [Describe DB clusters](Actions/AuroraWrapper.cs)(`DescribeDBClustersAsync`)
-* [Describe DB instances](Actions/AuroraWrapper.cs)(`DescribeDBInstancesAsync`)
-* [Describe options for DB instances](Actions/AuroraWrapper.cs)(`DescribeOrderableDBInstanceOptionsAsync`)
-* [Get parameters from a DB cluster parameter group](Actions/AuroraWrapper.cs)(`GetDBClusterParametersAsync`)
-* [Update parameters in a DB cluster parameter group](Actions/AuroraWrapper.cs)(`ModifyDBClusterParameterGroupAsync`)
+- [CreateDBCluster](Actions/AuroraWrapper.cs#L199)
+- [CreateDBClusterParameterGroup](Actions/AuroraWrapper.cs#L41)
+- [CreateDBClusterSnapshot](Actions/AuroraWrapper.cs#L320)
+- [CreateDBInstance](Actions/AuroraWrapper.cs#L286)
+- [DeleteDBCluster](Actions/AuroraWrapper.cs#L367)
+- [DeleteDBClusterParameterGroup](Actions/AuroraWrapper.cs#L181)
+- [DeleteDBInstance](Actions/AuroraWrapper.cs#L386)
+- [DescribeDBClusterParameterGroups](Actions/AuroraWrapper.cs#L98)
+- [DescribeDBClusterParameters](Actions/AuroraWrapper.cs#L66)
+- [DescribeDBClusterSnapshots](Actions/AuroraWrapper.cs#L340)
+- [DescribeDBClusters](Actions/AuroraWrapper.cs#L259)
+- [DescribeDBEngineVersions](Actions/AuroraWrapper.cs#L21)
+- [DescribeDBInstances](Actions/AuroraWrapper.cs#L236)
+- [DescribeOrderableDBInstanceOptions](Actions/AuroraWrapper.cs#L154)
+- [ModifyDBClusterParameterGroup](Actions/AuroraWrapper.cs#L115)
 
 ### Scenarios
 
-Code examples that show you how to accomplish a specific task by calling
-multiple functions within the same service.
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
 
-* [Get started with DB clusters](Scenarios/AuroraScenario.cs)
+- [Create an Aurora Serverless work item tracker](../cross-service/AuroraItemTracker)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
 
 ## Run the examples
 
-### Prerequisites
-* To find prerequisites for running these examples, see the
-  [README](../README.md#Prerequisites) in the dotnetv3 folder.
+### Instructions
 
-### Get started with DB clusters
+For general instructions to run the examples, see the
+[README](../README.md#building-and-running-the-code-examples) in the `dotnetv3` folder.
 
-This interactive scenario runs at a command prompt and shows you how to use
-Aurora with the AWS SDK for .NET to do the following:
+Some projects might include a settings.json file. Before compiling the project,
+you can change these values to match your own account and resources. Alternatively,
+add a settings.local.json file with your local settings, which will be loaded automatically
+when the application runs.
 
-* Create a custom Aurora DB cluster parameter group and set parameter values.
-* Create a DB cluster that is configured to use the parameter group.
-* Create a DB instance in the DB cluster that contains a database.
-* Take a snapshot of the DB cluster.
-* Delete the instance, DB cluster, and parameter group.
-
-After the example compiles, you can run it from the command line. To do so,
-navigate to the folder that contains the .csproj file and run the following
-command:
+After the example compiles, you can run it from the command line. To do so, navigate to
+the folder that contains the .csproj file and run the following command:
 
 ```
 dotnet run
@@ -73,9 +93,68 @@ dotnet run
 
 Alternatively, you can run the example from within your IDE.
 
-## Additional resources
-* [Amazon Aurora User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html)
-* [Amazon RDS API Reference](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/Welcome.html)
-* [Amazon RDS API for .NET API reference](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/RDS/NRDS.html)
 
-Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. SPDX-License-Identifier: Apache-2.0
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+#### Hello Aurora
+
+This example shows you how to get started using Aurora.
+
+
+#### Learn the basics
+
+This example shows you how to do the following:
+
+- Create a custom Aurora DB cluster parameter group and set parameter values.
+- Create a DB cluster that uses the parameter group.
+- Create a DB instance that contains a database.
+- Take a snapshot of the DB cluster, then clean up resources.
+
+<!--custom.basic_prereqs.aurora_Scenario_GetStartedClusters.start-->
+<!--custom.basic_prereqs.aurora_Scenario_GetStartedClusters.end-->
+
+
+<!--custom.basics.aurora_Scenario_GetStartedClusters.start-->
+<!--custom.basics.aurora_Scenario_GetStartedClusters.end-->
+
+
+#### Create an Aurora Serverless work item tracker
+
+This example shows you how to create a web application that tracks work items in an Amazon Aurora Serverless database and uses Amazon Simple Email Service (Amazon SES) (Amazon SES) to send reports.
+
+
+<!--custom.scenario_prereqs.cross_RDSDataTracker.start-->
+<!--custom.scenario_prereqs.cross_RDSDataTracker.end-->
+
+
+<!--custom.scenarios.cross_RDSDataTracker.start-->
+<!--custom.scenarios.cross_RDSDataTracker.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../README.md#Tests)
+in the `dotnetv3` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
+
+## Additional resources
+
+- [Aurora User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html)
+- [Aurora API Reference](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/Welcome.html)
+- [SDK for .NET Aurora reference](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/RDS/NRDS.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
+
+---
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0

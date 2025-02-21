@@ -1,111 +1,160 @@
-# DynamoDB code examples for the SDK for Go
+# DynamoDB code examples for the SDK for Go V2
 
 ## Overview
 
-Shows how to use the AWS SDK for Go (v2) to create Amazon DynamoDB
-tables and move data in and out of them.
+Shows how to use the AWS SDK for Go V2 to work with Amazon DynamoDB.
 
-*Amazon DynamoDB is a fully managed NoSQL database service that provides fast and
-predictable performance with seamless scalability.*
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## ⚠️ Important
+_DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability._
 
-* Running this code might result in charges to your AWS account. 
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
 * Running the tests might result in charges to your AWS account.
-* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege). 
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
 * This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
 
-### Single action
+### Prerequisites
 
-* [Create a table](actions/table_basics.go)
-  (`CreateTable`)
-* [Delete a table](actions/table_basics.go)
-  (`DeleteTable`)
-* [Delete an item from a table](actions/table_basics.go)
-  (`DeleteItem`)
-* [Get an item from a table](actions/table_basics.go)
-  (`GetItem`)
-* [Get information about a table](actions/table_basics.go)
-  (`DescribeTable`)
-* [List tables](actions/table_basics.go)
-  (`ListTables`)
-* [Put an item in a table](actions/table_basics.go)
-  (`PutItem`)
-* [Query a table](actions/table_basics.go)
-  (`Query`)
-* [Run a PartiQL statement](actions/partiql.go)
-  (`ExecuteStatement`)
-* [Run batches of PartiQL statements](actions/partiql.go)
-  (`BatchExecuteStatement`)
-* [Scan a table](actions/table_basics.go)
-  (`Scan`)
-* [Update an item in a table](actions/table_basics.go)
-  (`UpdateItem`)
-* [Write a batch of items](actions/table_basics.go)
-  (`BatchWriteItem`)
+For prerequisites, see the [README](../README.md#Prerequisites) in the `gov2` folder.
 
-### Scenario
 
-* [Get started using tables, items, and queries](scenarios/scenario_movie_table.go)
-* [Query a table using PartiQL](scenarios/scenario_partiql_single.go)
-* [Query a table by using batches of PartiQL statements](scenarios/scenario_partiql_batch.go)
-  
-## Running the examples
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
-### Get started using tables, items, and queries
+### Basics
 
-This interactive scenario runs at a command prompt and shows you how to use DynamoDB
-to do the following:
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](scenarios/scenario_movie_table.go)
+
+
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [BatchExecuteStatement](actions/partiql.go#L7)
+- [BatchWriteItem](actions/table_basics.go#L177)
+- [CreateTable](actions/table_basics.go#L54)
+- [DeleteItem](actions/table_basics.go#L332)
+- [DeleteTable](actions/table_basics.go#L347)
+- [DescribeTable](actions/table_basics.go#L31)
+- [ExecuteStatement](actions/partiql.go#L7)
+- [GetItem](actions/table_basics.go#L221)
+- [ListTables](actions/table_basics.go#L99)
+- [PutItem](actions/table_basics.go#L121)
+- [Query](actions/table_basics.go#L243)
+- [Scan](actions/table_basics.go#L285)
+- [UpdateItem](actions/table_basics.go#L140)
+
+### Scenarios
+
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
+
+- [Query a table by using batches of PartiQL statements](scenarios/scenario_partiql_batch.go)
+- [Query a table using PartiQL](scenarios/scenario_partiql_single.go)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+
+#### Run a scenario
+
+All scenarios can be run with the `cmd` runner. To get a list of scenarios
+and to get help for running a scenario, use the following command:
+
+```
+go run ./cmd -h
+```
+#### Learn the basics
+
+This example shows you how to do the following:
 
 - Create a table that can hold movie data.
 - Put, get, and update a single movie in the table.
 - Write movie data to the table from a sample JSON file.
 - Query for movies that were released in a given year.
 - Scan for movies that were released in a range of years.
-- List tables in your account.
-- Delete a movie from the table.
-- Delete the table.
+- Delete a movie from the table, then delete the table.
 
-Install all required resources and start the example by running the following in the 
-`dynamodb` folder at a command prompt.
+<!--custom.basic_prereqs.dynamodb_Scenario_GettingStartedMovies.start-->
+<!--custom.basic_prereqs.dynamodb_Scenario_GettingStartedMovies.end-->
 
-```
-go mod tidy
-go run ./cmd -scenario movieTable
-```
 
-### Query a table using PartiQL
+<!--custom.basics.dynamodb_Scenario_GettingStartedMovies.start-->
+<!--custom.basics.dynamodb_Scenario_GettingStartedMovies.end-->
 
-These two scenarios show you how to run PartiQL statements to query a DynamoDB table of
-movie data. You can do this one at a time or in batches. Both scenarios add, get,
-update, and delete movies in the table.
 
-Install all required resources and start the example by running one of the following in 
-the `dynamodb` folder at a command prompt.
+#### Query a table by using batches of PartiQL statements
 
-```
-go mod tidy
-go run ./cmd -scenario partiQLSingle
-go run ./cmd -scenario partiQLBatch
-```
+This example shows you how to do the following:
 
-### Prerequisites
+- Get a batch of items by running multiple SELECT statements.
+- Add a batch of items by running multiple INSERT statements.
+- Update a batch of items by running multiple UPDATE statements.
+- Delete a batch of items by running multiple DELETE statements.
 
-Prerequisites for running the examples for this service can be found in the
-[README](../README.md#Prerequisites) in the GoV2 folder.
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLBatch.start-->
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLBatch.end-->
 
-## Tests
 
-Instructions for running the tests for this service can be found in the
-[README](../README.md#Tests) in the GoV2 folder.
+<!--custom.scenarios.dynamodb_Scenario_PartiQLBatch.start-->
+<!--custom.scenarios.dynamodb_Scenario_PartiQLBatch.end-->
+
+#### Query a table using PartiQL
+
+This example shows you how to do the following:
+
+- Get an item by running a SELECT statement.
+- Add an item by running an INSERT statement.
+- Update an item by running an UPDATE statement.
+- Delete an item by running a DELETE statement.
+
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLSingle.start-->
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLSingle.end-->
+
+
+<!--custom.scenarios.dynamodb_Scenario_PartiQLSingle.start-->
+<!--custom.scenarios.dynamodb_Scenario_PartiQLSingle.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../README.md#Tests)
+in the `gov2` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
 
 ## Additional resources
 
-* [Amazon DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
-* [Amazon DynamoDB API Reference](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html)
-* [AWS SDK for Go DynamoDB Client](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/dynamodb)
+- [DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+- [DynamoDB API Reference](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html)
+- [SDK for Go V2 DynamoDB reference](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/dynamodb)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
 
 ---
 

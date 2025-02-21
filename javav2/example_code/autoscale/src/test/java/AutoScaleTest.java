@@ -1,136 +1,145 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import com.example.autoscaling.AutoScalingScenario;
 import com.example.autoscaling.CreateAutoScalingGroup;
 import com.example.autoscaling.DeleteAutoScalingGroup;
 import com.example.autoscaling.DescribeAutoScalingInstances;
 import com.example.autoscaling.DetachInstances;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.services.autoscaling.AutoScalingClient;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import java.util.Random;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
 
+/**
+ * To run these integration tests, you must set the required values
+ * in the config.properties file or AWS Secrets Manager.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AutoScaleTest {
-
     private static AutoScalingClient autoScalingClient;
-    private static String groupName="";
-    private static String groupNameSc="";
-    private static String instanceId="";
-    private static String instanceId2="";
-    private static String launchTemplateName="";
-    private static String serviceLinkedRoleARN="";
-    private static String vpcZoneId="";
+    private static String groupName = "";
+    private static String groupNameSc = "";
+    private static String instanceId = "";
+    private static String instanceId2 = "";
+    private static String launchTemplateName = "";
+    private static String vpcZoneId = "";
 
     @BeforeAll
     public static void setUp() throws IOException {
-
         autoScalingClient = AutoScalingClient.builder()
                 .region(Region.US_EAST_1)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
 
-        try (InputStream input = AutoScaleTest.class.getClassLoader().getResourceAsStream("config.properties")) {
+        Random random = new Random();
+        int randomNum = random.nextInt((10000 - 1) + 1) + 1;
 
-            Properties prop = new Properties();
-            if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
-                return;
-            }
+        // Get the values to run these tests from AWS Secrets Manager.
+        Gson gson = new Gson();
+        TestValues myValues = gson.fromJson(String.valueOf(getSecretValues()), TestValues.class);
+        groupName = myValues.getGroupName() + randomNum;
+        launchTemplateName = myValues.getLaunchTemplateName();
+        vpcZoneId = myValues.getVpcZoneId();
+        groupNameSc = myValues.getGroupNameSc() + randomNum;
 
-            prop.load(input);
-            groupName = prop.getProperty("groupName");
-            launchTemplateName = prop.getProperty("launchTemplateName");
-            serviceLinkedRoleARN = prop.getProperty("serviceLinkedRoleARN");
-            vpcZoneId = prop.getProperty("vpcZoneId");
-            groupNameSc = prop.getProperty("groupNameSc");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        // Uncomment this code block if you prefer using a config.properties file to
+        // retrieve AWS values required for the tests.
+        /*
+         * try (InputStream input =
+         * AutoScaleTest.class.getClassLoader().getResourceAsStream("config.properties")
+         * ) {
+         * Properties prop = new Properties();
+         * if (input == null) {
+         * System.out.println("Sorry, unable to find config.properties");
+         * return;
+         * }
+         * 
+         * prop.load(input);
+         * groupName = prop.getProperty("groupName")+randomNum;
+         * launchTemplateName = prop.getProperty("launchTemplateName");
+         * vpcZoneId = prop.getProperty("vpcZoneId");
+         * groupNameSc = prop.getProperty("groupNameSc")+randomNum;
+         * 
+         * } catch (IOException ex) {
+         * ex.printStackTrace();
+         * }
+         */
     }
+
     @Test
     @Order(1)
-    public void checkValues() {
-        assertNotNull(autoScalingClient);
-        assertNotNull(groupName);
-        assertNotNull(instanceId);
-        assertNotNull(launchTemplateName);
-        assertNotNull(serviceLinkedRoleARN);
-        assertNotNull(vpcZoneId);
+    public void createAutoScalingGroup() {
+        assertDoesNotThrow(() -> CreateAutoScalingGroup.createAutoScalingGroup(autoScalingClient, groupName,
+                launchTemplateName, vpcZoneId));
         System.out.println("Test 1 passed");
     }
 
     @Test
     @Order(2)
-    public void createAutoScalingGroup() {
-        assertDoesNotThrow(() -> CreateAutoScalingGroup.createAutoScalingGroup(autoScalingClient, groupName, launchTemplateName, serviceLinkedRoleARN, vpcZoneId));
+    public void describeAutoScalingInstances() throws InterruptedException {
+        System.out.println("Wait 1 min for the resources");
+        Thread.sleep(60000);
+        instanceId2 = DescribeAutoScalingInstances.getAutoScaling(autoScalingClient, groupName);
+        assertFalse(instanceId2.isEmpty());
+        System.out.println(instanceId2);
         System.out.println("Test 2 passed");
     }
 
     @Test
     @Order(3)
-    public void describeAutoScalingInstances() throws InterruptedException {
-        System.out.println("Wait 1 min for the resources");
+    public void detachInstances() throws InterruptedException {
+        System.out.println("Wait 1 min for the resources, including the instance");
         Thread.sleep(60000);
-        instanceId2 = DescribeAutoScalingInstances.getAutoScaling(autoScalingClient, groupName);
-        assertTrue(!instanceId2.isEmpty());
-        System.out.println(instanceId2);
+        assertDoesNotThrow(() -> DetachInstances.detachInstance(autoScalingClient, groupName, instanceId2));
         System.out.println("Test 3 passed");
     }
 
     @Test
     @Order(4)
-    public void detachInstances()throws InterruptedException {
-        System.out.println("Wait 1 min for the resources, including the instance");
-        Thread.sleep(60000);
-        assertDoesNotThrow(() -> DetachInstances.detachInstance(autoScalingClient, groupName, instanceId2));
+    public void deleteAutoScalingGroup() {
+        assertDoesNotThrow(() -> DeleteAutoScalingGroup.deleteAutoScalingGroup(autoScalingClient, groupName));
         System.out.println("Test 4 passed");
     }
 
     @Test
     @Order(5)
-    public void deleteAutoScalingGroup() {
-        assertDoesNotThrow(() -> DeleteAutoScalingGroup.deleteAutoScalingGroup(autoScalingClient, groupName));
-        System.out.println("Test 5 passed");
-    }
-
-    @Test
-    @Order(6)
     public void autoScalingScenario() throws InterruptedException {
-        System.out.println("**** Create an Auto Scaling group named "+groupName);
-        AutoScalingScenario.createAutoScalingGroup(autoScalingClient, groupNameSc, launchTemplateName, serviceLinkedRoleARN, vpcZoneId);
+        System.out.println("**** Create an Auto Scaling group named " + groupName);
+        AutoScalingScenario.createAutoScalingGroup(autoScalingClient, groupNameSc, launchTemplateName, vpcZoneId);
 
-        System.out.println("Wait 1 min for the resources, including the instance. Otherwise, an empty instance Id is returned");
+        System.out.println(
+                "Wait 1 min for the resources, including the instance. Otherwise, an empty instance Id is returned");
         Thread.sleep(60000);
 
         System.out.println("**** Get Auto Scale group Id value");
         String instanceId = AutoScalingScenario.getSpecificAutoScalingGroups(autoScalingClient, groupNameSc);
-        assertTrue(!instanceId.isEmpty());
+        assertFalse(instanceId.isEmpty());
 
-        System.out.println("**** Describe Auto Scaling with the Id value "+instanceId);
-        AutoScalingScenario.describeAutoScalingInstance( autoScalingClient, instanceId);
+        System.out.println("**** Describe Auto Scaling with the Id value " + instanceId);
+        AutoScalingScenario.describeAutoScalingInstance(autoScalingClient, instanceId);
 
-        System.out.println("**** Enable metrics collection "+instanceId);
+        System.out.println("**** Enable metrics collection " + instanceId);
         AutoScalingScenario.enableMetricsCollection(autoScalingClient, groupNameSc);
 
         System.out.println("**** Update an Auto Scaling group to update max size to 3");
-        AutoScalingScenario.updateAutoScalingGroup(autoScalingClient, groupNameSc, launchTemplateName, serviceLinkedRoleARN);
+        AutoScalingScenario.updateAutoScalingGroup(autoScalingClient, groupNameSc, launchTemplateName);
 
         System.out.println("**** Describe all Auto Scaling groups to show the current state of the groups");
         AutoScalingScenario.describeAutoScalingGroups(autoScalingClient, groupNameSc);
@@ -138,7 +147,8 @@ public class AutoScaleTest {
         System.out.println("**** Describe account details");
         AutoScalingScenario.describeAccountLimits(autoScalingClient);
 
-        System.out.println("Wait 1 min for the resources, including the instance. Otherwise, an empty instance Id is returned");
+        System.out.println(
+                "Wait 1 min for the resources, including the instance. Otherwise, an empty instance Id is returned");
         Thread.sleep(60000);
 
         System.out.println("**** Set desired capacity to 2");
@@ -159,5 +169,49 @@ public class AutoScaleTest {
         System.out.println("**** Delete the Auto Scaling group");
         AutoScalingScenario.deleteAutoScalingGroup(autoScalingClient, groupNameSc);
     }
-}
 
+    private static String getSecretValues() {
+        SecretsManagerClient secretClient = SecretsManagerClient.builder()
+                .region(Region.US_EAST_1)
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                .build();
+        String secretName = "test/autoscale";
+
+        GetSecretValueRequest valueRequest = GetSecretValueRequest.builder()
+                .secretId(secretName)
+                .build();
+
+        GetSecretValueResponse valueResponse = secretClient.getSecretValue(valueRequest);
+        return valueResponse.secretString();
+    }
+
+    @Nested
+    @DisplayName("A class used to get test values from test/autoscale (an AWS Secrets Manager secret)")
+    class TestValues {
+        private String groupName;
+        private String groupNameSc;
+
+        private String launchTemplateName;
+
+        private String vpcZoneId;
+
+        TestValues() {
+        }
+
+        String getGroupName() {
+            return this.groupName;
+        }
+
+        String getGroupNameSc() {
+            return this.groupNameSc;
+        }
+
+        String getLaunchTemplateName() {
+            return this.launchTemplateName;
+        }
+
+        String getVpcZoneId() {
+            return this.vpcZoneId;
+        }
+    }
+}

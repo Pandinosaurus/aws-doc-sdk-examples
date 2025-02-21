@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Set the minimum required version of CMake for this project.
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.13)
 
 # Set this project's name.
 project("s3-encryption-examples")
@@ -28,7 +28,7 @@ find_package(AWSSDK REQUIRED COMPONENTS s3-encryption)
 
 # If the compiler is some version of Microsoft Visual C++, or another compiler simulating C++,
 # and building as shared libraries, then dynamically link to those shared libraries.
-if(MSVC AND BUILD_SHARED_LIBS)
+if(MSVC AND AWSSDK_INSTALL_AS_SHARED_LIBS)
     add_definitions(-DUSE_IMPORT_EXPORT)
     # Copy relevant AWS SDK for C++ libraries into the current binary directory for running and debugging.
     list(APPEND SERVICE_LIST s3-encryption)

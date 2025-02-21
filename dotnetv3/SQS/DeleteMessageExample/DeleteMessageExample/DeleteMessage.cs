@@ -1,10 +1,9 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier:  Apache-2.0
+// SPDX-License-Identifier: Apache-2.0
 
 /// <summary>
 /// Shows how to delete one or more messages from an Amazon Simple Queue
-/// Service (Amazon SQS) queue. This example was created using the AWS SDK
-/// for .NET version 3.7 and .NET Core 5.0.
+/// Service (Amazon SQS) queue.
 /// </summary>
 namespace DeleteMessageExample
 {

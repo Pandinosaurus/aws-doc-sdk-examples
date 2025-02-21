@@ -1,108 +1,148 @@
-# Amazon S3 Glacier vaults and archives example
+# S3 Glacier code examples for the SDK for Python
 
-## Purpose
+## Overview
 
-Shows how to use the AWS SDK for Python (Boto3) with Amazon Simple Storage Service
-Glacier to create and manage vaults and archives.
+Shows how to use the AWS SDK for Python (Boto3) to work with Amazon S3 Glacier.
 
-*Amazon S3 Glacier is a storage service optimized for infrequently used data. The 
-service provides durable and extremely low-cost storage with security features for 
-data archiving and backup.*
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## Code examples
-
-### Usage examples
-
-* [Archiving a file, getting notifications, and initiating a job](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`upload_demo`)
-* [Getting archive content from a job and deleting the archive](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`retrieve_demo`)
-
-### API examples
-
-* [Creating a vault](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py) 
-(`create_vault`)
-* [Deleting an archive](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`delete_archive`)
-* [Deleting vault notifications](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`delete_vault_notifications`)
-* [Describing a job](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`describe_job`)
-* [Getting job output](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`get_job_output`)
-* [Getting vault notification configuration](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`get_vault_notification`)
-* [Initiating an archive retrieval job](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`initiate_job`)
-* [Initiating an inventory retrieval job](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`initiate_job`)
-* [Listing jobs](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`list_jobs`)
-* [Listing vaults](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`list_vaults`)
-* [Setting vault notifications](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`set_vault_notification`)
-* [Uploading an archive](https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/python/example_code/glacier/glacier_basics.py)
-(`upload_archive`)
+_S3 Glacier provides durable and extremely low-cost storage for infrequently used data with security features for data archiving and backup._
 
 ## ⚠ Important
 
-- As an AWS best practice, grant this code least privilege, or only the 
-  permissions required to perform a task. For more information, see 
-  [Grant Least Privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege) 
-  in the *AWS Identity and Access Management 
-  User Guide*.
-- This code has not been tested in all AWS Regions. Some AWS services are 
-  available only in specific Regions. For more information, see the 
-  [AWS Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)
-  on the AWS website.
-- Running this code might result in charges to your AWS account.
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
 
-## Running the code
+<!--custom.important.start-->
+<!--custom.important.end-->
+
+## Code examples
 
 ### Prerequisites
 
-- You must have an AWS account, and have your default credentials and AWS Region
-  configured as described in the [AWS Tools and SDKs Shared Configuration and
-  Credentials Reference Guide](https://docs.aws.amazon.com/credref/latest/refdocs/creds-config-files.html).
-- Python 3.8 or later
-- Boto3 1.17.96 or later
-- Pytest 6.0.2 or later (to run unit tests)
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `python` folder.
 
-### Command
-
-Run code that creates an Amazon S3 Glacier vault, uploads an archive, optionally sets 
-up notifications, and starts a job that retrieves an archive from the vault.
+Install the packages required by these examples by running the following in a virtual environment:
 
 ```
-python glacier_basics.py --upload --notify <Amazon SNS topic ARN>
-``` 
+python -m pip install -r requirements.txt
+```
 
-Run code that gets job output, deletes the archive, and deletes the vault.
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
+
+### Single actions
+
+Code excerpts that show you how to call individual service functions.
+
+- [CreateVault](glacier_basics.py#L35)
+- [DeleteArchive](glacier_basics.py#L196)
+- [DeleteVault](glacier_basics.py#L157)
+- [DeleteVaultNotifications](glacier_basics.py#L330)
+- [DescribeJob](glacier_basics.py#L215)
+- [GetJobOutput](glacier_basics.py#L240)
+- [GetVaultNotifications](glacier_basics.py#L305)
+- [InitiateJob](glacier_basics.py#L99)
+- [ListJobs](glacier_basics.py#L121)
+- [ListVaults](glacier_basics.py#L54)
+- [SetVaultNotifications](glacier_basics.py#L266)
+- [UploadArchive](glacier_basics.py#L68)
+
+### Scenarios
+
+Code examples that show you how to accomplish a specific task by calling multiple
+functions within the same service.
+
+- [Archive a file, get notifications, and initiate a job](glacier_basics.py)
+- [Get archive content and delete the archive](glacier_basics.py)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
+
+## Run the examples
+
+### Instructions
+
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+
+
+#### Archive a file, get notifications, and initiate a job
+
+This example shows you how to do the following:
+
+- Create an Amazon S3 Glacier vault.
+- Configure the vault to publish notifications to an Amazon SNS topic.
+- Upload an archive file to the vault.
+- Initiate an archive retrieval job.
+
+<!--custom.scenario_prereqs.glacier_Usage_UploadNotifyInitiate.start-->
+<!--custom.scenario_prereqs.glacier_Usage_UploadNotifyInitiate.end-->
+
+Start the example by running the following at a command prompt:
+
+```
+python glacier_basics.py
+```
+
+
+<!--custom.scenarios.glacier_Usage_UploadNotifyInitiate.start-->
+<!--custom.scenarios.glacier_Usage_UploadNotifyInitiate.end-->
+
+#### Get archive content and delete the archive
+
+This example shows you how to do the following:
+
+- List jobs for an Amazon S3 Glacier vault and get job status.
+- Get the output of a completed archive retrieval job.
+- Delete an archive.
+- Delete a vault.
+
+<!--custom.scenario_prereqs.glacier_Usage_RetrieveDelete.start-->
+<!--custom.scenario_prereqs.glacier_Usage_RetrieveDelete.end-->
+
+Start the example by running the following at a command prompt:
+
+```
+python glacier_basics.py
+```
+
+
+<!--custom.scenarios.glacier_Usage_RetrieveDelete.start-->
 Because Amazon S3 Glacier is designed for infrequent retrieval, a typical retrieval
 job takes 3–5 hours to complete.
+<!--custom.scenarios.glacier_Usage_RetrieveDelete.end-->
 
-```
-python glacier_basics.py --retrieve
-```
+### Tests
 
-## Running the tests
+⚠ Running tests might result in charges to your AWS account.
 
-The unit tests in this module use the botocore Stubber, which captures requests before 
-they are sent to AWS, and returns a mocked response. To run all of the tests, 
-run the following in your [GitHub root]/python/example_code/glacier 
-folder.
 
-```    
-python -m pytest
-```
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `python` folder.
 
-## Additional information
 
-- [Boto3 Glacier service reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glacier.html)
-- [Amazon S3 Glacier documentation](https://docs.aws.amazon.com/glacier/index.html)
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
+
+## Additional resources
+
+- [S3 Glacier Developer Guide](https://docs.aws.amazon.com/amazonglacier/latest/dev/introduction.html)
+- [S3 Glacier API Reference](https://docs.aws.amazon.com/amazonglacier/latest/dev/amazon-glacier-api.html)
+- [SDK for Python S3 Glacier reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glacier.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
 
 ---
+
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 SPDX-License-Identifier: Apache-2.0

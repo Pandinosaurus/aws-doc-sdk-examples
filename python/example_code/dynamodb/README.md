@@ -1,176 +1,146 @@
-# DynamoDB examples for the SDK for Python
+# DynamoDB code examples for the SDK for Python
 
 ## Overview
 
-Shows how to use the AWS SDK for Python (Boto3) to create Amazon DynamoDB 
-tables and move data in and out of them.
- 
-* Create a table for storing movies.
-* Load movies into the table from a JSON-formatted file.
-* Update and query movies in the table.
-* Get, write, and delete items in batches.
-* Run PartiQL queries on a DynamoDB table. 
-* Accelerate reads with DynamoDB Accelerator (DAX).
+Shows how to use the AWS SDK for Python (Boto3) to work with Amazon DynamoDB.
 
-*Amazon DynamoDB is a fully managed NoSQL database service that provides fast and 
-predictable performance with seamless scalability.*
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## ⚠️ Important
+_DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability._
 
-* Running this code might result in charges to your AWS account. 
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
 * Running the tests might result in charges to your AWS account.
-* We recommend that you grant your code least privilege. At most, grant only the minimum 
-permissions required to perform the task. For more information, see 
-[Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege). 
-* This code is not tested in every AWS Region. For more information, see 
-[AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
+
+### Prerequisites
+
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `python` folder.
+
+Install the packages required by these examples by running the following in a virtual environment:
+
+```
+python -m pip install -r requirements.txt
+```
+
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
+
+### Get started
+
+- [Hello DynamoDB](hello/hello_dynamodb.py#L4) (`ListTables`)
+
+
+### Basics
+
+Code examples that show you how to perform the essential operations within a service.
+
+- [Learn the basics](GettingStarted/scenario_getting_started_movies.py)
+
 
 ### Single actions
 
 Code excerpts that show you how to call individual service functions.
 
-* [Create a table](GettingStarted/scenario_getting_started_movies.py)
-(`create_table`)
-* [Delete a table](GettingStarted/scenario_getting_started_movies.py)
-(`delete_table`)
-* [Delete an item from a table](GettingStarted/scenario_getting_started_movies.py)
-(`delete_item`)
-* [Delete an item from a table if it meets a condition](GettingStarted/update_and_query.py)
-(`delete_item`)
-* [Get an item from a table](GettingStarted/scenario_getting_started_movies.py)
-(`get_item`)
-* [List tables](GettingStarted/scenario_getting_started_movies.py)
-(`list_tables`)
-* [Put an item into a table](GettingStarted/scenario_getting_started_movies.py)
-(`put_item`)
-* [Put items loaded from a JSON file into a table](GettingStarted/scenario_getting_started_movies.py)
-(`put_item`)
-* [Query items and project a subset of data](GettingStarted/update_and_query.py)
-(`query`)
-* [Query items by using a key condition expression](GettingStarted/scenario_getting_started_movies.py)
-(`query`)
-* [Run a PartiQL statement](partiql/scenario_partiql_single.py)
-(`execute_statement`)
-* [Run batches of PartiQL statements](partiql/scenario_partiql_batch.py)
-(`batch_execute_statement`)
-* [Scan a table for items](GettingStarted/scenario_getting_started_movies.py)
-(`scan`)
-* [Update an item by using a conditional expression](GettingStarted/update_and_query.py)
-(`update_item`)
-* [Update an item by using an update expression](GettingStarted/update_and_query.py)
-(`update_item`)
-* [Update an item in a table](GettingStarted/scenario_getting_started_movies.py)
-(`update_item`)
+- [BatchExecuteStatement](partiql/scenario_partiql_batch.py#L44)
+- [BatchGetItem](batching/dynamo_batching.py#L64)
+- [BatchWriteItem](GettingStarted/scenario_getting_started_movies.py#L164)
+- [CreateTable](GettingStarted/scenario_getting_started_movies.py#L100)
+- [DeleteItem](GettingStarted/scenario_getting_started_movies.py#L342)
+- [DeleteTable](GettingStarted/scenario_getting_started_movies.py#L363)
+- [DescribeTable](GettingStarted/scenario_getting_started_movies.py#L70)
+- [ExecuteStatement](partiql/scenario_partiql_single.py#L43)
+- [GetItem](GettingStarted/scenario_getting_started_movies.py#L223)
+- [ListTables](GettingStarted/scenario_getting_started_movies.py#L140)
+- [PutItem](GettingStarted/scenario_getting_started_movies.py#L193)
+- [Query](GettingStarted/scenario_getting_started_movies.py#L280)
+- [Scan](GettingStarted/scenario_getting_started_movies.py#L303)
+- [UpdateItem](GettingStarted/scenario_getting_started_movies.py#L248)
 
 ### Scenarios
 
-Code examples that show you how to accomplish a specific task by calling multiple 
+Code examples that show you how to accomplish a specific task by calling multiple
 functions within the same service.
 
-* [Get started using tables, items, and queries](GettingStarted/scenario_getting_started_movies.py)
-* [Get, write, and delete batches of items](batching/dynamo_batching.py)
-* [Query a table using PartiQL](partiql/scenario_partiql_single.py)
-* [Query a table by using batches of PartiQL statements](partiql/scenario_partiql_batch.py)
-* [Accelerate reads with DAX](TryDax)
+- [Accelerate reads with DynamoDB Accelerator](TryDax/01-create-table.py)
+- [Create a REST API to track COVID-19 data](../../cross_service/apigateway_covid-19_tracker)
+- [Create a messenger application](../../cross_service/stepfunctions_messenger)
+- [Create a web application to track DynamoDB data](../../cross_service/dynamodb_item_tracker)
+- [Create a websocket chat application](../../cross_service/apigateway_websocket_chat)
+- [Query a table by using batches of PartiQL statements](partiql/scenario_partiql_batch.py)
+- [Query a table using PartiQL](partiql/scenario_partiql_single.py)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
 
 ## Run the examples
 
-### Prerequisites
+### Instructions
 
-To find prerequisites for running these examples, see the 
-[README](../../README.md#Prerequisites) in the Python folder.
 
-The following additional packages are required to run these examples:
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
 
-- Requests 2.25.1 or later (to download the movie data JSON file)
-- Amazon DynamoDB Accelerator (DAX) client 1.1.7 or later (to run the DAX example)
+#### Hello DynamoDB
 
-You can install these prerequisites by running the following command in a
-virtual environment:
+This example shows you how to get started using DynamoDB.
 
 ```
-python -m pip install -r requirements.txt
-``` 
-
-### Get started with tables, items, and queries
-
-This scenario shows you how to create an Amazon DynamoDB table for storing movie data. 
-The scenario loads movies into the table from a JSON-formatted file, walks you 
-through an interactive demo to add, update, and delete movies one at a time, and 
-shows you how to query for sets of movies with various parameters.
-
-The demo uses the Requests package to download a `moviedata.json` file of movie data.
-If you prefer, you can download and extract the file to the `GettingStarted` folder
-from the 
-[Amazon DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip). 
-
-To start the scenario, navigate to the `GettingStarted` folder and run the following 
-at a command prompt:
-
-```
-python scenario_getting_started_movies.py
+python hello/hello_dynamodb.py
 ```
 
-### Get, write, and delete batches of items
+#### Learn the basics
 
-This scenario shows you how to write and retrieve DynamoDB data using batch functions.
+This example shows you how to do the following:
 
-Boto3 features a 
-[batch_writer](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/dynamodb.html#batch-writing) 
-function that handles all of the necessary intricacies
-of the DynamoDB batch API on your behalf. This includes buffering, removing
-duplicates, and retrying unprocessed items.
+- Create a table that can hold movie data.
+- Put, get, and update a single movie in the table.
+- Write movie data to the table from a sample JSON file.
+- Query for movies that were released in a given year.
+- Scan for movies that were released in a range of years.
+- Delete a movie from the table, then delete the table.
 
-The demo requires a `moviedata.json` file of movie data in the `batching` folder.
-You can download and extract the file from the 
-[Amazon DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip). 
+<!--custom.basic_prereqs.dynamodb_Scenario_GettingStartedMovies.start-->
+<!--custom.basic_prereqs.dynamodb_Scenario_GettingStartedMovies.end-->
 
-To start the scenario, navigate to the `batching` folder and run the following at a 
-command prompt:
-
-```
-python dynamo_batching.py
-```  
-
-### Query a table using PartiQL
-
-These two scenarios show you how to run PartiQL statements to query a DynamoDB table of 
-movie data. You can do this one at a time or in batches. Both scenarios add, get, 
-update, and delete movies in the table.
-
-To start a scenario, navigate to the `partiql` folder and run one of the 
-following at a command prompt:
+Start the example by running the following at a command prompt:
 
 ```
-python scenario_partiql_single.py
-python scenario_partiql_batch.py
+python GettingStarted/scenario_getting_started_movies.py
 ```
 
-### Accelerate reads with DAX
 
-Shows you how to use the Amazon DAX Client for Python to read items from a DynamoDB 
-table. Retrieval, query, and scan speeds are measured for both Boto3 and DAX clients 
-to show some of the performance advantages of using DAX.
+<!--custom.basics.dynamodb_Scenario_GettingStartedMovies.start-->
+<!--custom.basics.dynamodb_Scenario_GettingStartedMovies.end-->
 
-DAX is a DynamoDB-compatible caching service that provides fast in-memory performance 
-and high availability for applications that demand microsecond latency. For more
-information, see [In-Memory Acceleration with DynamoDB Accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html). 
 
-#### Run on your local computer
+#### Accelerate reads with DynamoDB Accelerator
 
-When run on your local computer, only the Boto3 client works.
+This example shows you how to do the following:
 
-Each file can be run separately at a command prompt. For example, create the
-table by running the following from a command prompt window.
+- Create and write data to a table with both the DynamoDB Accelerator and SDK clients.
+- Get, query, and scan the table with both clients and compare their performance.
 
-```commandline
-python 01-create-table.py
-```  
+<!--custom.scenario_prereqs.dynamodb_Usage_DaxDemo.start-->
+<!--custom.scenario_prereqs.dynamodb_Usage_DaxDemo.end-->
 
-#### Run on a DAX cluster
+Start the example by running the following at a command prompt:
 
+```
+python TryDax/01-create-table.py
+```
+
+
+<!--custom.scenarios.dynamodb_Usage_DaxDemo.start-->
 To run the scripts with the DAX client, you must run them on an Amazon Elastic Compute 
 Cloud (Amazon EC2) instance within your virtual private cloud (VPC). This process is 
 described in the Python sample application tutorial in the  
@@ -182,7 +152,7 @@ The tutorial shows you how to set up the following additional resources:
 - A VPC from Amazon Virtual Private Cloud (Amazon VPC)
 - A DAX cluster set up in your VPC 
 - An EC2 instance running in your VPC with the following installed:
-    - Python 3.7 or later
+    - Python 3.9 or later
     - Boto3 1.11.10 or later
     - Amazon DAX Client for Python 1.1.7 or later
 
@@ -190,45 +160,129 @@ On an EC2 instance, run the get item, query, and scan test scripts with the DAX 
 by specifying a DAX cluster endpoint as the first positional argument.
 To run the query test script with the DAX client, run the following from a command 
 prompt window.
+Start the example by running the following at a command prompt:
 
 ```commandline
 python 04-query-test.py YOUR-CLUSTER-NAME.111111.clustercfg.dax.usw2.cache.amazonaws.com:8111
 ```
+<!--custom.scenarios.dynamodb_Usage_DaxDemo.end-->
 
-## Tests
+#### Create a REST API to track COVID-19 data
 
-All tests use pytest, and you can find them in the `test` folder of each example.
+This example shows you how to create a REST API that simulates a system to track daily cases of COVID-19 in the United States, using fictional data.
 
-### Unit tests
 
-The unit tests in this module use the botocore Stubber. Stubber captures requests before 
-they are sent to AWS and returns a mocked response so that no charges are incurred on 
-your account.
+<!--custom.scenario_prereqs.cross_ApiGatewayDataTracker.start-->
+<!--custom.scenario_prereqs.cross_ApiGatewayDataTracker.end-->
 
-Run unit tests at a command prompt from the example subfolder by including the 
-`"not integ"` marker.
+
+<!--custom.scenarios.cross_ApiGatewayDataTracker.start-->
+<!--custom.scenarios.cross_ApiGatewayDataTracker.end-->
+
+#### Create a messenger application
+
+This example shows you how to create an AWS Step Functions messenger application that retrieves message records from a database table.
+
+
+<!--custom.scenario_prereqs.cross_StepFunctionsMessenger.start-->
+<!--custom.scenario_prereqs.cross_StepFunctionsMessenger.end-->
+
+
+<!--custom.scenarios.cross_StepFunctionsMessenger.start-->
+<!--custom.scenarios.cross_StepFunctionsMessenger.end-->
+
+#### Create a web application to track DynamoDB data
+
+This example shows you how to create a web application that tracks work items in an Amazon DynamoDB table and uses Amazon Simple Email Service (Amazon SES) (Amazon SES) to send reports.
+
+
+<!--custom.scenario_prereqs.cross_DynamoDBDataTracker.start-->
+<!--custom.scenario_prereqs.cross_DynamoDBDataTracker.end-->
+
+
+<!--custom.scenarios.cross_DynamoDBDataTracker.start-->
+<!--custom.scenarios.cross_DynamoDBDataTracker.end-->
+
+#### Create a websocket chat application
+
+This example shows you how to create a chat application that is served by a websocket API built on Amazon API Gateway.
+
+
+<!--custom.scenario_prereqs.cross_ApiGatewayWebsocketChat.start-->
+<!--custom.scenario_prereqs.cross_ApiGatewayWebsocketChat.end-->
+
+
+<!--custom.scenarios.cross_ApiGatewayWebsocketChat.start-->
+<!--custom.scenarios.cross_ApiGatewayWebsocketChat.end-->
+
+#### Query a table by using batches of PartiQL statements
+
+This example shows you how to do the following:
+
+- Get a batch of items by running multiple SELECT statements.
+- Add a batch of items by running multiple INSERT statements.
+- Update a batch of items by running multiple UPDATE statements.
+- Delete a batch of items by running multiple DELETE statements.
+
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLBatch.start-->
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLBatch.end-->
+
+Start the example by running the following at a command prompt:
 
 ```
-python -m pytest -m "not integ"
+python partiql/scenario_partiql_batch.py
 ```
 
-### Integration tests
 
-⚠️Running the integration tests might result in charges to your AWS account.
+<!--custom.scenarios.dynamodb_Scenario_PartiQLBatch.start-->
+<!--custom.scenarios.dynamodb_Scenario_PartiQLBatch.end-->
 
-Run integration tests at a command prompt by including the `"integ"` marker.
+#### Query a table using PartiQL
+
+This example shows you how to do the following:
+
+- Get an item by running a SELECT statement.
+- Add an item by running an INSERT statement.
+- Update an item by running an UPDATE statement.
+- Delete an item by running a DELETE statement.
+
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLSingle.start-->
+<!--custom.scenario_prereqs.dynamodb_Scenario_PartiQLSingle.end-->
+
+Start the example by running the following at a command prompt:
 
 ```
-python -m pytest -m "integ"
+python partiql/scenario_partiql_single.py
 ```
+
+
+<!--custom.scenarios.dynamodb_Scenario_PartiQLSingle.start-->
+<!--custom.scenarios.dynamodb_Scenario_PartiQLSingle.end-->
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `python` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
 
 ## Additional resources
 
-- [Amazon DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
-- [Amazon DynamoDB API Reference](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html)
-- [Boto3 Amazon DynamoDB service reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html)
+- [DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+- [DynamoDB API Reference](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html)
+- [SDK for Python DynamoDB reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html)
+
+<!--custom.resources.start-->
+<!--custom.resources.end-->
 
 ---
+
 Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 SPDX-License-Identifier: Apache-2.0

@@ -1,61 +1,105 @@
-# CloudWatch Events code examples for the SDK for JavaScript in Node.js
+# CloudWatch Events code examples for the SDK for JavaScript (v3)
 
 ## Overview
 
-The code examples in this directory demonstrate how to work with Amazon CloudWatch Events
-using the AWS SDK for JavaScript (v3).
+Shows how to use the AWS SDK for JavaScript (v3) to work with Amazon CloudWatch Events.
 
-Amazon CloudWatch Events delivers a near real-time stream of system events that describe 
-changes in Amazon Web Services (AWS) resources.
+<!--custom.overview.start-->
+<!--custom.overview.end-->
 
-## ⚠️ Important
+_CloudWatch Events send system events from AWS resources to AWS Lambda functions, Amazon Simple Notification Service topics, streams in Amazon Kinesis, and other target types._
 
-- Running this code might result in charges to your AWS account.
-- Running the tests might result in charges to your AWS account.
-- We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
-- This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+## ⚠ Important
+
+* Running this code might result in charges to your AWS account. For more details, see [AWS Pricing](https://aws.amazon.com/pricing/) and [Free Tier](https://aws.amazon.com/free/).
+* Running the tests might result in charges to your AWS account.
+* We recommend that you grant your code least privilege. At most, grant only the minimum permissions required to perform the task. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege).
+* This code is not tested in every AWS Region. For more information, see [AWS Regional Services](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services).
+
+<!--custom.important.start-->
+<!--custom.important.end-->
 
 ## Code examples
+
+### Prerequisites
+
+For prerequisites, see the [README](../../README.md#Prerequisites) in the `javascriptv3` folder.
+
+
+<!--custom.prerequisites.start-->
+<!--custom.prerequisites.end-->
 
 ### Single actions
 
 Code excerpts that show you how to call individual service functions.
 
-- [Add an AWS Lambda function target](actions/put-targets.js)(PutTargets)
-- [Create a scheduled rule](actions/put-rule.js)(PutRule)
-- [Send events](actions/put-events.js)(PutEvents)
+- [PutEvents](actions/put-events.js#L4)
+- [PutRule](actions/put-rule.js#L4)
+- [PutTargets](actions/put-targets.js#L4)
+
+
+<!--custom.examples.start-->
+<!--custom.examples.end-->
 
 ## Run the examples
+
+### Instructions
 
 **Note**: All code examples are written in ECMAscript 6 (ES6). For guidelines on converting to CommonJS, see
 [JavaScript ES6/CommonJS syntax](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sdk-examples-javascript-syntax.html).
 
-### Prerequisites
-
-- [Set up AWS SDK for JavaScript](../README.rst)
-- Run `npm i` to install dependencies.
-
-## Instructions
-
 **Run a single action**
 
-1. Run `node ./actions/<fileName>`.
-   OR
-1. Import `./actions/fileName` into another module.
+```bash
+node ./actions/<fileName>
+```
 
-## Tests
+**Run a scenario**
 
-⚠️ Running the tests might result in charges to your AWS account.
+Most scenarios can be run with the following command:
+```bash
+node ./scenarios/<fileName>
+```
 
-### Integration tests
+**Run with options**
 
-1. Run `npm i`.
-1. Run `npm run integration-test`.
+Some actions and scenarios can be run with options from the command line:
+```bash
+node ./scenarios/<fileName> --option1 --option2
+```
+[util.parseArgs](https://nodejs.org/api/util.html#utilparseargsconfig) is used to configure
+these options. For the specific options available to each script, see the `parseArgs` usage
+for that file.
+
+<!--custom.instructions.start-->
+<!--custom.instructions.end-->
+
+
+
+### Tests
+
+⚠ Running tests might result in charges to your AWS account.
+
+
+To find instructions for running these tests, see the [README](../../README.md#Tests)
+in the `javascriptv3` folder.
+
+
+
+<!--custom.tests.start-->
+<!--custom.tests.end-->
 
 ## Additional resources
 
-- [Amazon CloudWatch Events User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/WhatIsCloudWatchEvents.html)
-- [Amazon CloudWatch Logs API Reference](https://docs.aws.amazon.com/eventbridge/latest/APIReference/Welcome.html)
-- [CloudWatch Events Client - AWS SDK for JavaScript (v3)](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudwatch-events/index.html)
+- [CloudWatch Events User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/WhatIsCloudWatchEvents.html)
+- [CloudWatch Events API Reference](https://docs.aws.amazon.com/eventbridge/latest/APIReference/Welcome.html)
+- [SDK for JavaScript (v3) CloudWatch Events reference](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/cloudwatch-events)
 
-Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. SPDX-License-Identifier: Apache-2.0
+<!--custom.resources.start-->
+<!--custom.resources.end-->
+
+---
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0

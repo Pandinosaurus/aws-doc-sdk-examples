@@ -1,367 +1,403 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
-import com.example.cloudwatch.DeleteAlarm;
+import com.example.cloudwatch.scenario.CloudWatchActions;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.cloudwatch.CloudWatchClient;
+import software.amazon.awssdk.services.cloudwatch.model.DeleteAlarmsResponse;
+import software.amazon.awssdk.services.cloudwatch.model.DeleteAnomalyDetectorResponse;
+import software.amazon.awssdk.services.cloudwatch.model.DeleteDashboardsResponse;
 import software.amazon.awssdk.services.cloudwatch.model.Dimension;
-import software.amazon.awssdk.services.cloudwatchevents.CloudWatchEventsClient;
-import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClient;
+import software.amazon.awssdk.services.cloudwatch.model.GetMetricStatisticsResponse;
+import software.amazon.awssdk.services.cloudwatch.model.PutDashboardResponse;
+import software.amazon.awssdk.services.cloudwatch.model.PutMetricDataResponse;
 import com.example.cloudwatch.*;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+
+/**
+ * To run these integration tests, you must set the required values
+ * in the config.properties file or AWS Secrets Manager.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CloudWatchTest {
-
-    private static CloudWatchClient cw ;
-    private static CloudWatchLogsClient cloudWatchLogsClient ;
-    private static CloudWatchEventsClient cwe;
-    private static String logGroup="";
-    private static String alarmName="";
-    private static String streamName ="";
-    private static String metricId = "";
-    private static String instanceId="";
-    private static String ruleResource = "";
-    private static String filterName="";
-    private static String destinationArn="";
-    private static String roleArn ="";
-    private static String ruleArn ="";
-    private static String namespace ="";
-    private static String filterPattern = "";
-    private static String ruleName = "";
+    private static CloudWatchClient cw;
+    private static String namespace = "";
     private static String myDateSc = "";
     private static String costDateWeekSc = "";
     private static String dashboardNameSc = "";
     private static String dashboardJsonSc = "";
     private static String dashboardAddSc = "";
     private static String settingsSc = "";
-    private static String metricImageSc = "";
 
+    private static String alarmName = "";
 
+    private static final CloudWatchActions cwActions = new CloudWatchActions();
+
+    private static Dimension myDimension = null;
+
+    private static final Logger logger = LoggerFactory.getLogger(CloudWatchTest.class);
     @BeforeAll
     public static void setUp() throws IOException {
-
-        Region region = Region.US_EAST_1;
         cw = CloudWatchClient.builder()
-                .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .region(Region.US_EAST_1)
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
 
-        cloudWatchLogsClient = CloudWatchLogsClient.builder()
-                .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
-                .build();
-
-        cwe = CloudWatchEventsClient.builder()
-                .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
-                .build();
-
-        try (InputStream input = CloudWatchTest.class.getClassLoader().getResourceAsStream("config.properties")) {
-
-            Properties prop = new Properties();
-
-            if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
-                return;
-            }
-
-            //load a properties file from class path, inside static method
-            prop.load(input);
-
-            // Populate the data members required for all tests
-            logGroup = prop.getProperty("logGroup");
-            alarmName = prop.getProperty("alarmName");
-            streamName = prop.getProperty("streamName");
-            ruleResource = prop.getProperty("ruleResource");
-            metricId = prop.getProperty("metricId");
-            filterName = prop.getProperty("filterName");
-            destinationArn = prop.getProperty("destinationArn");
-            roleArn= prop.getProperty("roleArn");
-            filterPattern= prop.getProperty("filterPattern");
-            instanceId= prop.getProperty("instanceId");
-            ruleName= prop.getProperty("ruleName");
-            ruleArn= prop.getProperty("ruleArn");
-            namespace= prop.getProperty("namespace");
-            myDateSc= prop.getProperty("myDateSc");
-            costDateWeekSc= prop.getProperty("costDateWeekSc");
-            dashboardNameSc= prop.getProperty("dashboardNameSc");
-            dashboardJsonSc= prop.getProperty("dashboardJsonSc");
-            dashboardAddSc= prop.getProperty("dashboardAddSc");
-            settingsSc= prop.getProperty("settingsSc");
-            metricImageSc= prop.getProperty("metricImageSc");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        // Get the values to run these tests from AWS Secrets Manager.
+        Gson gson = new Gson();
+        String json = getSecretValues();
+        SecretValues values = gson.fromJson(json, SecretValues.class);
+        namespace = values.getNamespace();
+        myDateSc = values.getMyDateSc();
+        costDateWeekSc = values.getCostDateWeekSc();
+        dashboardNameSc = values.getDashboardNameSc();
+        dashboardJsonSc = values.getDashboardJsonSc();
+        dashboardAddSc = values.getDashboardAddSc();
+        settingsSc = values.getSettingsSc();
     }
 
     @Test
+    @Tag("IntegrationTest")
     @Order(1)
-    public void whenInitializingAWSCWService_thenNotNull() {
-        assertNotNull(cw);
-        assertNotNull(cloudWatchLogsClient);
-        System.out.printf("\n Test 1 passed");
+    public void testHelloService() {
+        assertDoesNotThrow(() -> HelloService.listMets(cw, namespace));
+        logger.info(" Test 1 passed");
     }
 
     @Test
+    @Tag("IntegrationTest")
     @Order(2)
-    public void CreateAlarm() {
-        PutMetricAlarm.putMetricAlarm(cw, alarmName,instanceId );
-        System.out.printf("\n Test 2 passed");
+    public void testListNameSpaces() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<ArrayList<String>> future = cwActions.listNameSpacesAsync();
+            ArrayList<String> list = future.join();
+            assertFalse(list.isEmpty());
+        });
+        System.out.println("Test 2 passed");
     }
 
+
     @Test
+    @Tag("IntegrationTest")
     @Order(3)
-    public void DescribeAlarms() {
-       DescribeAlarms.desCWAlarms(cw);
-       System.out.printf("\n Test 3 passed");
+    void testCreateDashboard() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<PutDashboardResponse> future = cwActions.createDashboardWithMetricsAsync(dashboardNameSc, dashboardJsonSc);
+            future.join();
+        });
+        logger.info("\n Test 6 passed");
     }
 
     @Test
+    @Tag("IntegrationTest")
     @Order(4)
-    public void CreateSubscriptionFilters() {
-      PutSubscriptionFilter.putSubFilters(cloudWatchLogsClient, filterName, filterPattern, logGroup, destinationArn);
-       System.out.printf("\n Test 4 passed");
+    public void testGetMetricData() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<GetMetricStatisticsResponse> future = cwActions.getMetricStatisticsAsync(costDateWeekSc);
+            future.join();
+        });
+        logger.info("\n Test 7 passed");
     }
 
     @Test
+    @Tag("IntegrationTest")
     @Order(5)
-    public void DescribeSubscriptionFilters() {
-       DescribeSubscriptionFilters.describeFilters(cloudWatchLogsClient,logGroup);
-       System.out.printf("\n Test 5 passed");
+    public void testListDashboards() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<Void> future = cwActions.listDashboardsAsync();
+            future.join();
+        });
+        logger.info("\n Test 8 passed");
     }
 
     @Test
+    @Tag("IntegrationTest")
     @Order(6)
-    public void DisableAlarmActions() {
-
-      DisableAlarmActions.disableActions(cw, alarmName);
-      System.out.println("\n Test 6 passed");
-    }
-
-    @Test
-    @Order(7)
-    public void EnableAlarmActions() {
-
-      EnableAlarmActions.enableActions(cw, alarmName) ;
-      System.out.println("\n Test 7 passed");
-    }
-
-    @Test
-    @Order(8)
-    public void GetLogEvents() {
-
-        GetLogEvents.getCWLogEvents(cloudWatchLogsClient,logGroup,streamName);
-        System.out.println("\n Test 8 passed");
-    }
-
-    @Test
-    @Order(9)
-    void PutCloudWatchEvent() {
-       PutEvents.putCWEvents(cwe,ruleResource );
-       System.out.println("\n Test 9 passed");
-    }
-
-    @Test
-    @Order(10)
-    public void GetMetricData() {
-
-      GetMetricData.getMetData(cw);
-      System.out.println("\n Test 10 passed");
-    }
-
-    @Test
-    @Order(11)
-    public void DeleteSubscriptionFilter() {
-
-        DeleteSubscriptionFilter.deleteSubFilter(cloudWatchLogsClient, filterName,logGroup );
-        System.out.println("\n Test 11 passed");
-    }
-
-    @Test
-    @Order(12)
-   public void PutRule() {
-       PutRule.putCWRule(cwe, ruleName, ruleArn);
-        System.out.println("\n Test 12 passed");
-   }
-
-    @Test
-    @Order(13)
-   public void ListMetrics() {
-       ListMetrics.listMets(cw, namespace);
-       System.out.println("\n Test 13 passed");
-   }
-
-    @Test
-    @Order(14)
-   public void PutLogEvents() {
-       PutLogEvents.putCWLogEvents(cloudWatchLogsClient, logGroup, streamName);
-        System.out.println("\n Test 14 passed");
-   }
-
-    @Test
-    @Order(15)
-    public void DeleteAlarm() {
-      DeleteAlarm.deleteCWAlarm(cw, alarmName);
-      System.out.println("\n Test 15 passed");
-    }
-
-    @Test
-    @Order(16)
-    public void TestScenario() throws IOException {
-        Scanner sc = new Scanner(System.in);
+    public void testListMetrics() {
         Double dataPoint = Double.parseDouble("10.0");
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("1. List at least five available unique namespaces from Amazon CloudWatch. Select one from the list.");
-        ArrayList<String> list = CloudWatchScenario.listNameSpaces(cw);
-        for (int z=0; z<5; z++) {
-            int index = z+1;
-            System.out.println("    " +index +". " +list.get(z));
+        assertDoesNotThrow(() -> {
+            CompletableFuture<PutMetricDataResponse> future = cwActions.createNewCustomMetricAsync(dataPoint);
+            future.join();
+        });
+        logger.info("\n Test 9 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(7)
+    public void testMetricToDashboard() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<PutDashboardResponse> future = cwActions.addMetricToDashboardAsync(dashboardAddSc, dashboardNameSc);
+            future.join();
+
+        });
+        logger.info("\n Test 10 passed");
+    }
+    @Test
+    @Tag("IntegrationTest")
+    @Order(8)
+    public void testCreateAlarm() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<String> future = cwActions.createAlarmAsync(settingsSc);
+            alarmName = future.join();
+            assertFalse(alarmName.isEmpty());
+        });
+        logger.info("\n Test 11 passed");
+     }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(9)
+    public void testDescribeAlarms() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<Void> future = cwActions.describeAlarmsAsync();
+            future.join();
+        });
+        logger.info("\n Test 12 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(10)
+    public void testCustomMetricData() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<Void> future = cwActions.getCustomMetricDataAsync(settingsSc);
+            future.join();
+        });
+        logger.info("\n Test 13 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(11)
+    public void testMetricDataForAlarm() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<PutMetricDataResponse> future = cwActions.addMetricDataForAlarmAsync(settingsSc);
+            future.join();
+        });
+        logger.info("\n Test 14 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(12)
+    public void testMetricAlarmAsync() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<Void> future = cwActions.checkForMetricAlarmAsync(settingsSc);
+            future.join();
+        });
+        logger.info("\n Test 15 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(13)
+    public void testAlarmHistory() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<Void> future = cwActions.getAlarmHistoryAsync(settingsSc, myDateSc);
+            future.join();
+        });
+        logger.info("\n Test 16 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(14)
+    public void testAnomalyDetector() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<Void> future = cwActions.addAnomalyDetectorAsync(settingsSc);
+            future.join();
+        });
+        logger.info("\n Test 17 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(15)
+    public void testDeleteDashboard() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<DeleteDashboardsResponse> future = cwActions.deleteDashboardAsync(dashboardNameSc);
+            future.join();
+
+        });
+        logger.info("\n Test 18 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(16)
+    public void testCWAlarmAsync() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<DeleteAlarmsResponse> future = cwActions.deleteCWAlarmAsync(alarmName);
+            future.join();
+
+        });
+        logger.info("\n Test 19 passed");
+    }
+
+    @Test
+    @Tag("IntegrationTest")
+    @Order(17)
+    public void testDeleteAnomalyDetector() {
+        assertDoesNotThrow(() -> {
+            CompletableFuture<DeleteAnomalyDetectorResponse> future = cwActions.deleteAnomalyDetectorAsync(settingsSc);
+            future.join();
+
+        });
+        logger.info("\n Test 20 passed");
+    }
+
+    private static String getSecretValues() {
+        SecretsManagerClient secretClient = SecretsManagerClient.builder()
+                .region(Region.US_EAST_1)
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                .build();
+        String secretName = "test/cloudwatch";
+
+        GetSecretValueRequest valueRequest = GetSecretValueRequest.builder()
+                .secretId(secretName)
+                .build();
+
+        GetSecretValueResponse valueResponse = secretClient.getSecretValue(valueRequest);
+        return valueResponse.secretString();
+    }
+
+    @Nested
+    @DisplayName("A class used to get test values from test/cloudwatch (an AWS Secrets Manager secret)")
+    class SecretValues {
+        private String logGroup;
+        private String alarmName;
+        private String instanceId;
+
+        private String streamName;
+
+        private String ruleResource;
+
+        private String metricId;
+
+        private String filterName;
+
+        private String destinationArn;
+
+        private String roleArn;
+
+        private String ruleArn;
+
+        private String filterPattern;
+
+        private String ruleName;
+
+        private String namespace;
+
+        private String myDateSc;
+
+        private String costDateWeekSc;
+
+        private String dashboardNameSc;
+
+        private String dashboardJsonSc;
+
+        private String dashboardAddSc;
+
+        private String settingsSc;
+
+        private String metricImageSc;
+
+        // Provide getter methods for each of the test values
+        public String getLogGroup() {
+            return logGroup;
         }
 
-        String selectedNamespace = "";
-        String selectedMetrics = "";
-        int num = Integer.parseInt(sc.nextLine());
-        if (1 <= num && num <= 5){
-            selectedNamespace = list.get(num-1);
-        } else {
-            System.out.println("You did not select a valid option.");
-            System.exit(1);
+        public String getAlarmName() {
+            return alarmName;
         }
-        System.out.println("You selected "+selectedNamespace);
-        System.out.println(CloudWatchScenario.DASHES);
 
-        System.out.println( CloudWatchScenario.DASHES);
-        System.out.println("2. List available metrics within the selected namespace and select one from the list.");
-        ArrayList<String> metList =  CloudWatchScenario.listMets(cw, selectedNamespace);
-        for (int z=0; z<5; z++) {
-            int index = z+1;
-            System.out.println("    " +index +". " +metList.get(z));
+        public String getInstanceId() {
+            return instanceId;
         }
-        num = Integer.parseInt(sc.nextLine());
-        if (1 <= num && num <= 5){
-            selectedMetrics = metList.get(num-1);
-        } else {
-            System.out.println("You did not select a valid option.");
-            System.exit(1);
+
+        public String getStreamName() {
+            return streamName;
         }
-        System.out.println("You selected "+selectedMetrics);
-        Dimension myDimension =  CloudWatchScenario.getSpecificMet( cw, selectedNamespace);
-        System.out.println( CloudWatchScenario.DASHES);
 
-        System.out.println( CloudWatchScenario.DASHES);
-        System.out.println("3. Get statistics for the selected metric over the last day.");
-        String metricOption="";
-        ArrayList<String> statTypes = new ArrayList<>();
-        statTypes.add("SampleCount");
-        statTypes.add("Average");
-        statTypes.add("Sum");
-        statTypes.add("Minimum");
-        statTypes.add("Maximum");
-
-        for (int t=0; t<5; t++){
-            System.out.println("    " +(t+1) +". "+statTypes.get(t));
+        public String getRuleResource() {
+            return ruleResource;
         }
-        System.out.println("Select a metric statistic by entering a number from the preceding list:");
-        num = Integer.parseInt(sc.nextLine());
-        if (1 <= num && num <= 5){
-            metricOption = statTypes.get(num-1);
-        } else {
-            System.out.println("You did not select a valid option.");
-            System.exit(1);
+
+        public String getMetricId() {
+            return metricId;
         }
-        System.out.println("You selected "+metricOption);
-        CloudWatchScenario.getAndDisplayMetricStatistics(cw, selectedNamespace, selectedMetrics, metricOption, myDateSc, myDimension);
-        System.out.println(CloudWatchScenario.DASHES);
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("4. Get CloudWatch estimated billing for the last week.");
-        CloudWatchScenario.getMetricStatistics(cw, costDateWeekSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getFilterName() {
+            return filterName;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("5. Create a new CloudWatch dashboard with metrics.");
-        CloudWatchScenario.createDashboardWithMetrics(cw, dashboardNameSc, dashboardJsonSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getDestinationArn() {
+            return destinationArn;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("6. List dashboards using a paginator.");
-        CloudWatchScenario.listDashboards(cw);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getRoleArn() {
+            return roleArn;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("7. Create a new custom metric by adding data to it.");
-        CloudWatchScenario.createNewCustomMetric(cw, dataPoint);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getFilterPattern() {
+            return filterPattern;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("8. Add additional metric to the dashboard.");
-        CloudWatchScenario.addMetricToDashboard(cw, dashboardAddSc, dashboardNameSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getRuleName() {
+            return ruleName;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("9. Create an alarm for the custom metric.");
-        String alarmName = CloudWatchScenario.createAlarm(cw, settingsSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getRuleArn() {
+            return ruleArn;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("10. Describe ten current alarms.");
-        CloudWatchScenario.describeAlarms(cw);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getNamespace() {
+            return namespace;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("11. Get current data for new custom metric.");
-        CloudWatchScenario.getCustomMetricData(cw, settingsSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getMyDateSc() {
+            return myDateSc;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("12. Push data into the custom metric to trigger the alarm.");
-        CloudWatchScenario.addMetricDataForAlarm(cw, settingsSc) ;
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getCostDateWeekSc() {
+            return costDateWeekSc;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("13. Check the alarm state using the action DescribeAlarmsForMetric.");
-        CloudWatchScenario.checkForMetricAlarm(cw, settingsSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getDashboardNameSc() {
+            return dashboardNameSc;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("14. Get alarm history for the new alarm.");
-        CloudWatchScenario.getAlarmHistory(cw, settingsSc, myDateSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getDashboardJsonSc() {
+            return dashboardJsonSc;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("15. Add an anomaly detector for the custom metric.");
-        CloudWatchScenario.addAnomalyDetector(cw, settingsSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getDashboardAddSc() {
+            return dashboardAddSc;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("16. Describe current anomaly detectors");
-        CloudWatchScenario.describeAnomalyDetectors(cw, settingsSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getSettingsSc() {
+            return settingsSc;
+        }
 
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("17. Get a metric image for the custom metric.");
-        CloudWatchScenario.getAndOpenMetricImage(cw, metricImageSc);
-        System.out.println(CloudWatchScenario.DASHES);
-
-        System.out.println(CloudWatchScenario.DASHES);
-        System.out.println("18. Clean up the Amazon CloudWatch resources.");
-        CloudWatchScenario.deleteDashboard(cw, dashboardNameSc);
-        CloudWatchScenario.deleteCWAlarm(cw, alarmName);
-        CloudWatchScenario.deleteAnomalyDetector(cw, settingsSc);
-        System.out.println(CloudWatchScenario.DASHES);
+        public String getMetricImageSc() {
+            return metricImageSc;
+        }
     }
 }
-
-
-
-
-

@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 package com.etl.example;
 
@@ -10,7 +8,6 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 @DynamoDbBean
 public class Population {
-
     public String id;
     public String code;
     public String pop2010;
@@ -24,16 +21,14 @@ public class Population {
     public String pop2018;
     public String pop2019;
 
-
     public void setId(String name) {
         this.id = name;
     }
 
     @DynamoDbPartitionKey
     public String getId() {
-        return this.id ;
+        return this.id;
     }
-
 
     public void set2019(String num) {
         this.pop2019 = num;
@@ -51,7 +46,6 @@ public class Population {
         return this.pop2018;
     }
 
-
     public void set2017(String num) {
         this.pop2017 = num;
     }
@@ -59,7 +53,6 @@ public class Population {
     public String get2017() {
         return this.pop2017;
     }
-
 
     public void set2016(String num) {
         this.pop2016 = num;
@@ -77,7 +70,6 @@ public class Population {
         return this.pop2015;
     }
 
-
     public void set2014(String num) {
         this.pop2014 = num;
     }
@@ -86,7 +78,6 @@ public class Population {
         return this.pop2014;
     }
 
-
     public void set2013(String num) {
         this.pop2013 = num;
     }
@@ -94,7 +85,6 @@ public class Population {
     public String get2013() {
         return this.pop2013;
     }
-
 
     public void set2012(String num) {
         this.pop2012 = num;
@@ -111,7 +101,6 @@ public class Population {
     public String get2011() {
         return this.pop2011;
     }
-
 
     public void set2010(String num) {
         this.pop2010 = num;

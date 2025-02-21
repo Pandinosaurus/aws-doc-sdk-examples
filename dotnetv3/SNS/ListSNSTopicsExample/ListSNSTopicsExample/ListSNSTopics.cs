@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace ListSNSTopicsExample
 {
@@ -11,9 +11,8 @@ namespace ListSNSTopicsExample
     using Amazon.SimpleNotificationService.Model;
 
     /// <summary>
-    /// An example to list the Amazon Simple Notification Service (Amazon SNS)
-    /// topics for the default user account. The code was written using the
-    /// AWS SDK for .NET 3.7 and .NET Core 5.0.
+    /// Lists the Amazon Simple Notification Service (Amazon SNS)
+    /// topics for the current account.
     /// </summary>
     public class ListSNSTopics
     {
@@ -58,5 +57,6 @@ namespace ListSNSTopicsExample
             }
         }
     }
+
     // snippet-end:[SNS.dotnetv3.ListSNSTopicsExample]
 }

@@ -1,22 +1,88 @@
 # zexi 0.4.0
-sqs_CreateQueue:
-  title: Create an &SQS; queue using an &AWS; SDK
-  title_abbrev: Create a queue
-  synopsis: create an &SQS; queue.
-  category:
+sqs_Hello:
+  title: Hello &SQS;
+  title_abbrev: Hello &SQS;
+  synopsis: get started using &SQS;.
+  category: Hello
   languages:
     .NET:
       versions:
         - sdk_version: 3
-          github: dotnetv3/SQS
+          github: dotnetv3/cross-service/TopicsAndQueues
+          excerpts:
+            - snippet_tags:
+                - TopicsAndQueues.dotnetv3.HelloSQS
+    Kotlin:
+      versions:
+        - sdk_version: 1
+          github: kotlin/services/sqs
+          sdkguide:
+          excerpts:
+            - snippet_tags:
+                - sqs.kotlin.hellosqs.main
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/sqs
           sdkguide:
           excerpts:
             - description:
               snippet_tags:
-                - SQS.dotnetv3.CreateQueueExample
+                - sqs.java2.hello.main
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/sqs/hello_sqs
+          sdkguide:
+          excerpts:
+            - description: Code for the CMakeLists.txt CMake file.
+              snippet_tags:
+                - cpp.example_code.sqs.hello_sqs.cmake
+            - description: Code for the hello_sqs.cpp source file.
+              snippet_tags:
+                - cpp.example_code.sqs.hello_sqs
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/sqs
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.sqs.Hello
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description: Initialize an &SQS; client and list queues.
+              snippet_tags:
+                - javascript.v3.sqs.hello
+  services:
+    sqs: {ListQueues}
+sqs_CreateQueue:
+  languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/cross-service/TopicsAndQueues
+          sdkguide:
+          excerpts:
+            - description: Create a queue with a specific name.
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.CreateQueue
             - description: Create an &SQS; queue and send a message to it.
               snippet_tags:
                 - SQS.dotnetv3.CreateSendExample
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/workflows/topics_and_queues
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.sqs.SqsActions.struct
+                - gov2.sqs.CreateQueue
     Kotlin:
       versions:
         - sdk_version: 1
@@ -44,6 +110,15 @@ sqs_CreateQueue:
             - description:
               snippet_tags:
                 - python.example_code.sqs.CreateQueue
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.sqs.CreateQueue
     SAP ABAP:
       versions:
         - sdk_version: 1
@@ -62,13 +137,10 @@ sqs_CreateQueue:
           github: javascriptv3/example_code/sqs
           sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-using-queues.html#sqs-examples-using-queues-create-queue
           excerpts:
-            - description: Create the client.
-              snippet_tags:
-                - sqs.JavaScript.createclientv3
             - description: Create an &SQS; standard queue.
               snippet_tags:
                 - sqs.JavaScript.queues.createQueueV3
-            - description: Create an &SQS; queue that waits for a message to arrive.
+            - description: Create an &SQS; queue with long polling.
               snippet_tags:
                 - sqs.JavaScript.longPoll.createQueueV3
         - sdk_version: 2
@@ -81,21 +153,19 @@ sqs_CreateQueue:
             - description: Create an &SQS; queue that waits for a message to arrive.
               snippet_tags:
                 - sqs.JavaScript.longPoll.createQueue
-    Go:
+    C++:
       versions:
-        - sdk_version: 2
-          github: gov2/sqs
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
           excerpts:
             - description:
               snippet_tags:
-                - sqs.go-v2.CreateQueue
+                - cpp.example_code.sqs.CreateQueue.config
+                - cpp.example_code.sqs.CreateQueue
   services:
     sqs: {CreateQueue}
 sqs_GetQueueUrl:
-  title: Get the URL of an &SQS; queue using an &AWS; SDK
-  title_abbrev: Get the URL of a queue
-  synopsis: get the URL of an &SQS; queue.
-  category:
   languages:
     .NET:
       versions:
@@ -139,9 +209,6 @@ sqs_GetQueueUrl:
           github: javascriptv3/example_code/sqs
           sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-using-queues.html#sqs-examples-using-queues-get-queue-url
           excerpts:
-            - description: Create the client.
-              snippet_tags:
-                - sqs.JavaScript.createclientv3
             - description: Get the URL for an &SQS; queue.
               snippet_tags:
                 - sqs.JavaScript.queues.getQueueUrlV3
@@ -152,22 +219,28 @@ sqs_GetQueueUrl:
             - description: Get the URL for an &SQS; queue.
               snippet_tags:
                 - sqs.JavaScript.queues.getQueueUrl
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cpp.example_code.sqs.GetQueueUrl.config
+                - cpp.example_code.sqs.GetQueueUrl
+  services:
+    sqs: {GetQueueUrl}
+sqs_ListQueues:
+  languages:
     Go:
       versions:
         - sdk_version: 2
           github: gov2/sqs
           excerpts:
-            - description: Get the URL for an &SQS; queue.
+            - description:
               snippet_tags:
-                - sqs.go-v2.GetQueueUrl
-  services:
-    sqs: {GetQueueUrl}
-sqs_ListQueues:
-  title: List &SQS; queues using an &AWS; SDK
-  title_abbrev: List queues
-  synopsis: list &SQS; queues.
-  category:
-  languages:
+                - gov2.sqs.Hello
     Kotlin:
       versions:
         - sdk_version: 1
@@ -195,10 +268,19 @@ sqs_ListQueues:
             - description:
               snippet_tags:
                 - python.example_code.sqs.ListQueues
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.sqs.ShowQueues
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/sqs
+          github: rustv1/examples/sqs
           excerpts:
             - description: Retrieve the first &SQS; queue listed in the Region.
               snippet_tags:
@@ -218,9 +300,6 @@ sqs_ListQueues:
           github: javascriptv3/example_code/sqs
           sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-using-queues.html#sqs-examples-using-queues-listing-queues
           excerpts:
-            - description: Create the client.
-              snippet_tags:
-                - sqs.JavaScript.createclientv3
             - description: List your &SQS; queues.
               snippet_tags:
                 - sqs.JavaScript.queues.listQueuesV3
@@ -231,31 +310,39 @@ sqs_ListQueues:
             - description: List your &SQS; queues.
               snippet_tags:
                 - sqs.JavaScript.queues.listQueues
-    Go:
+    C++:
       versions:
-        - sdk_version: 2
-          github: gov2/sqs
-          excerpts:
-            - description: List your &SQS; queues.
-              snippet_tags:
-                - sqs.go-v2.ListQueues
-  services:
-    sqs: {ListQueues}
-sqs_DeleteQueue:
-  title: Delete an &SQS; queue using an &AWS; SDK
-  title_abbrev: Delete a queue
-  synopsis: delete an &SQS; queue.
-  category:
-  languages:
-    .NET:
-      versions:
-        - sdk_version: 3
-          github: dotnetv3/SQS
+        - sdk_version: 1
+          github: cpp/example_code/sqs
           sdkguide:
           excerpts:
             - description:
               snippet_tags:
-                - SQS.dotnetv3.DeleteQueueExample
+                - cpp.example_code.sqs.ListQueues.config
+                - cpp.example_code.sqs.ListQueues
+  services:
+    sqs: {ListQueues}
+sqs_DeleteQueue:
+  languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/cross-service/TopicsAndQueues
+          sdkguide:
+          excerpts:
+            - description: Delete a queue by using its URL.
+
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.DeleteQueue
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/workflows/topics_and_queues
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.sqs.SqsActions.struct
+                - gov2.sqs.DeleteQueue
     Kotlin:
       versions:
         - sdk_version: 1
@@ -283,6 +370,15 @@ sqs_DeleteQueue:
             - description:
               snippet_tags:
                 - python.example_code.sqs.DeleteQueue
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.sqs.DeleteQueue
     SAP ABAP:
       versions:
         - sdk_version: 1
@@ -298,9 +394,6 @@ sqs_DeleteQueue:
           github: javascriptv3/example_code/sqs
           sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-using-queues.html#sqs-examples-using-queues-delete-queue
           excerpts:
-            - description: Create the client.
-              snippet_tags:
-                - sqs.JavaScript.createclientv3
             - description: Delete an &SQS; queue.
               snippet_tags:
                 - sqs.JavaScript.queues.deleteQueueV3
@@ -311,22 +404,19 @@ sqs_DeleteQueue:
             - description: Delete an &SQS; queue.
               snippet_tags:
                 - sqs.JavaScript.queues.deleteQueue
-    Go:
+    C++:
       versions:
-        - sdk_version: 2
-          github: gov2/sqs
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
           excerpts:
-            - description: Delete an &SQS; queue.
+            - description:
               snippet_tags:
-                - sqs.go-v2.DeleteQueue
-
+                - cpp.example_code.sqs.DeleteQueue.config
+                - cpp.example_code.sqs.DeleteQueue
   services:
     sqs: {DeleteQueue}
 sqs_SendMessage:
-  title: Send a message to an &SQS; queue using an &AWS; SDK
-  title_abbrev: Send a message to a queue
-  synopsis: send a message to an &SQS; queue.
-  category:
   languages:
     .NET:
       versions:
@@ -334,9 +424,6 @@ sqs_SendMessage:
           github: dotnetv3/SQS
           sdkguide:
           excerpts:
-            - description:
-              snippet_tags:
-                - SQS.dotnetv3.SendMessageToQueueExample
             - description: Create an &SQS; queue and send a message to it.
               snippet_tags:
                 - SQS.dotnetv3.CreateSendExample
@@ -367,10 +454,19 @@ sqs_SendMessage:
             - description:
               snippet_tags:
                 - python.example_code.sqs.SendMessage
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.sqs.SendMessage
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/sqs
+          github: rustv1/examples/sqs
           excerpts:
             - description:
               snippet_tags:
@@ -390,9 +486,6 @@ sqs_SendMessage:
           github: javascriptv3/example_code/sqs
           sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-send-receive-messages.html#sqs-examples-send-receive-messages-sending
           excerpts:
-            - description: Create the client.
-              snippet_tags:
-                - sqs.JavaScript.createclientv3
             - description: Send a message to an &SQS; queue.
               snippet_tags:
                 - sqs.JavaScript.messages.sendMessageV3
@@ -403,21 +496,19 @@ sqs_SendMessage:
             - description: Send a message to an &SQS; queue.
               snippet_tags:
                 - sqs.JavaScript.messages.sendMessage
-    Go:
+    C++:
       versions:
-        - sdk_version: 2
-          github: gov2/sqs
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
           excerpts:
-            - description: Send a message to an &SQS; queue.
+            - description:
               snippet_tags:
-                - sqs.go-v2.SendMessage
+                - cpp.example_code.sqs.SendMessage.config
+                - cpp.example_code.sqs.SendMessage
   services:
     sqs: {SendMessage}
 sqs_SendMessageBatch:
-  title: Send a batch of messages to an &SQS; queue using an &AWS; SDK
-  title_abbrev: Send a batch of messages to a queue
-  synopsis: send a batch of messages to an &SQS; queue.
-  category:
   languages:
     Java:
       versions:
@@ -437,26 +528,41 @@ sqs_SendMessageBatch:
             - description:
               snippet_tags:
                 - python.example_code.sqs.SendMessageBatch
-  services:
-    sqs: {SendMessageBatch}
-sqs_ReceiveMessage:
-  title: Receive messages from an &SQS; queue using an &AWS; SDK
-  title_abbrev: Receive messages from a queue
-  synopsis: receive messages from an &SQS; queue.
-  category:
-  languages:
-    .NET:
+    Ruby:
       versions:
         - sdk_version: 3
-          github: dotnetv3/SQS
+          github: ruby/example_code/sqs
           sdkguide:
           excerpts:
             - description:
               snippet_tags:
-                - SQS.dotnetv3.ReceiveFromQueueExample
+                - ruby.example_code.sqs.SendMessageBatch
+  services:
+    sqs: {SendMessageBatch}
+sqs_ReceiveMessage:
+  languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/cross-service/TopicsAndQueues
+          sdkguide:
+          excerpts:
+            - description: Receive messages from a queue by using its URL.
+
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.ReceiveMessage
             - description: Receive a message from an &SQS; queue, and then delete the message.
               snippet_tags:
                 - SQS.dotnetv3.ReceiveDeleteExample
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/workflows/topics_and_queues
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.sqs.SqsActions.struct
+                - gov2.sqs.ReceiveMessage
     Kotlin:
       versions:
         - sdk_version: 1
@@ -484,10 +590,19 @@ sqs_ReceiveMessage:
             - description:
               snippet_tags:
                 - python.example_code.sqs.ReceiveMessage
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.example_code.sqs.ReceiveMessages
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/sqs
+          github: rustv1/examples/sqs
           excerpts:
             - description:
               snippet_tags:
@@ -508,36 +623,35 @@ sqs_ReceiveMessage:
       versions:
         - sdk_version: 3
           github: javascriptv3/example_code/sqs
-          sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-enable-long-polling.html#sqs-examples-enable-long-polling-on-receive-message
+          sdkguide:
           excerpts:
-            - description: Create the client.
+            - description: Receive a message from an &SQS; queue.
               snippet_tags:
-                - sqs.JavaScript.createclientv3
-            - description: Receive a message from an  &SQS; queue using long-poll support.
+                - sqs.JavaScript.messages.receiveMessageV3
+            - description: Receive a message from an &SQS; queue using long-poll support.
               snippet_tags:
                 - sqs.JavaScript.longPoll.receiveMessageV3
         - sdk_version: 2
           github: javascript/example_code/sqs
-          sdkguide: sdk-for-javascript/v2/developer-guide/sqs-examples-enable-long-polling.html#sqs-examples-enable-long-polling-on-receive-message
+          sdkguide: 
+            sdk-for-javascript/v2/developer-guide/sqs-examples-enable-long-polling.html#sqs-examples-enable-long-polling-on-receive-message
           excerpts:
             - description: Receive a message from an  &SQS; queue using long-poll support.
               snippet_tags:
                 - sqs.JavaScript.longPoll.receiveMessage
-    Go:
+    C++:
       versions:
-        - sdk_version: 2
-          github: gov2/sqs
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
           excerpts:
-            - description: Receive a message from an &SQS; queue.
+            - description:
               snippet_tags:
-                - sqs.go-v2.ReceiveMessage
+                - cpp.example_code.sqs.ReceiveMessage.config
+                - cpp.example_code.sqs.ReceiveMessage
   services:
     sqs: {ReceiveMessage}
 sqs_DeleteMessage:
-  title: Delete a message from an &SQS; queue using an &AWS; SDK
-  title_abbrev: Delete a message from a queue
-  synopsis: delete a message from an &SQS; queue.
-  category:
   languages:
     .NET:
       versions:
@@ -545,9 +659,6 @@ sqs_DeleteMessage:
           github: dotnetv3/SQS
           sdkguide:
           excerpts:
-            - description:
-              snippet_tags:
-                - SQS.dotnetv3.DeleteMessageExample
             - description: Receive a message from an &SQS; queue and then delete the message.
               snippet_tags:
                 - SQS.dotnetv3.ReceiveDeleteExample
@@ -582,37 +693,51 @@ sqs_DeleteMessage:
       versions:
         - sdk_version: 3
           github: javascriptv3/example_code/sqs
-          sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-send-receive-messages.html#sqs-examples-send-receive-messages-receiving
+          sdkguide:
           excerpts:
-            - description: Create the client.
-              snippet_tags:
-                - sqs.JavaScript.createclientv3
             - description: Receive and delete &SQS; messages.
               snippet_tags:
                 - sqs.JavaScript.messages.receiveMessageV3
         - sdk_version: 2
           github: javascript/example_code/sqs
-          sdkguide: sdk-for-javascript/v2/developer-guide/sqs-examples-send-receive-messages.html#sqs-examples-send-receive-messages-receiving
+          sdkguide: 
+            sdk-for-javascript/v2/developer-guide/sqs-examples-send-receive-messages.html#sqs-examples-send-receive-messages-receiving
           excerpts:
             - description: Receive and delete &SQS; messages.
               snippet_tags:
                 - sqs.JavaScript.messages.receiveMessage
-    Go:
+    C++:
       versions:
-        - sdk_version: 2
-          github: gov2/sqs
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
           excerpts:
             - description:
               snippet_tags:
-                - sqs.go-v2.DeleteMessage
+                - cpp.example_code.sqs.DeleteMessage.config
+                - cpp.example_code.sqs.DeleteMessage
   services:
     sqs: {DeleteMessage}
 sqs_DeleteMessageBatch:
-  title: Delete a batch of messages from an &SQS; queue using an &AWS; SDK
-  title_abbrev: Delete a batch of messages from a queue
-  synopsis: delete a batch of messages from an &SQS; queue.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/cross-service/TopicsAndQueues
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.DeleteMessageBatch
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/workflows/topics_and_queues
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.sqs.SqsActions.struct
+                - gov2.sqs.DeleteMessageBatch
     Python:
       versions:
         - sdk_version: 3
@@ -622,6 +747,24 @@ sqs_DeleteMessageBatch:
             - description:
               snippet_tags:
                 - python.example_code.sqs.DeleteMessageBatch
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/cross-service/topics_and_queues
+          excerpts:
+            - snippet_tags:
+                - cpp.example_code.cross-service.topics_and_queues.config
+                - cpp.example_code.cross-service.topics_and_queues.sqs_client
+                - cpp.example_code.cross-service.topics_and_queues.sqs.DeleteMessageBatch
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - sqs.JavaScript.messages.receiveMessageV3
   services:
     sqs: {DeleteMessageBatch}
 sqs_Scenario_SendReceiveBatch:
@@ -646,113 +789,230 @@ sqs_Scenario_SendReceiveBatch:
                 - python.example_code.sqs.SendMessageBatch
                 - python.example_code.sqs.ReceiveMessage
                 - python.example_code.sqs.DeleteMessageBatch
-            - description:
-                Use the wrapper functions to send and receive messages
-                in batches.
+            - description: Use the wrapper functions to send and receive messages in batches.
               snippet_tags:
                 - python.example_code.sqs.Scenario_SendReceiveBatch
   services:
-    sqs:
-      {
-        CreateQueue,
-        DeleteQueue,
-        SendMessageBatch,
-        ReceiveMessage,
-        DeleteMessageBatch,
-      }
-sqs_AuthorizeS3ToSendMessage:
-  title: Authorize an &S3; bucket to send messages to an &SQS; queue
-  title_abbrev: Authorize a bucket to send messages to a queue
-  synopsis: authorize an &S3; bucket to send messages to an &SQS; queue.
-  category:
-  languages:
-    .NET:
-      versions:
-        - sdk_version: 3
-          github: dotnetv3/SQS
-          sdkguide:
-          excerpts:
-            - description:
-              snippet_tags:
-                - SQS.dotnetv3.AuthorizeS3ToSendMessageExample
-  services:
-    sqs: {}
+    sqs: {CreateQueue, DeleteQueue, SendMessageBatch, ReceiveMessage, DeleteMessageBatch}
 sqs_GetQueueAttributes:
-  title: Get attributes for an &SQS; queue
-  title_abbrev: Get attributes for a queue
-  synopsis: get attributes for an &SQS; queue.
-  category:
   languages:
     .NET:
       versions:
         - sdk_version: 3
-          github: dotnetv3/SQS
+          github: dotnetv3/cross-service/TopicsAndQueues
           sdkguide:
           excerpts:
             - description:
               snippet_tags:
-                - SQS.dotnetv3.GetQueueAttributesExample
+                - TopicsAndQueues.dotnetv3.GetQueueAttributes
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cpp.example_code.cross-service.topics_and_queues.config
+                - cpp.example_code.cross-service.topics_and_queues.sqs_client
+                - cpp.example_code.cross-service.topics_and_queues.GetQueueAttributes1
+                - cpp.example_code.cross-service.topics_and_queues.GetQueueAttributes2
+                - cpp.example_code.cross-service.topics_and_queues.GetQueueAttributes3
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/workflows/topics_and_queues
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.sqs.SqsActions.struct
+                - gov2.sqs.GetQueueAttributes
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - javascript.v3.sqs.actions.GetQueueAttributes
   services:
     sqs: {GetQueueAttributes}
 sqs_ChangeMessageVisibility:
-  title: Receive an &SQS; message and change its timeout visibility
-  title_abbrev: Change message timeout visibility
-  synopsis: change an &SQS; message timeout visibility.
-  category:
   languages:
     JavaScript:
       versions:
         - sdk_version: 3
           github: javascriptv3/example_code/sqs
-          sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-managing-visibility-timeout.html#sqs-examples-managing-visibility-timeout-setting
+          sdkguide:
           excerpts:
-            - description: Create the client.
-              snippet_tags:
-                - sqs.JavaScript.createclientv3
             - description: Receive an &SQS; message and change its timeout visibility.
               snippet_tags:
                 - sqs.JavaScript.visibility.receiveMessageV3
         - sdk_version: 2
           github: javascript/example_code/sqs
-          sdkguide: sdk-for-javascript/v2/developer-guide/sqs-examples-managing-visibility-timeout.html#sqs-examples-managing-visibility-timeout-setting
+          sdkguide: 
+            sdk-for-javascript/v2/developer-guide/sqs-examples-managing-visibility-timeout.html#sqs-examples-managing-visibility-timeout-setting
           excerpts:
             - description: Receive an &SQS; message and change its timeout visibility.
               snippet_tags:
                 - sqs.JavaScript.visibility.receiveMessage
-    Go:
+    Ruby:
       versions:
-        - sdk_version: 2
-          github: gov2/sqs
+        - sdk_version: 3
+          github: ruby/example_code/sqs
+          sdkguide:
           excerpts:
             - description:
               snippet_tags:
-                - sqs.go-v2.ChangeMessageVisibility
+                - ruby.example_code.sqs.MessageVisibilityTimeout
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cpp.example_code.sqs.ChangeMessageVisibility.config
+                - cpp.example_code.sqs.ChangeMessageVisibility
   services:
     sqs: {ChangeMessageVisibility}
 sqs_SetQueueAttributes:
-  title: Change how long an &SQS; queue waits for a message
-  title_abbrev: Change how long a queue waits for a message
-  synopsis: change how long an &SQS; queue waits for a message to arrive.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/cross-service/TopicsAndQueues
+          sdkguide:
+          excerpts:
+            - description: Set the policy attribute of a queue for a topic.
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.SetQueueAttributes
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/workflows/topics_and_queues
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.sqs.SqsActions.struct
+                - gov2.sqs.SetQueueAttributes
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/sqs
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cpp.example_code.sqs.SetQueueAttributes.config
+                - cpp.example_code.sqs.SetQueueAttributes
+            - description: Configure a dead-letter queue.
+              snippet_tags:
+                - cpp.example_code.sqs.SetDeadLetterQueue.config
+                - cpp.example_code.sqs.SetDeadLetterQueue
+            - description: Configure an &SQS; queue to use long polling.
+              snippet_tags:
+                - cpp.example_code.sqs.LongPollingAttribute.config
+                - cpp.example_code.sqs.LongPollingAttribute
     JavaScript:
       versions:
         - sdk_version: 3
           github: javascriptv3/example_code/sqs
-          sdkguide: sdk-for-javascript/v3/developer-guide/sqs-examples-enable-long-polling.html#sqs-examples-enable-long-polling-existing-queue
+          sdkguide:
           excerpts:
-            - description: Create the client.
+            - description:
               snippet_tags:
-                - sqs.JavaScript.createclientv3
-            - description: Change how long an &SQS; queue waits for a message to arrive.
+                - sqs.JavaScript.messages.setQueueAttributesV3
+            - description: Configure an &SQS; queue to use long polling.
               snippet_tags:
                 - sqs.JavaScript.longPoll.setQueueAttributesV3
-        - sdk_version: 2
-          github: javascript/example_code/sqs
-          sdkguide: sdk-for-javascript/v2/developer-guide/sqs-examples-enable-long-polling.html#sqs-examples-enable-long-polling-existing-queue
-          excerpts:
-            - description: Change how long an &SQS; queue waits for a message to arrive.
+            - description: Configure a dead-letter queue.
               snippet_tags:
-                - sqs.JavaScript.longPoll.setQueueAttributes
+                - sqs.JavaScript.deadLetter.setQueueAttributesV3
   services:
     sqs: {SetQueueAttributes}
+sqs_Scenario_TopicsAndQueues:
+  title: Publish &SNS; messages to &SQS; queues using an &AWS; SDK
+  title_abbrev: Publish messages to queues
+  synopsis_list:
+    - Create topic (FIFO or non-FIFO).
+    - Subscribe several queues to the topic with an option to apply a filter.
+    - Publish messages to the topic.
+    - Poll the queues for messages received.
+  category: Scenarios
+  languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/cross-service/TopicsAndQueues
+          excerpts:
+            - description: Run an interactive scenario at a command prompt.
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.Scenario
+            - description: Create a class that wraps &SQS; operations.
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.SQSWrapper
+            - description: Create a class that wraps &SNS; operations.
+              snippet_tags:
+                - TopicsAndQueues.dotnetv3.SNSWrapper
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/cross-service/topics_and_queues
+          excerpts:
+            - description:
+              snippet_tags:
+                - cpp.example_code.cross-service.topics_and_queues.config
+                - cpp.example_code.cross-service.topics_and_queues.messaging_with_topics_and_queues
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/workflows/topics_and_queues
+          excerpts:
+            - description: Run an interactive scenario at a command prompt.
+              snippet_tags:
+                - gov2.workflows.TopicsAndQueues
+            - description: Define a struct that wraps &SNS; actions used in this example.
+              snippet_tags:
+                - gov2.sns.SnsActions.complete
+            - description: Define a struct that wraps &SQS; actions used in this example.
+              snippet_tags:
+                - gov2.sqs.SqsActions.complete
+            - description: Clean up resources.
+              snippet_tags:
+                - gov2.workflows.TopicsAndQueues.Resources.complete
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/cross-services/wkflw-topics-queues
+          sdkguide:
+          excerpts:
+            - description: This is the entry point for this scenario.
+              snippet_tags:
+                - javascript.v3.wkflw.topicsandqueues.index
+            - description: The preceding code provides the necessary dependencies and starts the scenario. The next section
+                contains the bulk of the example.
+              snippet_tags:
+                - javascript.v3.wkflw.topicsandqueues.wrapper
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/usecases/topics_and_queues
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - sqs.java2.scenario.main
+    Kotlin:
+      versions:
+        - sdk_version: 1
+          github: kotlin/usecases/topics_and_queues
+          sdkguide:
+          excerpts:
+            - snippet_tags:
+                - sns.kotlin.workflow.main
+  services:
+    sns: {CreateTopic, Subscribe, Publish, Unsubscribe, DeleteTopic}
+    sqs: {CreateQueue, GetQueueAttributes, SetQueueAttributes, ReceiveMessage, DeleteMessageBatch, DeleteQueue}

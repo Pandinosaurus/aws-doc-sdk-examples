@@ -1,14 +1,35 @@
-/**
- * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-import { pipe, adjust, join, split, toLower, map, toUpper } from "ramda";
-
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 import { v4 as uuidv4 } from "uuid";
 
-const getUniqueName = (name) => `${uuidv4()}-${name.toLowerCase()}`;
+/**
+ * @param {string} prefix
+ */
+export const getUniqueName = (prefix) => {
+  class GetUniqueNameError extends Error {
+    name = GetUniqueNameError.name;
+  }
 
-const postfix = (source, str) => {
+  if (!prefix) {
+    throw new GetUniqueNameError("Prefix is missing.");
+  }
+
+  return `${prefix.toLowerCase()}-${uuidv4()}`;
+};
+
+/**
+ * @param {int} length
+ */
+export const getRandomAlphanumericString = (length) => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  return Array.from(
+    { length },
+    () => characters[Math.floor(Math.random() * characters.length)],
+  ).join("");
+};
+
+export const postfix = (source, str) => {
   if (typeof str !== "string") {
     throw new Error("Cannot postfix a non-string value.");
   }
@@ -16,25 +37,43 @@ const postfix = (source, str) => {
   return `${source}${str}`;
 };
 
-const downcaseSplit = pipe(toLower, split("-"));
+/**
+ * @param {string} str
+ */
+const downcaseSplit = (str) => str.toLowerCase().split("-");
 
-const capitalize = pipe(Array.from, adjust(0, toUpper), join(""));
+/**
+ * @param {string} str
+ */
+const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-const kebabCase = pipe(downcaseSplit, join("-"));
+export const kebabCase = (str) => downcaseSplit(str).join("-");
+export const pascalCase = (str) => downcaseSplit(str).map(capitalize).join("");
+export const snakeCase = (str) => downcaseSplit(str).join("_");
+export const titleCase = (str) => downcaseSplit(str).map(capitalize).join(" ");
 
-const pascalCase = pipe(downcaseSplit, map(capitalize), join(""));
+/**
+ * Take a string as input and split it into an array using the delimiter provided.
+ * Trim each element in the array.
+ * @param {string} delimiter
+ * @param {string} input
+ */
+export const splitMapTrim = (delimiter, input) =>
+  input.split(delimiter).map((s) => s.trim());
 
-const snakeCase = pipe(downcaseSplit, join("_"));
-
-const titleCase = pipe(downcaseSplit, map(capitalize), join(" "));
-
-export {
-  capitalize,
-  downcaseSplit,
-  getUniqueName,
-  kebabCase,
-  pascalCase,
-  postfix,
-  snakeCase,
-  titleCase
+export const parseString = (input) => {
+  if (typeof input === "string") {
+    return input;
+  }
+  if (input instanceof Error) {
+    return input.message;
+  }
+  return JSON.stringify(input);
 };
+
+// snippet-start:[javascript.v3.utils.wrapText]
+export const wrapText = (text, char = "=") => {
+  const rule = char.repeat(80);
+  return `${rule}\n    ${text}\n${rule}\n`;
+};
+// snippet-end:[javascript.v3.utils.wrapText]

@@ -1,7 +1,5 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 /**
  * Before running this C++ code example, set up your development environment, including your credentials.
@@ -55,6 +53,7 @@
 // snippet-start:[cpp.example_code.iam.Scenario_CreateUserAssumeRole]
 namespace AwsDoc {
     namespace IAM {
+  
         //! Cleanup by deleting created entities.
         /*!
           \sa DeleteCreatedEntities
@@ -68,6 +67,10 @@ namespace AwsDoc {
                                           const Aws::IAM::Model::User &user,
                                           const Aws::IAM::Model::Policy &policy);
     }
+
+    static const int LIST_BUCKETS_WAIT_SEC = 20;
+
+    static const char ALLOCATION_TAG[] = "example_code";
 }
 
 //! Scenario to create an IAM user, create an IAM role, and apply the role to the user.
@@ -270,6 +273,7 @@ bool AwsDoc::IAM::iamCreateUserAssumeRoleScenario(
                 Aws::Auth::AWSCredentials(credentials.GetAccessKeyId(),
                                           credentials.GetSecretAccessKey(),
                                           credentials.GetSessionToken()),
+                Aws::MakeShared<Aws::S3::S3EndpointProvider>(ALLOCATION_TAG),
                 clientConfig);
         Aws::S3::Model::ListBucketsOutcome listBucketsOutcome = s3Client.ListBuckets();
         if (!listBucketsOutcome.IsSuccess()) {
@@ -317,19 +321,20 @@ bool AwsDoc::IAM::iamCreateUserAssumeRoleScenario(
     // 7. List objects in the bucket (this should succeed).
     // Repeatedly call ListBuckets, because there is often a delay
     // before the policy with ListBucket permissions has been applied to the role.
-    // Repeat at most 20 times when access is denied.
+    // Repeat at most LIST_BUCKETS_WAIT_SEC times when access is denied.
     while (true) {
         Aws::S3::S3Client s3Client(
                 Aws::Auth::AWSCredentials(credentials.GetAccessKeyId(),
                                           credentials.GetSecretAccessKey(),
                                           credentials.GetSessionToken()),
+                Aws::MakeShared<Aws::S3::S3EndpointProvider>(ALLOCATION_TAG),
                 clientConfig);
         Aws::S3::Model::ListBucketsOutcome listBucketsOutcome = s3Client.ListBuckets();
         if (!listBucketsOutcome.IsSuccess()) {
-            if ((count > 20) ||
+            if ((count > LIST_BUCKETS_WAIT_SEC) ||
                 listBucketsOutcome.GetError().GetErrorType() !=
                 Aws::S3::S3Errors::ACCESS_DENIED) {
-                std::cerr << "Could not lists buckets after 20 seconds. " <<
+                std::cerr << "Could not lists buckets after " << LIST_BUCKETS_WAIT_SEC << " seconds. " <<
                           listBucketsOutcome.GetError().GetMessage() << std::endl;
                 DeleteCreatedEntities(client, role, user, policy);
                 return false;

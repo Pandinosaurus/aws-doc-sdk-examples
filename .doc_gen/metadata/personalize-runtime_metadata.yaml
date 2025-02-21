@@ -1,13 +1,9 @@
-personalize-runtime_getRecommendations:
-  title: Get recommendations from a campaign created in a custom dataset group with &PERSR; using an &AWS; SDK
-  title_abbrev: Get recommendations from a recommender (domain dataset group)
-  synopsis: get &PERSR; Runtime recommendations.
-  category:
+personalize-runtime_GetRecommendations:
   languages:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascipt/example_code/personalize
+          github: javascriptv3/example_code/personalize
           sdkguide:
           excerpts:
             - description:
@@ -36,16 +32,12 @@ personalize-runtime_getRecommendations:
                 - personalize.java2.filter_recommendations.main
   services:
     personalize-runtime: {GetRecommendations}
-personalize-runtime_getPersonalizedRanking:
-  title: Get ranked recommendations from a campaign created in a custom dataset group with &PERSR; using an &AWS; SDK
-  title_abbrev: Get recommendations (custom dataset group)
-  synopsis: get &PERSR; Runtime ranked recommendations.
-  category:
+personalize-runtime_GetPersonalizedRanking:
   languages:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascipt/example_code/personalize
+          github: javascriptv3/example_code/personalize
           sdkguide:
           excerpts:
             - description:

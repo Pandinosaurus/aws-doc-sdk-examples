@@ -1,25 +1,102 @@
-# zexi 0.4.0
-cognito-identity-provider_ListUserPools:
-  title: List the &COG; user pools using an &AWS; SDK
-  title_abbrev: List the user pools
-  synopsis: list the &COG; user pools.
-  category:
+cognito-identity-provider_Hello:
+  title: Hello &COG;
+  title_abbrev: Hello &COG;
+  synopsis: get started using &COG;.
+  category: Hello
   languages:
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.hello
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cognito.java2.hello.main
+    C++:
+      versions:
+        - sdk_version: 1
+          github: cpp/example_code/cognito/hello_cognito
+          excerpts:
+            - description: Code for the CMakeLists.txt CMake file.
+              snippet_tags:
+                - cpp.example_code.cognito.hello_cognito.cmake
+            - description: Code for the hello_cognito.cpp source file.
+              snippet_tags:
+                - cpp.example_code.cognito.hello_cognito
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/cognito-identity-provider
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - javascript.v3.cognito.hello
+    Python:
+      versions:
+        - sdk_version: 3
+          github: python/example_code/cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - python.example_code.cognito-idp.HelloCognito
+    Ruby:
+      versions:
+        - sdk_version: 3
+          github: ruby/example_code/cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - ruby.hello_cognito.list_user_pools
+  services:
+    cognito-identity-provider: {ListUserPools}
+cognito-identity-provider_ListUserPools:
+  languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - Cognito.dotnetv3.ListUserPools
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.hello
     Rust:
       versions:
         - sdk_version: 1
-          github: rust_dev_preview/cognitoidentityprovider
+          github: rustv1/examples/cognitoidentityprovider
           excerpts:
             - description:
               snippet_tags:
                 - cognitoidentityprovider.rust.list-user-pools
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cognito.java2.ListUserPools.main
   services:
     cognito-identity-provider: {ListUserPools}
 cognito-identity-provider_SignUp:
-  title: Sign up a user with &COG; using an &AWS; SDK
-  title_abbrev: Sign up a user
-  synopsis: sign up a user with &COG;.
-  category:
   languages:
     .NET:
       versions:
@@ -29,7 +106,16 @@ cognito-identity-provider_SignUp:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.SignUp
+                - Cognito.dotnetv3.SignUp
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.SignUp
     Kotlin:
       versions:
         - sdk_version: 1
@@ -61,7 +147,7 @@ cognito-identity-provider_SignUp:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -80,10 +166,6 @@ cognito-identity-provider_SignUp:
   services:
     cognito-identity-provider: {SignUp}
 cognito-identity-provider_AdminGetUser:
-  title: Get information about an &COG; user using an &AWS; SDK
-  title_abbrev: Get information about a user
-  synopsis: get information about an &COG; user.
-  category:
   languages:
     .NET:
       versions:
@@ -93,7 +175,7 @@ cognito-identity-provider_AdminGetUser:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.GetAdminUser
+                - Cognito.dotnetv3.GetAdminUser
     Kotlin:
       versions:
         - sdk_version: 1
@@ -125,7 +207,7 @@ cognito-identity-provider_AdminGetUser:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito/
+          github: javascriptv3/example_code/cognito-identity-provider/
           sdkguide:
           excerpts:
             - description:
@@ -144,10 +226,6 @@ cognito-identity-provider_AdminGetUser:
   services:
     cognito-identity-provider: {AdminGetUser}
 cognito-identity-provider_ResendConfirmationCode:
-  title: Resend an &COG; confirmation code using an &AWS; SDK
-  title_abbrev: Resend a confirmation code
-  synopsis: resend an &COG; confirmation code.
-  category:
   languages:
     .NET:
       versions:
@@ -157,7 +235,7 @@ cognito-identity-provider_ResendConfirmationCode:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.ResendConfirmationCode
+                - Cognito.dotnetv3.ResendConfirmationCode
     Kotlin:
       versions:
         - sdk_version: 1
@@ -189,7 +267,7 @@ cognito-identity-provider_ResendConfirmationCode:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -208,10 +286,6 @@ cognito-identity-provider_ResendConfirmationCode:
   services:
     cognito-identity-provider: {ResendConfirmationCode}
 cognito-identity-provider_ConfirmSignUp:
-  title: Confirm an &COG; user using an &AWS; SDK
-  title_abbrev: Confirm a user
-  synopsis: confirm an &COG; user.
-  category:
   languages:
     .NET:
       versions:
@@ -221,7 +295,7 @@ cognito-identity-provider_ConfirmSignUp:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.ConfirmSignUp
+                - Cognito.dotnetv3.ConfirmSignUp
     Kotlin:
       versions:
         - sdk_version: 1
@@ -253,7 +327,7 @@ cognito-identity-provider_ConfirmSignUp:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -272,11 +346,16 @@ cognito-identity-provider_ConfirmSignUp:
   services:
     cognito-identity-provider: {ConfirmSignUp}
 cognito-identity-provider_ListUsers:
-  title: List &COG; users using an &AWS; SDK
-  title_abbrev: List users
-  synopsis: list &COG; users.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - Cognito.dotnetv3.ListUsers
     Kotlin:
       versions:
         - sdk_version: 1
@@ -308,7 +387,7 @@ cognito-identity-provider_ListUsers:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -317,11 +396,16 @@ cognito-identity-provider_ListUsers:
   services:
     cognito-identity-provider: {ListUsers}
 cognito-identity-provider_AdminInitiateAuth:
-  title: Start authentication with &COG; and administrator credentials using an &AWS; SDK
-  title_abbrev: Start authentication with administrator credentials
-  synopsis: start authentication with &COG; and administrator credentials.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - Cognito.dotnetv3.AdminInitiateAuth
     Kotlin:
       versions:
         - sdk_version: 1
@@ -353,7 +437,7 @@ cognito-identity-provider_AdminInitiateAuth:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito/
+          github: javascriptv3/example_code/cognito-identity-provider/
           sdkguide:
           excerpts:
             - description:
@@ -372,10 +456,6 @@ cognito-identity-provider_AdminInitiateAuth:
   services:
     cognito-identity-provider: {AdminInitiateAuth}
 cognito-identity-provider_AssociateSoftwareToken:
-  title: Get a token to associate an MFA application with an &COG; user using an &AWS; SDK
-  title_abbrev: Get a token to associate an MFA application with a user
-  synopsis: get a token to associate an MFA application with an &COG; user.
-  category:
   languages:
     .NET:
       versions:
@@ -385,7 +465,7 @@ cognito-identity-provider_AssociateSoftwareToken:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.GetSecretForAppMFA
+                - Cognito.dotnetv3.AssociateSoftwareToken
     Kotlin:
       versions:
         - sdk_version: 1
@@ -417,7 +497,7 @@ cognito-identity-provider_AssociateSoftwareToken:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -436,10 +516,6 @@ cognito-identity-provider_AssociateSoftwareToken:
   services:
     cognito-identity-provider: {AssociateSoftwareToken}
 cognito-identity-provider_VerifySoftwareToken:
-  title: Verify an MFA application with an &COG; user using an &AWS; SDK
-  title_abbrev: Verify an MFA application with a user
-  synopsis: verify an MFA application with an &COG; user.
-  category:
   languages:
     .NET:
       versions:
@@ -449,7 +525,7 @@ cognito-identity-provider_VerifySoftwareToken:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.VerifyTOTP
+                - Cognito.dotnetv3.VerifySoftwareToken
     Kotlin:
       versions:
         - sdk_version: 1
@@ -481,7 +557,7 @@ cognito-identity-provider_VerifySoftwareToken:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -500,10 +576,6 @@ cognito-identity-provider_VerifySoftwareToken:
   services:
     cognito-identity-provider: {VerifySoftwareToken}
 cognito-identity-provider_AdminRespondToAuthChallenge:
-  title: Respond to an &COG; authentication challenge using an &AWS; SDK
-  title_abbrev: Respond to an authentication challenge
-  synopsis: respond to an &COG; authentication challenge.
-  category:
   languages:
     .NET:
       versions:
@@ -513,7 +585,7 @@ cognito-identity-provider_AdminRespondToAuthChallenge:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.AdminRespondToAuthChallenge
+                - Cognito.dotnetv3.AdminRespondToAuthChallenge
     Kotlin:
       versions:
         - sdk_version: 1
@@ -538,15 +610,14 @@ cognito-identity-provider_AdminRespondToAuthChallenge:
           github: python/example_code/cognito
           sdkguide:
           excerpts:
-            - description: Respond to an MFA challenge by providing a
-                code generated by an associated MFA application.
+            - description: Respond to an MFA challenge by providing a code generated by an associated MFA application.
               snippet_tags:
                 - python.example_code.cognito-idp.helper.CognitoIdentityProviderWrapper.decl
                 - python.example_code.cognito-idp.AdminRespondToAuthChallenge
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -565,11 +636,15 @@ cognito-identity-provider_AdminRespondToAuthChallenge:
   services:
     cognito-identity-provider: {AdminRespondToAuthChallenge}
 cognito-identity-provider_ConfirmDevice:
-  title: Confirm an MFA device for tracking by &COG; using an &AWS; SDK
-  title_abbrev: Confirm an MFA device for tracking
-  synopsis: confirm an MFA device for tracking by &COG;.
-  category:
   languages:
+    .NET:
+      versions:
+        - sdk_version: 3
+          github: dotnetv3/Cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - Cognito.dotnetv3.ConfirmDevice
     Python:
       versions:
         - sdk_version: 3
@@ -583,7 +658,7 @@ cognito-identity-provider_ConfirmDevice:
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -592,10 +667,6 @@ cognito-identity-provider_ConfirmDevice:
   services:
     cognito-identity-provider: {ConfirmDevice}
 cognito-identity-provider_InitiateAuth:
-  title: Start authentication with a device tracked by &COG; using an &AWS; SDK
-  title_abbrev: Start authentication with a tracked device
-  synopsis: start authentication with a device tracked by &COG;.
-  category:
   languages:
     .NET:
       versions:
@@ -605,23 +676,31 @@ cognito-identity-provider_InitiateAuth:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.InitiateAuth
+                - Cognito.dotnetv3.InitiateAuth
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.InitiateAuth
     Python:
       versions:
         - sdk_version: 3
           github: python/example_code/cognito
           sdkguide:
           excerpts:
-            - description: Sign in with a tracked device. To complete sign-in,
-                the client must respond correctly to Secure Remote Password (SRP)
-                challenges.
+            - description: This example shows you how to start authentication with a tracked device. To complete sign-in,
+                the client must respond correctly to Secure Remote Password (SRP) challenges.
               snippet_tags:
                 - python.example_code.cognito-idp.helper.CognitoIdentityProviderWrapper.decl
                 - python.example_code.cognito-idp.InitiateAuth
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -630,36 +709,22 @@ cognito-identity-provider_InitiateAuth:
   services:
     cognito-identity-provider: {InitiateAuth}
 cognito-identity-provider_RespondToAuthChallenge:
-  title: Respond to &COG; SRP authentication challenges using an &AWS; SDK
-  title_abbrev: Respond to SRP authentication challenges
-  synopsis: respond to &COG; SRP authentication challenges.
-  category:
   languages:
-    .NET:
-      versions:
-        - sdk_version: 3
-          github: dotnetv3/Cognito
-          sdkguide:
-          excerpts:
-            - description:
-              snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.AdminRespondToAuthChallenge
     Python:
       versions:
         - sdk_version: 3
           github: python/example_code/cognito
           sdkguide:
           excerpts:
-            - description: Sign in with a tracked device. To complete sign-in,
-                the client must respond correctly to Secure Remote Password (SRP)
-                challenges.
+            - description: Sign in with a tracked device. To complete sign-in, the client must respond correctly to Secure
+                Remote Password (SRP) challenges.
               snippet_tags:
                 - python.example_code.cognito-idp.helper.CognitoIdentityProviderWrapper.decl
                 - python.example_code.cognito-idp.RespondToAuthChallenge
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito
+          github: javascriptv3/example_code/cognito-identity-provider
           sdkguide:
           excerpts:
             - description:
@@ -668,10 +733,6 @@ cognito-identity-provider_RespondToAuthChallenge:
   services:
     cognito-identity-provider: {RespondToAuthChallenge}
 cognito-identity-provider_DeleteUser:
-  title: Delete an &COG; user using an &AWS; SDK
-  title_abbrev: Delete a user
-  synopsis: delete an &COG; user.
-  category:
   languages:
     C++:
       versions:
@@ -683,14 +744,135 @@ cognito-identity-provider_DeleteUser:
                 - cpp.example_code.cognito.client_configuration
                 - cpp.example_code.cognito.cognito_client
                 - cpp.example_code.cognito.delete_user
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.DeleteUser
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/cross-services/wkflw-pools-triggers
+          excerpts:
+            - description:
+              snippet_tags:
+                - javascript.v3.cognito-idp.actions.DeleteUser
   services:
     cognito-identity-provider: {DeleteUser}
+cognito-identity-provider_CreateUserPool:
+  languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cognito.java2.create_user_pool.main
+  services:
+    cognito-identity-provider: {CreateUserPool}
+cognito-identity-provider_CreateUserPoolClient:
+  languages:
+    Java:
+      versions:
+        - sdk_version: 2
+          github: javav2/example_code/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - cognito.java2.user_pool.create_user_pool_client.main
+  services:
+    cognito-identity-provider: {CreateUserPoolClient}
+cognito-identity-provider_UpdateUserPool:
+  languages:
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.UpdateUserPool
+    JavaScript:
+      versions:
+        - sdk_version: 3
+          github: javascriptv3/example_code/cross-services/wkflw-pools-triggers
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - javascript.v3.cognito-idp.actions.UpdateUserPool
+  services:
+    cognito-identity-provider: {UpdateUserPool}
+cognito-identity-provider_ForgotPassword:
+  languages:
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.ForgotPassword
+  services:
+    cognito-identity-provider: {ForgotPassword}
+cognito-identity-provider_ConfirmForgotPassword:
+  languages:
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.ConfirmForgotPassword
+  services:
+    cognito-identity-provider: {ConfirmForgotPassword}
+cognito-identity-provider_AdminCreateUser:
+  languages:
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.AdminCreateUser
+  services:
+    cognito-identity-provider: {AdminCreateUser}
+cognito-identity-provider_AdminSetUserPassword:
+  languages:
+    Go:
+      versions:
+        - sdk_version: 2
+          github: gov2/cognito
+          sdkguide:
+          excerpts:
+            - description:
+              snippet_tags:
+                - gov2.cognito-identity-provider.CognitoActions.struct
+                - gov2.cognito-identity-provider.AdminSetUserPassword
+  services:
+    cognito-identity-provider: {AdminSetUserPassword}
 cognito-identity-provider_Scenario_SignUpUserWithMfa:
   title: Sign up a user with an &COG; user pool that requires MFA using an &AWS; SDK
   title_abbrev: Sign up a user with a user pool that requires MFA
   synopsis_list:
-    - Sign up a user with a user name, password, and email address.
-    - Confirm the user from a code sent in email.
+    - Sign up and confirm a user with a username, password, and email address.
     - Set up multi-factor authentication by associating an MFA application with the user.
     - Sign in by using a password and an MFA code.
   category: Scenarios
@@ -703,8 +885,8 @@ cognito-identity-provider_Scenario_SignUpUserWithMfa:
           excerpts:
             - description:
               snippet_tags:
-                - cognito.dotnetv3.CognitoBasics.Usings
-                - cognito.dotnetv3.CognitoBasics.Main
+                - Cognito.dotnetv3.Main
+                - Cognito.dotnetv3.CognitoWrapper
     Kotlin:
       versions:
         - sdk_version: 1
@@ -729,20 +911,22 @@ cognito-identity-provider_Scenario_SignUpUserWithMfa:
           github: python/example_code/cognito
           sdkguide:
           excerpts:
-            - description: In addition to the previously listed steps, this example
-                also registers an MFA device to be tracked by &COG; and shows you
-                how to sign in by using a password and information from the tracked
-                device. This avoids the need to enter a new MFA code.
+            - description: Create a class that wraps &COG; functions used in the scenario.
+              snippet_tags:
+                - python.example_code.cognito-idp.CognitoIdentityProviderWrapper.full
+            - description: Create a class that runs the scenario. This example also registers an MFA device to be tracked
+                by &COG; and shows you how to sign in by using a password and information from the tracked device. This avoids
+                the need to enter a new MFA code.
               snippet_tags:
                 - python.example_code.cognito-idp.Scenario_SignUpUserWithMfa
     JavaScript:
       versions:
         - sdk_version: 3
-          github: javascriptv3/example_code/cognito/scenarios/basic
+          github: javascriptv3/example_code/cognito-identity-provider/scenarios/basic
           sdkguide:
           excerpts:
-            - description: For the best experience, clone the GitHub repository and run this 
-                example. The following code represents a sample of the full example application.
+            - description: For the best experience, clone the GitHub repository and run this example. The following code represents
+                a sample of the full example application.
               snippet_tags:
                 - javascript.v3.cognito-idp.scenarios.basic.SignUpHandler
                 - javascript.v3.cognito-idp.actions.SignUp
@@ -764,7 +948,5 @@ cognito-identity-provider_Scenario_SignUpUserWithMfa:
                 - cpp.example_code.cognito.client_configuration
                 - cpp.example_code.getting_started_with_user_pools
   services:
-    cognito-identity-provider: {ConfirmSignUp, ConfirmDevice, AssociateSoftwareToken,
-                                AdminGetUser, ListUsers, ResendConfirmationCode,
-                                RespondToAuthChallenge, AdminRespondToAuthChallenge,
-                                SignUp, InitiateAuth, AdminInitiateAuth, VerifySoftwareToken}
+    cognito-identity-provider: {ConfirmSignUp, ConfirmDevice, AssociateSoftwareToken, AdminGetUser, ListUsers, ResendConfirmationCode,
+                                RespondToAuthChallenge, AdminRespondToAuthChallenge, SignUp, InitiateAuth, AdminInitiateAuth, VerifySoftwareToken}

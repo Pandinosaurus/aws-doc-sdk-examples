@@ -1,12 +1,14 @@
-using Amazon.SQS;
-using Amazon.SQS.Model;
-using Moq;
-using System;
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Amazon.SQS;
+using Amazon.SQS.Model;
+using Moq;
 using Xunit;
-using System.Collections.Generic;
 
 namespace ReceiveDeleteExampleTests
 {
@@ -15,6 +17,7 @@ namespace ReceiveDeleteExampleTests
         private readonly string _queueUrl = "https://sqs.us-east-2.amazonaws.com/704812345678/Example_Queue";
 
         [Fact]
+        [Trait("Category", "Unit")]
         public async Task GetQueueURLTest()
         {
             var mockClient = new Mock<IAmazonSQS>();
@@ -46,6 +49,7 @@ namespace ReceiveDeleteExampleTests
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public async Task GetMessageTest()
         {
             var msgs = new List<Message>();
@@ -86,6 +90,7 @@ namespace ReceiveDeleteExampleTests
         }
 
         [Fact]
+        [Trait("Category", "Unit")]
         public async Task DeleteMessageTest()
         {
             var mockClient = new Mock<IAmazonSQS>();

@@ -17,6 +17,9 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"syscall"
+
+	"golang.org/x/term"
 )
 
 // IAnswerValidator defines an interface that validates string input.
@@ -25,7 +28,8 @@ type IAnswerValidator interface {
 }
 
 // NotEmpty is a validator that requires that the input be non-empty.
-type NotEmpty struct {}
+type NotEmpty struct{}
+
 func (notEmpty NotEmpty) IsValid(answer string) bool {
 	valid := len(answer) > 0
 	if !valid {
@@ -40,6 +44,7 @@ type InIntRange struct {
 	Lower int
 	Upper int
 }
+
 func (inRange InIntRange) IsValid(answer string) bool {
 	var valid bool
 	intAnswer, err := strconv.Atoi(answer)
@@ -60,6 +65,7 @@ type InFloatRange struct {
 	Lower float64
 	Upper float64
 }
+
 func (inRange InFloatRange) IsValid(answer string) bool {
 	var valid bool
 	floatAnswer, err := strconv.ParseFloat(answer, 32)
@@ -81,6 +87,8 @@ type IQuestioner interface {
 	AskBool(question string, expected string) bool
 	AskInt(question string, validators ...IAnswerValidator) int
 	AskFloat64(question string, validators ...IAnswerValidator) float64
+	AskChoice(question string, choices []string) int
+	AskPassword(question string, minLength int) string
 }
 
 // Questioner implements IQuestioner and stores input in a reader.
@@ -149,4 +157,32 @@ func (questioner Questioner) AskFloat64(question string, validators ...IAnswerVa
 		panic(err)
 	}
 	return answerFloat
+}
+
+func (questioner Questioner) AskChoice(question string, choices []string) int {
+	for index, choice := range choices {
+		question += fmt.Sprintf("\t%v. %v\n", index+1, choice)
+	}
+	question += fmt.Sprintf("Enter a choice between %v and %v: ", 1, len(choices))
+	answer := questioner.AskInt(question, InIntRange{Lower: 1, Upper: len(choices)})
+	return answer - 1
+}
+
+func (questioner Questioner) AskPassword(question string, minLength int) string {
+	var bpw []byte
+	var err error
+	valid := false
+	for !valid {
+		fmt.Println(question)
+		bpw, err = term.ReadPassword(int(syscall.Stdin))
+		if err != nil {
+			panic(err)
+		}
+		if len(bpw) > minLength {
+			valid = true
+		} else {
+			fmt.Printf("The password you entered isn't valid. It has to be at least %v characters.\n", minLength)
+		}
+	}
+	return string(bpw)
 }

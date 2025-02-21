@@ -1,5 +1,5 @@
 ﻿// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX - License - Identifier: Apache - 2.0
+// SPDX-License-Identifier: Apache-2.0
 
 namespace SNSMessageExample
 {
@@ -28,5 +28,6 @@ namespace SNSMessageExample
             await snsMessage.SendTextMessageAsync(phoneNumber, message);
         }
     }
+
     // snippet-end:[SNS.dotnetv3.SendTextMessage]
 }

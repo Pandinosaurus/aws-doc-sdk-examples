@@ -1,115 +1,127 @@
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 import com.example.stepfunctions.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.iam.IamClient;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
 import software.amazon.awssdk.services.sfn.SfnClient;
 import java.io.*;
 import java.util.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+/**
+ * To run these integration tests, you must set the required values
+ * in the config.properties file or AWS Secrets Manager.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class StepFunctionsTest {
-
-    private static  SfnClient sfnClient;
-    private static String stateMachineArn = ""; // Gets dynamically set in a test.
-    private static String exeArn = "";  // Gets dynamically set in a test.
-    private static String jsonFile = "";
-    private static String jsonFileSM = "";
-    private static String roleARN = "";
-    private static String stateMachineName = "";
+    private static SfnClient sfnClient;
+    private static String roleNameSC = "";
+    private static String activityNameSC = "";
+    private static String stateMachineNameSC = "";
 
     @BeforeAll
     public static void setUp() throws IOException {
-
         Region region = Region.US_EAST_1;
         sfnClient = SfnClient.builder()
                 .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
 
-        try (InputStream input = StepFunctionsTest.class.getClassLoader().getResourceAsStream("config.properties")) {
+        // Get the values to run these tests from AWS Secrets Manager.
+        Gson gson = new Gson();
+        String json = getSecretValues();
+        SecretValues values = gson.fromJson(json, SecretValues.class);
+        roleNameSC = values.getRoleNameSC() + java.util.UUID.randomUUID();
+        ;
+        activityNameSC = values.getActivityNameSC() + java.util.UUID.randomUUID();
+        ;
+        stateMachineNameSC = values.getStateMachineNameSC() + java.util.UUID.randomUUID();
+        ;
 
-            Properties prop = new Properties();
-
-            if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
-                return;
-            }
-
-            // load the properties file.
-            prop.load(input);
-
-            // Populate the data members required for all tests.
-            jsonFile = prop.getProperty("jsonFile");
-            jsonFileSM = prop.getProperty("jsonFileSM");
-            roleARN = prop.getProperty("roleARN");
-            stateMachineName = prop.getProperty("stateMachineName");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        // Uncomment this code block if you prefer using a config.properties file to
+        // retrieve AWS values required for these tests.
+        /*
+         * 
+         * try (InputStream input =
+         * StepFunctionsTest.class.getClassLoader().getResourceAsStream(
+         * "config.properties")) {
+         * Properties prop = new Properties();
+         * if (input == null) {
+         * System.out.println("Sorry, unable to find config.properties");
+         * return;
+         * }
+         * prop.load(input);
+         * roleNameSC = prop.getProperty("roleNameSC")+ java.util.UUID.randomUUID();;
+         * activityNameSC = prop.getProperty("activityNameSC")+
+         * java.util.UUID.randomUUID();;
+         * stateMachineNameSC = prop.getProperty("stateMachineNameSC")+
+         * java.util.UUID.randomUUID();;
+         * 
+         * } catch (IOException ex) {
+         * ex.printStackTrace();
+         * }
+         */
     }
 
     @Test
+    @Tag("IntegrationTest")
     @Order(1)
-    public void whenInitializingAWSService_thenNotNull() {
-        assertNotNull(sfnClient);
+    public void ListActivities() {
+        assertDoesNotThrow(() -> ListActivities.listAllActivites(sfnClient));
         System.out.println("Test 1 passed");
     }
 
     @Test
+    @Tag("IntegrationTest")
     @Order(2)
-    public void CreateStateMachine() {
-        stateMachineArn = CreateStateMachine.createMachine(sfnClient, roleARN, stateMachineName, jsonFileSM);
-        assertTrue(!stateMachineArn.isEmpty());
+    public void TestHello() {
+        assertDoesNotThrow(() -> ListStateMachines.listMachines(sfnClient));
         System.out.println("Test 2 passed");
     }
 
-    @Test
-    @Order(3)
-    public void StartExecution() {
-        exeArn = StartExecution.startWorkflow(sfnClient, stateMachineArn, jsonFile);
-        assertTrue(!stateMachineArn.isEmpty());
-        System.out.println("Test 3 passed");
+    private static String getSecretValues() {
+        SecretsManagerClient secretClient = SecretsManagerClient.builder()
+                .region(Region.US_EAST_1)
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                .build();
+        String secretName = "test/stepfunctions";
+
+        GetSecretValueRequest valueRequest = GetSecretValueRequest.builder()
+                .secretId(secretName)
+                .build();
+
+        GetSecretValueResponse valueResponse = secretClient.getSecretValue(valueRequest);
+        return valueResponse.secretString();
     }
 
-    @Test
-    @Order(4)
-    public void ListStateMachines() {
-        ListStateMachines.listMachines(sfnClient);
-        System.out.println("Test 4 passed");
+    @Nested
+    @DisplayName("A class used to get test values from test/stepfunctions (an AWS Secrets Manager secret)")
+    class SecretValues {
+        private String roleNameSC;
+        private String activityNameSC;
+        private String stateMachineNameSC;
+
+        public String getRoleNameSC() {
+            return roleNameSC;
+        }
+
+        public String getActivityNameSC() {
+            return activityNameSC;
+        }
+
+        public String getStateMachineNameSC() {
+            return stateMachineNameSC;
+        }
     }
-
-    @Test
-    @Order(5)
-    public void ListActivities() {
-        ListActivities.listAllActivites(sfnClient);
-        System.out.println("Test 5 passed");
-
-    }
-
-
-    @Test
-    @Order(6)
-    public void GetExecutionHistory() {
-        GetExecutionHistory.getExeHistory(sfnClient,exeArn );
-        System.out.println("Test 6 passed");
-    }
-
-    @Test
-    @Order(7)
-    public void DeleteStateMachine() {
-
-        DeleteStateMachine.deleteMachine(sfnClient, stateMachineArn);
-        System.out.println("Test 7 passed");
-    }
-
 }

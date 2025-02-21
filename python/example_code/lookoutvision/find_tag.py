@@ -56,27 +56,38 @@ def find_tag_in_projects(lookoutvision_client, key, value):
             logger.info("Searching project: %s ...", project["ProjectName"])
 
             response_models = lookoutvision_client.list_models(
-                ProjectName=project["ProjectName"])
+                ProjectName=project["ProjectName"]
+            )
             for model in response_models["Models"]:
                 model_description = lookoutvision_client.describe_model(
                     ProjectName=project["ProjectName"],
-                    ModelVersion=model["ModelVersion"])
+                    ModelVersion=model["ModelVersion"],
+                )
                 tags = lookoutvision_client.list_tags_for_resource(
-                    ResourceArn=model_description["ModelDescription"]["ModelArn"])
+                    ResourceArn=model_description["ModelDescription"]["ModelArn"]
+                )
 
                 logger.info(
                     "\tSearching model: %s for tag: %s value: %s.",
-                    model_description["ModelDescription"]["ModelArn"], key, value)
+                    model_description["ModelDescription"]["ModelArn"],
+                    key,
+                    value,
+                )
                 if find_tag(tags["Tags"], key, value) is True:
                     found = True
                     logger.info(
                         "\t\tMATCH: Project: %s: model version %s",
                         project["ProjectName"],
-                        model_description["ModelDescription"]["ModelVersion"])
-                    found_tags.append({
-                        "Project": project["ProjectName"],
-                        "ModelVersion":
-                            model_description["ModelDescription"]["ModelVersion"]})
+                        model_description["ModelDescription"]["ModelVersion"],
+                    )
+                    found_tags.append(
+                        {
+                            "Project": project["ProjectName"],
+                            "ModelVersion": model_description["ModelDescription"][
+                                "ModelVersion"
+                            ],
+                        }
+                    )
         if found is False:
             logger.info("No match for tag %s with value %s.", key, value)
     except ClientError:
@@ -94,7 +105,10 @@ def main():
     args = parser.parse_args()
     key = args.tag
     value = args.value
-    lookoutvision_client = boto3.client("lookoutvision")
+
+    session = boto3.Session(profile_name="lookoutvision-access")
+
+    lookoutvision_client = session.client("lookoutvision")
 
     print(f"Searching your models for tag: {key} with value: {value}.")
     tagged_models = find_tag_in_projects(lookoutvision_client, key, value)

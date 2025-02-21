@@ -1,11 +1,5 @@
-//snippet-sourcedescription:[transferOnStream.cpp demonstrates how to transfer an S3 object using stream into local memory and verify the correctness of the transfer]
-//snippet-service:[s3]
-//snippet-keyword:[Amazon S3]
-//snippet-keyword:[C++]
-//snippet-sourcesyntax:[cpp]
-//snippet-keyword:[Code Sample]
-//snippet-sourcetype:[full-example]
-//snippet-sourceauthor:[AWS]
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 /**
   Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -38,7 +32,6 @@ using namespace Aws::Utils;
 using namespace Aws::S3;
 
 static const size_t BUFFER_SIZE = 512 * 1024 * 1024; // 512MB Buffer 
-static size_t g_file_size = 0;
 
 /**
  * In-memory stream implementation
@@ -48,11 +41,11 @@ class MyUnderlyingStream : public Aws::IOStream
     public:
         using Base = Aws::IOStream;
         // Provide a customer-controlled streambuf to hold data from the bucket.
-        MyUnderlyingStream(std::streambuf* buf)
+        explicit MyUnderlyingStream(std::streambuf* buf)
             : Base(buf)
         {}
 
-        virtual ~MyUnderlyingStream() = default;
+        ~MyUnderlyingStream() override = default;
 };
 
 int main(int argc, char** argv)
@@ -74,7 +67,6 @@ int main(int argc, char** argv)
     LOCAL_FILE_COPY += "_copy";
 
     Aws::SDKOptions options;
-    options.loggingOptions.logLevel = Aws::Utils::Logging::LogLevel::Trace; //Turn on logging.
 
     Aws::InitAPI(options);
     {
@@ -83,6 +75,13 @@ int main(int argc, char** argv)
         auto executor = Aws::MakeShared<Aws::Utils::Threading::PooledThreadExecutor>("executor", 25);
         Aws::Transfer::TransferManagerConfiguration transfer_config(executor.get());
         transfer_config.s3Client = s3_client;
+
+        // Create buffer to hold data received by the data stream.
+        Aws::Utils::Array<unsigned char> buffer(BUFFER_SIZE);
+
+        // The local variable 'streamBuffer' is captured by reference in a lambda.
+        // It must persist until all downloading by the 'transfer_manager' is complete.
+        Stream::PreallocatedStreamBuf streamBuffer(buffer.GetUnderlyingData(), buffer.GetLength());
 
         auto transfer_manager = Aws::Transfer::TransferManager::Create(transfer_config);
 
@@ -101,14 +100,11 @@ int main(int argc, char** argv)
 
             // Verify that the upload retrieved the expected amount of data.
             assert(uploadHandle->GetBytesTotalSize() == uploadHandle->GetBytesTransferred());
-            g_file_size = uploadHandle->GetBytesTotalSize();
 
-            // Create buffer to hold data received by the data stream. 
-            Aws::Utils::Array<unsigned char> buffer(BUFFER_SIZE);
             auto downloadHandle = transfer_manager->DownloadFile(BUCKET,
                 KEY,
                 [&]() { //Define a lambda expression for the callback method parameter to stream back the data.
-                    return Aws::New<MyUnderlyingStream>("TestTag", Aws::New<Stream::PreallocatedStreamBuf>("TestTag", buffer.GetUnderlyingData(), BUFFER_SIZE));
+                    return Aws::New<MyUnderlyingStream>("TestTag", &streamBuffer);
                 });
             downloadHandle->WaitUntilFinished();// Block calling thread until download is complete.
             auto downStat = downloadHandle->GetStatus();
@@ -129,7 +125,8 @@ int main(int argc, char** argv)
 
             // Write the buffered data to local file copy.
             Aws::OFStream storeFile(LOCAL_FILE_COPY.c_str(), Aws::OFStream::out | Aws::OFStream::trunc);
-            storeFile.write((const char*)(buffer.GetUnderlyingData()), downloadHandle->GetBytesTransferred());
+            storeFile.write((const char*)(buffer.GetUnderlyingData()),
+                            static_cast<std::streamsize>(downloadHandle->GetBytesTransferred()));
             storeFile.close();
 
             std::cout << "File dumped to local file finished. You can verify the two files' content using md5sum." << std::endl;

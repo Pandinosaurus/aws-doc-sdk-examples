@@ -1,9 +1,8 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.9
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+//
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
 
 import PackageDescription
 
@@ -23,9 +22,8 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(
-            name: "AWSSwiftSDK",
             url: "https://github.com/awslabs/aws-sdk-swift",
-            from: "0.2.0"
+            from: "1.0.0"
         )
     ],
     // snippet-end:[cognitoidentity.swift.package-dependencies]
@@ -36,7 +34,7 @@ let package = Package(
         .target(
             name: "CognitoIdentityHandler",
             dependencies: [
-                .product(name: "AWSCognitoIdentity", package: "AWSSwiftSDK"),
+                .product(name: "AWSCognitoIdentity", package: "aws-sdk-swift"),
             ],
             path: "./Sources/CognitoIdentityHandler"
         ),
@@ -47,7 +45,7 @@ let package = Package(
             name: "CognitoIdentityHandlerTests",
             dependencies: [
                 "FindOrCreateIdentityPool",
-                .product(name: "AWSCognitoIdentity", package: "AWSSwiftSDK"),
+                .product(name: "AWSCognitoIdentity", package: "aws-sdk-swift"),
             ],
             path: "./Tests/CognitoIdentityHandlerTests"
         ),
